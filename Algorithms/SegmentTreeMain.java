@@ -19,9 +19,7 @@ import java.math.*;
  class F{
   
   public static long merge =0;
-  public static void main(String[] args)throws Exception
-
-    {  
+  public static void main(String[] args)throws Exception{  
 	
 	/*  BufferedReader br=new BufferedReader(new FileReader("input.txt"));
         BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));

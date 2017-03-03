@@ -1,186 +1,179 @@
-//pakage joney_000[let_me_start]
- 
 import java.util.*;
 import java.lang.*;
 import java.io.*;
 import java.math.*;
- /******************** Main Class ***********************/
 
- class C
-{	
+/*
+ * Coded by  	: jaswant Singh
+ * Lang   		: Java
+ * Algorithm 	: Not Specified
+ * Date           : 29/Nov/2015
+ */ 
+ class Solution implements Comparable<Solution>{
+	 public int vertex;
+	 public int weight; 
+	 //public provide flexibility to access from outside the the class
+	 //at the cost of security
+	 public Solution(){
+		this.vertex = 0;
+		this.weight = 0;
+	 }
+	 public Solution(int node , int weight){
+		 this.vertex = node;
+		 this.weight = weight;
+	 }
+	 @Override
+	 public int compareTo(Solution e){
+		 if(this.weight<e.weight)return -1;
+		 else if(this.weight==e.weight) return 0;
+		 else return 1;
+	 }
+	 @Override
+	 public String toString(){
+	 	return " vertex = "+ this.vertex + " weight= "+this.weight ;
+	 }
+     //Fast Reader implementation , handles large I/O files
+    private boolean finished = false;
+
+	private InputStream stream;
+	private byte[] buf = new byte[1024];  //input Buffer
+	private int curChar;
+	private int numChars;
+	private SpaceCharFilter filter;		  
+
+	public Solution(InputStream stream){
+		this.stream = stream;
+	}
     public static InputStream inputStream = System.in;
 	public static OutputStream outputStream = System.out;
-	public static FastReader in = new FastReader(inputStream);
+	public static Solution in = new Solution(inputStream);
     public static PrintWriter out = new PrintWriter(outputStream);
 	/*
-	Overhead [Additional Temporary Strorage]
-	*/
+	 *  Overhead [Additional Temporary Storage] 
+	 *  But it save a lot of time and Re Allocation of Space . it Reuse The same Buffers for all the Test Cases.
+	 *  take care of Limit : 10^5 + 5 (Runtime Error:OverFlow)
+	 */
 	public static int tempints[] = new int[100005];
 	public static long templongs[] = new long[100005];
 	public static double tempdoubles[] = new double[100005];
 	public static char tempchars[] = new char[100005];
 	public static long mod = 1000000000+7;
-	long temp[] =new long[25];
+ 	public static LinkedList<Integer> adj[];
+			
 	
-	public static void main(String[] args) throws java.lang.Exception{
-		//let_me_start 
-		
-		int tests = i();
-		long arr[] = new long[25];
-		
-		
-		for(int t=1;t<=tests;t++){
-		  int n = i(); int k=i();
-		  arr = ls(n);
-		  long sum=0;
-		  for(int i=1;i<=n;i++)sum+=arr[i];
-		  for(int i=0;i<n;i++)arr[i]=arr[i+1];
-		  if(sum==0&&n<k){
-		    out.write(""+"no\n");
-			out.flush();
-			continue;
-		  }
-		  if(sum%k!=0){
-		    out.write(""+"no\n");
-			continue;
-		  }
-		  long seg = sum/k;
-		  int ans = f(arr,n,k,seg);
-		  if(ans==-1){
-		    out.write(""+"no\n");
-		  }else{
-		    out.write(""+"yes\n");
-		  }
-		}
-		out.flush();
-		return;
-   }	 
-		 
-public static int f(long []arr , int n , int k,long seg)throws Exception{
- if(k==0)return 0;
-  
- 		int powersetsize = 1<<n;
-		//long temp = 0;
-		int temp[] = new int[25];
-		for(int c = 0; c < powersetsize; c++)
-		{
-		    
-			for(int j = 0; j < n; j++)
-			{   temp[j]=0; //reset
-				if((c & (1<<j))>0){
-				    temp[j]=-1;//System.out.print(arr[j]+" ");
+		    //Creating Reader-Writer Buffer of initial size 2000B
+			//public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in),2000);
+		//	public static BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out),2000);			
+	public static long INF = Integer.MAX_VALUE/1000;
+			
+				
+
+	public static void main(String []arg)throws Exception{
+			
+			//int tests = i();
+		//	for(int t = 1 ; t <= tests; t++){
+				
+				int n = i();
+				int freq[] = is(n);
+				long tree[] = new long[n+100];
+				//Building the tree
+				for(int i =1 ; i<= n ; i++){
+					update(tree ,i , freq[i]);
 				}
-					
-			}
-			long sum=0;
-			for(int j=0;j<n;j++){
-			 if(temp[j]==-1)sum+=arr[j];//if(temp[j]==-1) then jth value is taken in this perticuler set; 
-			}
-			//rest operation starts here
-			int idx=0;
-		    if(sum==seg){
-			  
-			  for(int j=0;j<n;j++){
-				  if(temp[j]!=-1){
-				    arr[idx]=arr[j];
-					idx++;
-				  }
-			  }
-			  return f(arr,idx,k-1,seg);
-			}
-			//System.out.print("\n");
+				int q = i();
+				for(int i =1 ; i <= q ; i++){
+					int idx = i();
+					long ans = query(tree ,idx);
+				 	out.write(""+ans+"\n");	out.flush();	
+				}
+				
+		//	}		
+			out.flush();
+			return ;
 		}
-		return -1;
+	
+		
+//                   My General Utilities for Contest                //
+ void update(long []tree , int idx , int val){
+     
+     while (idx < tree.length){
+        tree[idx] += val;
+        idx += (idx & -idx);
+    }
+}
+ long query(long []tree , int idx){
+     
+    long sum = 0;
+    while (idx > 0){
+        sum += tree[idx];
+        idx -= (idx & -idx);
+    }
+    return sum;
 }
 
-//****************************** Utilities ***********************//
-
+ 
  public static boolean isPrime(long n)throws Exception{
-  if(n==1)return false;
-  if(n<=3)return true;
-  if(n%2==0)return false;
-  for(int i=2 ;i <= Math.sqrt(n); i++){
-   if(n%i==0)return false;
-  }
-  return true;
- }
- // sieve
- public static int[] primes(int n)throws Exception{       // for(int i=1;i<=arr.length-1;i++)out.write(""+arr[i]+" ");
-  boolean arr[] = new boolean[n+1];
-  Arrays.fill(arr,true);
-  for(int i=1;i<=Math.sqrt(n);i++){
-	if(!arr[i])continue;
-	for(int j = 2*i ;j<=n;j+=i){
-		arr[i]=false;
+	if(n==1)return false;
+	if(n<=3)return true;
+	if(n%2==0)return false;
+	for(int i=2 ;i <= Math.sqrt(n); i++){
+		if(n%i==0)return false;
 	}
-  }
-  LinkedList<Integer> ll = new LinkedList<Integer>();
-  for(int i=1;i<=n;i++){
-   if(arr[i])ll.add(i);
-  }
-  n = ll.size();
-  
-  int primes[] = new int[n+1];
-  for(int i=1;i<=n;i++){
-    primes[i]=ll.removeFirst();
-  }
-  return primes;
+	return true;
  }
  public static long gcd (long a , long b)throws Exception{
-  if(b==0)return a;
-  return gcd(b , a%b);
+	if(b==0)return a;
+	return gcd(b , a%b);
  }
  public static long lcm (long a , long b)throws Exception{
-  if(a==0||b==0)return 0;
-  return (a*b)/gcd(a,b);
+	if(a==0||b==0)return 0;
+	return (a*b)/gcd(a,b);         //TAKE CARE OF Integer RANGE OVERFLOW
  }
  public static long mulmod(long a , long b ,long mod)throws Exception{
-   if(a==0||b==0)return 0;
-   if(b==1)return a;
-   long ans = mulmod(a,b/2,mod);
-   ans = (ans*2)% mod;
-   if(b%2==1)ans = (a + ans)% mod;
-   return ans;
+	if(a==0||b==0)return 0;
+	if(b==1)return a;
+	long ans = mulmod(a,b/2,mod);
+	ans = (ans*2)% mod;
+	if(b%2==1)ans = (a + ans)% mod;
+	return ans;
  }
  public static long pow(long a , long b ,long mod)throws Exception{
-   if(b==0)return 1;
-   if(b==1)return a;
-   long ans = pow(a,b/2,mod);
-   ans = (ans * ans)% mod;
-   if(b%2==1)ans = (a * ans)% mod;
-   return ans;
+	if(b==0)return 1;
+	if(b==1)return a;
+	long ans = pow(a,b/2,mod);
+	ans = (ans * ans)% mod;
+	if(b%2==1)ans = (a * ans)% mod;
+	return ans;
  }
  // 20*20   nCr Pascal Table
  public static long[][] ncrTable()throws Exception{
-  long ncr[][] = new long[21][21];
-  for(int i=0 ;i<=20 ;i++){ncr[i][0]=1;ncr[i][i]=1;}
-  for(int j=0;j<=20 ;j++){
-   for(int i=j+1;i<= 20 ;i++){
-    ncr[i][j] = ncr[i-1][j]+ncr[i-1][j-1];
-   }
-  }
-  return ncr;
+	long ncr[][] = new long[21][21];
+	for(int i=0 ;i<=20 ;i++){ncr[i][0]=1;ncr[i][i]=1;}
+	for(int j=0;j<=20 ;j++){
+		for(int i=j+1;i<= 20 ;i++){
+			ncr[i][j] = ncr[i-1][j]+ncr[i-1][j-1];
+		}
+	}
+	return ncr;
  }
-//*******************************I/O******************************//	
+//							My I/O function                    	//
 public static int i()throws Exception{
- //return Integer.parseInt(br.readLine().trim());
- return in.nextInt();
+ return in.nextInt();                   					   //read a single Integer
 }
-public static int[] is(int n)throws Exception{
-  //int arr[] = new int[n+1];
-  for(int i=1 ; i <= n ;i++)tempints[i] = in.nextInt();  
+public static int[] is(int n)throws Exception{               
+  for(int i=1 ; i <= n ;i++)tempints[i] = in.nextInt();        //read N integers
  return tempints;
 }
-public static long l()throws Exception{
+public static long l()throws Exception{                        //read a single Long
  return in.nextLong();
 }
-public static long[] ls(int n)throws Exception{
+public static long[] ls(int n)throws Exception{				   //read N Long type digits
   for(int i=1 ; i <= n ;i++)templongs[i] = in.nextLong();  
  return templongs;
 }
 
 public static double d()throws Exception{
- return in.nextDouble();
+  return in.nextDouble();
 }
 public static double[] ds(int n)throws Exception{
   for(int i=1 ; i <= n ;i++)tempdoubles[i] = in.nextDouble();  
@@ -199,35 +192,22 @@ public static String s()throws Exception{
 public static BigInteger bi()throws Exception{
  return in.nextBigInteger();
 }
-//***********************I/O ENDS ***********************//
-//*********************** 0.3%f [precision]***********************//
-/* roundoff upto 2 digits 
-   double roundOff = Math.round(a * 100.0) / 100.0;
-                    or
-   System.out.printf("%.2f", val);
-					
-*/
+
+//*********************** for 0.2%f [precision data]***********************//
+ /* 
+  * roundoff upto 2 digits 
+  * double roundOff = Math.round(a * 100.0) / 100.0;
+  *                  or
+  * System.out.printf("%.2f", val);
+  *				
+  */
 /*
-  print upto 2 digits after decimal
-  val = ((long)(val * 100.0))/100.0;
-  
+  *print upto 2 digits after decimal
+  *val = ((long)(val * 100.0))/100.0;
+  *
 */
-}
 
-class FastReader{
-
-	private boolean finished = false;
-
-	private InputStream stream;
-	private byte[] buf = new byte[1024];
-	private int curChar;
-	private int numChars;
-	private SpaceCharFilter filter;
-
-	public FastReader(InputStream stream){
-		this.stream = stream;
-	}
-
+   
 	public int read(){
 		if (numChars == -1){
 			throw new InputMismatchException ();
@@ -245,7 +225,7 @@ class FastReader{
 		}
 		return buf[curChar++];
 	}
-
+	
 	public int peek(){
 		if (numChars == -1){
 			return -1;
@@ -351,7 +331,6 @@ class FastReader{
 		return s;
 	}
 
-
 	public String nextLine(boolean ignoreEmptyLines){
 		if (ignoreEmptyLines){
 			return nextLine ();
@@ -359,6 +338,7 @@ class FastReader{
 			return readLine0 ();
 		}
 	}
+
 
 	public BigInteger nextBigInteger(){
 		try{
@@ -437,27 +417,5 @@ class FastReader{
 		public boolean isSpaceChar(int ch);
 	}
 }
- /******************** Pair class ***********************/
- 
- class Pair implements Comparable<Pair>{
- public int a;
- public int b;
- public Pair(){
-  this.a = 0;
-  this.b = 0;
- }
- public Pair(int a,int b){
-  this.a = a;
-  this.b = b;
- }
- public int compareTo(Pair p){
-  if(this.a==p.a){
-   return this.b-p.b;  
-  }
-  return this.a-p.a; 
- }
- public String toString(){
-  return "a="+this.a+" b="+this.b;
- }
- 
-} 
+
+

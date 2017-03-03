@@ -10,7 +10,6 @@ import java.math.*;
  *
  */
 
-
  class A{
 	
 	private InputStream inputStream ;
@@ -53,59 +52,46 @@ import java.math.*;
 		 //once();
 		 for(int t  = 1 ; t<= tests ; t++){
 		 	//clear(n);
-	String T = s();
-	String P = s();
-	String S = P+"$"+T;
-	char []str = S.toCharArray();
-	int Z[] = new int[1+S.length()];
- 	int n = S.length();
-    	int L, R, k;
- 
-    	// [L,R] make a window which matches with prefix of s
-    	L =0 ; R = 0;
-    	for (int i = 1; i < n; ++i)
-    	{
-        if (i > R)
-        {
-            L =i ;  R = i;
-            while (R<n && str[R-L] == str[R])
-                R++;
-            Z[i] = R-L;
-            R--;
-        }
-        else
-        {
-            k = i-L;
- 
-            if (Z[k] < R-i+1)
-                 Z[i] = Z[k];
- 		else
-            {
-                //  else start from R  and check manually
-                L = i;
-                while (R<n && str[R-L] == str[R])
-                    R++;
-                Z[i] = R-L;
-                R--;
-            }
-        }
-    }
-
-	int ans =0;
-	for(int i=T.length()+1;i<n;i++){
-		ans += Z[i];
-		//out.write("z["+i+"]="+Z[i]+"\n");
-	}
-	out.write(""+ans+"\n");
+			String T = s();
+			String P = s();
+			String S = P+"$"+T;
+			char []str = S.toCharArray();
+			int Z[] = new int[S.length()];				// Z array is zero based
+		 	int n = S.length();
+			int L, R, k;
+			L =0 ; R = 0;
+			for(int i = 1; i < n; ++i){
+		    if(i > R){
+		        L =i ;  R = i;
+		        while (R<n && str[R-L] == str[R])
+		            R++;
+		        Z[i] = R-L;
+		        R--;
+		    }else{
+		        k = i-L;
+	 			if(Z[k] < R-i+1)
+		             Z[i] = Z[k];
+		 		else {
+				        L = i;
+				        while (R<n && str[R-L] == str[R])
+				            R++;
+				        Z[i] = R-L;
+				        R--;
+				    }
+				}
+			}
+			// Uses & Logic
+			int ans =0;
+			for(int i=T.length()+1;i<n;i++){
+				ans += Z[i];
+				//out.write("z["+i+"]="+Z[i]+"\n");
+			}
+			out.write(""+ans+"\n");
 	
 		}//end tests
 	}//end run
 	
-	boolean check(int n){
-		String s = ""+n;
-		for(int i = 1 ; i <= s.length(); i++)if(s.charAt(i-1)=='3'||s.charAt(i-1)=='5')return true;
-		return false;
-	}	
+	
 	void clear(int n){
 		 
 	}

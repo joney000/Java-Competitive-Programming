@@ -9,9 +9,7 @@ import java.math.*;
  public class Main{
 	
 	
-  public static void main(String[] args)throws Exception
-
-    {  
+  public static void main(String[] args)throws Exception{  
 	
 	/*  BufferedReader br=new BufferedReader(new FileReader("input.txt"));
         BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));
@@ -31,18 +29,15 @@ import java.math.*;
 		long y= 0;
 		long l = 1;
 		long r = 100000000000000000L;
-		
-       
-		
-		out.write(""+v);
-		  out.flush();
-  }
 
-	long binarySearch(int A[], int l, int r, int key){
+		out.write(""+v);
+		out.flush();
+  }
     
-    		int m = 0;
-    		while( l <= r ){
-    		     m = l + (r-l)/2;
+	long binarySearch(int A[], int l, int r, int key){
+    	int m = 0;
+        while( l <= r ){
+                m = l + (r-l)/2;
 			if( A[m] == key ){ // first comparison
    		         return m;
    			} 

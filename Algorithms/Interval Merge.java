@@ -4,14 +4,18 @@ import java.lang.*;
 import java.io.*;
 import java.math.*;
 /*
- * Author    : joney_000[Jaswant Singh][jaswantsinghyadav007@gmail.com]
- * Algorithm : euler tocient function phi	in O(n * (sqrt(n)/10))	and	devisiors in O(n*sqrt(n))   sqrt(n)/10 ~~=> no of prime numbers in [1..sqrt(n)]  
- * Platform  : Facebook HackerCup
+ * Author    : joney_000[let_me_start]
+ * Algorithm : Maximum matching for bipartite graph. Hopcroft-Karp algorithm in O(E * sqrt(V))
+ * Platform  : https://www.facebook.com/hackercup
  *
  */
 
+/*    The Main Class                */
 
- class A {
+
+ 
+
+class B{
 	
 	private InputStream inputStream ;
 	private OutputStream outputStream ;
@@ -32,8 +36,8 @@ import java.math.*;
 	private final int  INF  = Integer.MAX_VALUE / 10;
 	private final long INF_L  = Long.MAX_VALUE / 10;
 	
-	public A(){}
-	public A(boolean stdIO)throws FileNotFoundException{
+	public B(){}
+	public B(boolean stdIO)throws FileNotFoundException{
 		//stdIO = false;
 		if(stdIO){
 			inputStream = System.in;
@@ -46,81 +50,87 @@ import java.math.*;
 		out = new PrintWriter(outputStream);
 		
 	}
-	int N = 500001 ; int MAXN = 500001;
-	int phi[] = new int[MAXN + 1];
-	int prime[] = new int[MAXN + 1];
-	int sz=0;
-	long val[] = new long[MAXN+1];
-	boolean mark [] = new boolean[MAXN+1];
-	
+
+
   	void run()throws Exception{
- 		prec(); 
- 		
+	
+	//	 int tests = i();
+	//	 once();
+	//	 for(int t  = 1 ; t<= tests ; t++){
+		 	int n = i(); long l = l(); long r = l();
+            long a[] = new long[n+1];
+            for(int i = 1; i <= n; i++)a[i] = l();
+            Arrays.sort(a, 1, n+1);
+            Interval[] it = new Interval[n];
+            for(int i = 1; i <= n - 1; i++){
+                long left = a[i+1]- a[i]+ 1;
+                long right = a[i+1]+a[i] - 1;
+                it[i] = new Interval(left, right);
+            }
+            it = mergeIntervals(it, n-1);
+            long ans = 0;
+            for(Interval i: it){
+                if((i.end < l) || (i.start > r))continue;
+                if(i.start < l)i.start = l;
+                if(i.end > r)i.end = r;
+                ans += i.end - i.start + 1;
+            }
+            // Interval arr[] =  { null,new Interval(6,8), new Interval(1,9), new Interval(2,4), new Interval(4,7), new Interval(11, 12),new Interval(12, 15),new Interval(15, 15) };
+            // int n = 7;
+            // out.write("here:");
+            out.write(""+ans+"\n");
+	//	 	out.write("Case #"+t+": "+ans+"\n");	
+		 	
+	//	}//end tests
+	}//end run
+	void once(){
+	
+	}	
+	void clear(int n){
+		 
 	}
-	
-	
-	void prec(){
-   		
-   	   phi[1] = 1; 
-   	   for (int i = 2; i <= MAXN; i++ ){
-    		if(!mark[i]){
-        		phi[i] = i-1;
-        		prime[sz++]= i;
-    		}
-    		for(int j=0; j<sz && prime[j]*i <= MAXN; j++ ){
-        		mark[prime[j]*i]=true;
-        		if(i%prime[j]==0){
-      	      	int ll = 0;int xx = i;
-      	      	while(xx%prime[j]==0){
-      	                     xx/=prime[j];
-      	                     ll++;         
-      	            }
-      	      	int mm = 1;
-      	      	for(int k=0;k<ll;k++)mm*=prime[j];
-      	      	phi[i*prime[j]] = phi[xx]*mm*(prime[j]-1);
-      	      	break;
-    			}else phi[i*prime[j]] = phi[i]*(prime[j]-1 );
-    		}
-	  }
-	  // End of phi and primes calculation
-	  
-	  for(int i = 1 ; i <= MAXN ; i++){
- 			long v= 0;
- 			for(int j = 1 ; j<= Math.sqrt(i);  j++){
- 				if(i%j!=0)continue;
- 				int a = j;
- 				int b = i/j;
- 				if(a==b){
- 					v += a * 1L * phi[i/a]; 
- 				}else{
- 					v += a * 1L * phi[i/a];
- 					v += b * 1L * phi[i/b];
- 				}
- 				v %= mod;
- 			}
- 			val[i] = v;
- 	}
- 	//End of divisiors
-  
-	}
-	
+	Interval[] mergeIntervals(Interval arr[], int n){
+        Stack<Interval> s = new Stack<Interval>();
+        Arrays.sort(arr, 1, n+1);
+        s.push(arr[1]);
+        for (int i = 2 ; i <= n; i++){
+            Interval top = s.peek();
+            if (top.end < arr[i].start){
+                s.push(arr[i]);
+            }else if (top.end < arr[i].end){
+                top.end = arr[i].end;
+                s.pop();
+                s.push(top);
+            }
+        }
+        Interval[] sortedMergedInterval = new Interval[s.size()];
+        int idx = 0;
+        while (!s.isEmpty()){
+            Interval t = s.peek();
+            sortedMergedInterval[idx++] = t;
+            //out.write("[" + t.start + "," + t.end + "] ");
+            s.pop();
+        }
+        Arrays.sort(sortedMergedInterval, 0 , idx);
+        return sortedMergedInterval;
+}
+		 
 //****************************** My Utilities ***********************//
  	void print_r(Object...o){
        	out.write("\n"+Arrays.deepToString(o)+"\n");
         	out.flush();
 	}
-	long h[];
-	void hash(String s){
-		long base = 31;
-		long a = 31;//base = a multiplier
-		long mod = 1000000007;//range [0..100004]
+	
+	int hash(String s){
+		int base = 31;
+		int a = 31;//base = a multiplier
+		int mod = 100005;//range [0..100004]
 		long val = 0;
 		for(int i =  1 ; i<= s.length() ;i++){
 			val += base * s.charAt(i-1);
-			h[i] = val;
-			base = ( a * base ) % mod;
+			base = ( a * base ) % 100005;
 		}
-		//return (int)(val % 100005) ;
+		return (int)(val % 100005) ;
 	}
 	
  	boolean isPrime(long n){
@@ -147,7 +157,7 @@ import java.math.*;
   				p[idx++] = i;
   				for(int j  = 2* i ; j<= n ; j+=i ){
   					isPrime[j] = false;		
-  				}		
+  				}
   			}
   		}
   		return p;
@@ -257,7 +267,7 @@ import java.math.*;
 	  BufferedReader br=new BufferedReader(new FileReader("input.txt"));
         BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));
     */ 	 
-    		 A driver = new A(true);
+    		 B driver = new B(true);
     		 long start =  System.currentTimeMillis();
     		 driver.run();
     		 long end =  System.currentTimeMillis();
@@ -493,39 +503,27 @@ class FastReader{
 }
  /******************** Pair class ***********************/
  
- class Pair implements Comparable<Pair>{
- 
- public long b;
- public long a;
- public long c;
- public long prev = 0;;
- public Pair(){
- 
+ class Interval implements Comparable<Interval>{
 
-  this.a = 0L;
-  this.b = 0L;
-  this.c = 0L;
- }
- public Pair(long a,long b , long c ){
+ public long start;
+ public long end;
 
-  this.a = a;
-  this.b = b;
-  this.c = c;
+ public Interval(){
+  this.start = 0L;
+  this.end = 0L;
+
  }
- public int compareTo(Pair p){
-	if(this.a < p.a)return -1;
-	else if(this.a > p.a )return 1;
-	else {
-		if(this.b < p.b)return -1;
-		else if(this.b > p.b )return 1;
-		else {
-			return 0;
-		}
-	
-	}
+ public Interval(long a, long b ){
+  this.start = a;
+  this.end = b;
+ }
+ public int compareTo(Interval p){
+	if(this.start < p.start)return -1;
+	else if(this.start > p.start )return 1;
+	else return 0;
  }
  public String toString(){
-  return "a="+this.a+" b="+this.b+" c="+this.c;
+  return "a="+this.start+" b="+this.end;
  }
  
 } 

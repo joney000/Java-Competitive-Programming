@@ -5,17 +5,8 @@ import java.lang.*;
 import java.io.*;
 import java.math.*;
  /******************** Main Class ***********************/
-class Node {
-  public static int node = 0;//node name
-  public static int w=0; // weigth
-  public Node(){
-  }
-  public Node(int node , int w){
-    this.node = node;
-	this.w = w;
-  }
-  }
-class DFS_AdjLis
+
+class A
 {	
     public static InputStream inputStream = System.in;
 	public static OutputStream outputStream = System.out;
@@ -30,61 +21,108 @@ class DFS_AdjLis
 	public static char tempchars[] = new char[100005];
 	public static long mod = 1000000000+7;
 	
-	public static void main(String[] args) throws java.lang.Exception{
-		//let_me_start 
-		 int tests=i();
-		 //int arr[] = is(n);
-		 //String ans = "No";
-        	long ans=0;
-		int n = i(); int m = i();
-		LinkedList <Integer> adj[] = new LinkedList[n+1];
+	public static void main(String[] args)throws Exception{
 		
-		for(int t=1;t<=m;t++){
-			int a = i(); int b = i();
-			adj[a].add(b);
-			adj[b].add(a);// bidirectional 
+		//let_me_start
+		
+		int n = i();//m=n-1; 
+		int k = i();
+		ArrayList al[] = new ArrayList[k+1];
+		for(int i =1;i<=k;i++)al[i]=new ArrayList();
+		int root = i();
+		
+		LinkedList<Integer> adj[] = new LinkedList[n+1]; //Adjency List
+		for(int i=1;i<=n ;i++)adj[i]=new LinkedList<Integer>();   //init List
+		int level[] = new int[n+1];		 // level[i]= level of node i in the tree
+		int f[] = new int[n+1];
+		Arrays.fill(f,-1);
+		int u=0,v=0;
+		int m = n-1;//edges
+		for(int i=1;i<=m;i++){
+			
+			u=i();
+			v=i();
+			adj[u].add(v);
+			adj[v].add(u);
+		}
+		for(int i=1;i<=n;i++){
+		  al[i()].add(i);
 		}
 		
+		bfs(adj,root,level,f,n);	
+		
+		int q = i();
+		int temp=0,ans=0;
+		for(int i=1;i<=q;i++){
+		    int st = i(); int type = i();
+			if(al[type].size()==0){
+			  out.write("-1"+"\n");
+			  continue;
+			}
+			int max=-1;
+			int ans_node=-1;int vv=0;
+			for(int j = 0;j<al[type].size();j++){
+				u = st; 
+		    	v =(Integer) al[type].get(j);
+				ans = lca(u,v,f,level);
+				//out.write("u="+st+" v="+v+"lca="+ans+"\n");out.flush();
+				if(level[ans]>max){
+				  max= level[ans];
+				  ans_node = v;
+				}else if(level[ans]==max&& v<ans_node){
+				  ans_node=v;
+				}
+			  
+			}
+			out.write(""+ans_node+"\n");out.flush();
+		}
+		//for(int i=1;i<=n;i++)out.write("node i="+i+" level="+level[i]+" f="+f[i]+"\n");
 		out.flush();
-		return;
-		}
+		
+	}
+    int lca(int u , int v ,int f[],int level[])throws Exception{
+        while(u!=v){
+            if(level[u]<level[v]){
+                v=f[v];
+            }else if(level[u]==level[v]){
+                u=f[u];v=f[v];
+            }else{
+                u=f[u];
+            } 
+        }
+        return u;
+	}
+	void bfs(ArrayList<Integer> adj[] ,int root ,int n){
+
+        boolean vis[] = new boolean[n+1]; 
+        LinkedList <Integer> q = new LinkedList<Integer>();   
+        int l = 0;//level and will be marked at the time of adding into queue
+        LinkedList<Integer> level_q =  new LinkedList<Integer>();
+        q.add(root);
+        vis[root]=true;
+        level[root]=0;
+        level_q.add(0);
+        while(!q.isEmpty()){
+            int u = q.removeFirst(); //first
+            l = level_q.removeFirst();
+            level[u] = l;
+            for(int v: adj[u]){
+                if(!vis[v]){
+                vis[v]=true;
+                q.add(v);
+                level_q.add(l+1);
+                f[v]=u;
+                level[v]=l+1;
+                }
+            }
+        }
+  }
 
 
-
-
+	
 
 //****************************** Utilities ***********************//
-//For an unweighted graph, DFS traversal of the graph produces the minimum spanning tree and all pair shortest path tree.
-public static void dfs(LinkedList<Integer> adj[] ,int root, int n)throws Exception{
-	
-		LinkedList <Integer> q = new LinkedList<Integer>(); //the stack 
-		int l = 0;//level
-		
-		q.add(root);
-		vis[root]=true;
-			
-		while(!q.isEmpty()){
-		
-			int u = q.getLast(); //top
-			level[u]=l;
-			
-			if(adj[u].size()>0){
-				int v = adj[u].removeFirst();
-				if(!vis[v]){
-					q.add(v);
-					l++;
-					vis[v]=true; 
-				}
-			
-			}else{
-			
-				int v = q.removeLast();
-				l--;
-			
-			}
-		
-		}
-}
+
  public static boolean isPrime(long n)throws Exception{
   if(n==1)return false;
   if(n<=3)return true;
@@ -130,6 +168,14 @@ public static void dfs(LinkedList<Integer> adj[] ,int root, int n)throws Excepti
    long ans = mulmod(a,b/2,mod);
    ans = (ans*2)% mod;
    if(b%2==1)ans = (a + ans)% mod;
+   return ans;
+ }
+ public static double pow(double a , long b )throws Exception{
+   if(b==0)return 1.0D;
+   if(b==1)return a;
+   double ans = pow(a,b/2);
+   ans = (ans * ans);
+   if(b%2==1)ans = (a * ans);
    return ans;
  }
  public static long pow(long a , long b ,long mod)throws Exception{

@@ -25,136 +25,79 @@ import java.math.*;
 	public static double tempdoubles[] = new double[100005];
 	public static char tempchars[] = new char[100005];
 	public static long mod = 1000000000+7;
-	static int n = 0 , m = 0  ,si = 0 , sj = 0 , maxl = 0;
-	static int dx[] = {-1 ,-1 , -1 , 0 , 0, 1 ,1 ,1};
-	static int dy[] = {-1 , 0 ,  1 ,-1 , 1,-1 ,0 ,1};
-	static ArrayList[] adj = null;
-	static boolean v[][]  ,  mat[][];
-
+	
 		public static void main(String[] args) throws java.lang.Exception{
 		//let_me_start 
     /*  BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter out=new BufferedWriter(new OutputStreamWriter(System.out));
 	    BufferedReader br=new BufferedReader(new FileReader("input.txt"));
         BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));
-3
-5 5
-....*
-...*.
-..*..
-...*.
-....*
-2 2
-*.
-..
-3 3
-.*.
-***
-.*.    
-
-    
     */ 
-    
-		int tests = i();
-		mat = new boolean[1001][1001];
-		v = new boolean[1001][1001];
-		//int vis[] = new int[1001 * 1001 + 1]; 
-		for(int  t =1; t<= tests ;t++){
-		
-		 n = i();  m = i();
-		// adj = new ArrayList[n*m+5];
-		 for(int i=0;i<=1000;i++){
-		  	for(int j = 0 ; j<= 1000 ; j++){
-		 		v[i][j] = false;
-		 		mat[i][j] = false;
-		 	}
-		 }
-		 //int arr[] = is((int)n);
-		 //String ans = "NO";
-		 long ans=0;
-		 si  = 0 ; sj = 0 ; maxl=0;
-		 for(int i=1;i<=n;i++){
-		 	String s = s();
-		 	for(int j = 1 ; j<= m ; j++){
-		 		if(s.charAt(j-1)=='*'){
-		 			mat[i][j] = true;
-		 			si = i;
-		 			sj = j;
-		 		}
-		 	    //  adj[idx(i,j)] = new ArrayList();
-		 	    //  vis[idx(i,j)] = false;
-		 	}
-		 	
-		 }
-		 bfs(si, sj);
-		 for(int i=1;i<=n;i++){
-		  	for(int j = 1 ; j<= m ; j++){
-		 		v[i][j] = false;
-		 	}
-		 }
-		 bfs(si, sj);
-		 ans = ( maxl + 1 ) ;
-		 ans = ans / 2 + 1;
-		 if(si==0||sj==0)ans = 0;	
-	//	 out.write(" ans = "+ans+"\n");
-		 out.write(""+ans+"\n");
-		 out.flush();
-		}
-		
-		out.flush();
+		 
+    	    int tests = i();
+    	    for(int t = 1 ; t<= tests ; t++){
+		 int n = i(); 
+		 HashMap<Pair , Pair> hm1 = new HashMap<Pair , Pair>();
+		 HashSet<Pair> hx = new HashSet<Pair>();
+		 HashSet<Pair> hy = new HashSet<Pair>();
+		 int a = 0 , b = 0 , c = 0 , aa = 0 , bb = 0;
+		 int  ans = 0 , g = 0;
+
+		 hy.add(new Pair(a,c));
+            Pair I = hm1.get(new Pair(aa  ,bb ));
+            if(I == null){
+                Pair p = new Pair(aa , bb);
+                if(c==0)g = 1;
+                p.s.add(new Pair(c, g));
+                hm1.put(p , p);
+            }else{
+                if(c==0)g = 1;
+                I.s.add(new Pair(c,g));
+                hm1.put(I ,I);
+            }
+		   		
+		   
+		   	/*	Integer I = hm1.get(new Pair(a  ,c ));
+		   		if(I == null){
+		   			hm2.put(new Pair(a , c) ,1);
+		   		}else{
+		   			hm2.put(new Pair(a , c) ,I.intValue()+1);
+		   		}
+		    */
+		    }
+	//	  out.write("hx = "+hx.size()+" hy = "+hy.size()+"ans = "+ans+"\n");
+		 //  Iterator it = hm1.entrySet().iterator();
+   		   ans = Math.max(hx.size() , hy.size());
+   		   /*
+   		   while (it.hasNext()) {
+     		       Pair pair = (Pair)it.next();
+      		 
+		   	 ans = Math.max(ans , (pair.s.size()));
+		   }
+		   */
+		   
+		  Iterator it = hm1.entrySet().iterator();
+		   while (it.hasNext()) {
+     		       Map.Entry pair = (Map.Entry)it.next();
+      //		 out.write(""+(Pair)pair.getKey()+" set size="+((Pair)pair.getKey()).s.size()+"\n");
+		   	 ans = Math.max(ans , ((Pair)pair.getKey()).s.size());
+		   }
+		 
+				
+		 
+		  out.write(""+ans+"\n");
+	    }
+	   
+		 
+	    out.flush();
 		return;
-		}	 
+	}	 
+		 
+		 
 	
 
 //****************************** Utilities ***********************//
 
- 
- public static boolean isValid(int i , int j)throws Exception{
-   if(i<=n && i>=1 && j <= m && j>= 1 && (!v[i][j]) )return true;
-   else return false;
- }
- public static void bfs(int xroot, int yroot)throws Exception{
-	
-		LinkedList <Integer> xq = new LinkedList<Integer>();
-		LinkedList <Integer> yq = new LinkedList<Integer>();
-		
-		int l = 0;//level and will be marked at the time of adding into queue
-		LinkedList<Integer> level_q = new LinkedList<Integer>();
-		xq.add(xroot);yq.add(yroot);
-		v[xroot][yroot]=true;
-		//level[root]=0;
-		int temp_l = 0;
-		level_q.add(0);
-		while(!xq.isEmpty()){
-		
-			int ux = xq.removeFirst(); //first
-			int uy = yq.removeFirst(); //first
-			l = level_q.removeFirst();
-			
-			//level[u] = l;		
-			for(int i = 0 ; i<= 7 ; i++){
-			      int vx = ux+dx[i] ; int vy = uy+dy[i];	
-				if(isValid(vx ,vy) ){
-			 		v[vx][vy]=true;
-			 		if(mat[vx][vy]){
-						temp_l = Math.max(l+1 , temp_l);
-						si  = ux ; sj = uy;
-					}
-			   		xq.add(vx);yq.add(vy);
-			   	//	adj[idx(ux,uy)].add(idx(vx , vy));
-			   	//	adj[idx(vx , vy)].add(idx(ux,uy)); 
-			   		level_q.add(l+1);
-			   	//	f[v]=u;
-			   	//	level[v]=l+1;
-			  	}
-			}
-		}
-		maxl = Math.max(temp_l , maxl);
-		//out.write("\n first max level = "+l + " f_end ( x ="+ si+" y="+sj+")\n");
-		out.flush();
-		return ;
-		
- }
  public static boolean isPrime(long n)throws Exception{
   if(n==1)return false;
   if(n<=3)return true;
@@ -186,6 +129,10 @@ import java.math.*;
     primes[i]=ll.removeFirst();
   }
   return primes;
+ }
+ public static int gcd (int a , int b)throws Exception{
+  if(b==0)return a;
+  return gcd(b , a%b);
  }
  public static long gcd (long a , long b)throws Exception{
   if(b==0)return a;
@@ -499,25 +446,34 @@ class FastReader{
 }
  /******************** Pair class ***********************/
  
- class Pair implements Comparable<Pair>{
- public int a;
- public int b;
- public Pair(){
-  this.a = 0;
-  this.b = 0;
- }
- public Pair(int a,int b){
-  this.a = a;
-  this.b = b;
- }
- public int compareTo(Pair p){
-  if(this.a==p.a){
-   return this.b-p.b;  
-  }
-  return this.a-p.a; 
- }
- public String toString(){
-  return "a="+this.a+" b="+this.b;
- }
- 
+class Pair {
+    public int a;
+    public int b;
+    public Pair(int a, int b){
+        this.a = a;
+        this.b = b;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Pair o = (Pair) obj;
+        if (( this.a == o.a) && (this.b==o.b)){   
+            return true;
+        } 
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        long hash = 31; 
+        hash = (hash + 97 * this.a)%1000000009; 
+        hash = 31 * hash +  97 * this.b;
+        hash %= 1000000009;
+        return (int)hash;
+    }
 } 

@@ -4,19 +4,19 @@ import java.lang.*;
 import java.io.*;
 import java.math.*;
 /*
- * Author    : joney_000[let_me_start][jaswantsinghyadav007@gmail.com]
- * Algorithm : DSU O(log n) + path optimization
- * Platform  : Codeforces
+ * Author    : joney_000[Jaswant Singh][jaswantsinghyadav007@gmail.com]
+ * Algorithm : euler tocient function phi	in O(n * (sqrt(n)/10))	and	devisiors in O(n*sqrt(n))   sqrt(n)/10 ~~=> no of prime numbers in [1..sqrt(n)]  
+ * Platform  : Facebook HackerCup
  *
  */
 
-/*    The Main Class                */
- class A{
+
+ class A {
 	
 	private InputStream inputStream ;
 	private OutputStream outputStream ;
 	private FastReader in ;
-    private PrintWriter out ;
+    	private PrintWriter out ;
 	/*
 		Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
 		 
@@ -46,80 +46,48 @@ import java.math.*;
 		out = new PrintWriter(outputStream);
 		
 	}
+	int N = 500001 ; int MAXN = 500001;
+	int phi[] = new int[MAXN + 1];
+	int prime[] = new int[MAXN + 1];
+	int sz=0;
+	long val[] = new long[MAXN+1];
+	boolean mark [] = new boolean[MAXN+1];
 	
   	void run()throws Exception{
+ 		prec(); 
+ 		
+	}
 	
-	//	 int tests = i();
-	//	 once();
-	//	 for(int t  = 1 ; t<= tests ; t++){
-		 	int n = i(); int m = i();
-			init(n);
-			for(int q = 1 ; q <= m ; q++){
-				int type = i(); 
-				if(type ==1){
-					//join
-					int a = i(); int b = i();
-					join(a,b);
-
-
-				}else{
-					int u = i();
-					out.write("root of "+u+"is :"+root(u)+"\n");
-
-				}
-			}	 	
-		 	
-	//	}//end tests
-	}//end run
-	void once(){
+	int phi(int n) {
+				int res = n;
+				for (int i = 2; i * i <= n; i++)
+						if (n % i == 0) {
+								while (n % i == 0)
+										n /= i;
+								res -= res / i;
+						}
+				if (n > 1)
+						res -= res / n;
+				return res;
+		}
 	
-	}
-
-	int f[] = new int[200005];
-    int h[] = new int[200005];
-    	
-	void init(int n){
-		 for(int i = 1 ; i <= n ; i++){
-		 	f[i] = i;
-		 	h[i] = 0;
-		 }	
-	}
-	int root(int i){
-    	
-    	if (f[i] != i)
-        	f[i] = root(f[i]);
-    	
-    	return f[i];
-	}
- 	void join(int x, int y){
-    	int xroot = root(x);
-    	int yroot = root(y);
- 		if (h[xroot] < h[yroot])
-        	f[xroot] = yroot;
-    	else if (h[xroot] > h[yroot])
-        	f[yroot] = xroot;
- 		else {
-        	f[yroot] = xroot;
-        	h[xroot]++;
-    	}
-	} 
-		 
 //****************************** My Utilities ***********************//
  	void print_r(Object...o){
        	out.write("\n"+Arrays.deepToString(o)+"\n");
         	out.flush();
 	}
-	
-	int hash(String s){
-		int base = 31;
-		int a = 31;//base = a multiplier
-		int mod = 100005;//range [0..100004]
+	long h[];
+	void hash(String s){
+		long base = 31;
+		long a = 31;//base = a multiplier
+		long mod = 1000000007;//range [0..100004]
 		long val = 0;
 		for(int i =  1 ; i<= s.length() ;i++){
 			val += base * s.charAt(i-1);
-			base = ( a * base ) % 100005;
+			h[i] = val;
+			base = ( a * base ) % mod;
 		}
-		return (int)(val % 100005) ;
+		//return (int)(val % 100005) ;
 	}
 	
  	boolean isPrime(long n){
@@ -139,7 +107,6 @@ import java.math.*;
   		int idx = 1;
   		// Put above 3 variables globle p[1..idx-1]
   		
-  		
   		Arrays.fill(isPrime,true);
   		isPrime[0]=isPrime[1]=false;
   		for(int i = 2 ; i<= n ; i++){
@@ -147,10 +114,8 @@ import java.math.*;
   				p[idx++] = i;
   				for(int j  = 2* i ; j<= n ; j+=i ){
   					isPrime[j] = false;		
-  				}
-  					
+  				}		
   			}
-  			
   		}
   		return p;
  	}
@@ -496,19 +461,20 @@ class FastReader{
  /******************** Pair class ***********************/
  
  class Pair implements Comparable<Pair>{
- public int id;
+ 
  public long b;
  public long a;
  public long c;
+ public long prev = 0;;
  public Pair(){
-  this.id = 1000;
  
-  this.a = 0;
-  this.b = 0;
-  this.c = 0;
+
+  this.a = 0L;
+  this.b = 0L;
+  this.c = 0L;
  }
- public Pair(int id , long a,long b , long c ){
-  this.id = id;
+ public Pair(long a,long b , long c ){
+
   this.a = a;
   this.b = b;
   this.c = c;
@@ -519,12 +485,14 @@ class FastReader{
 	else {
 		if(this.b < p.b)return -1;
 		else if(this.b > p.b )return 1;
-		else return 0;
+		else {
+			return 0;
+		}
 	
 	}
  }
  public String toString(){
-  return "a="+this.a+" b="+this.b;
+  return "a="+this.a+" b="+this.b+" c="+this.c;
  }
  
 } 

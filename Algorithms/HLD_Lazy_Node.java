@@ -6,7 +6,7 @@ import java.io.*;
 import java.math.*;
 /*
  * Author    : joney_000[let_me_start]
- * Algorithm : Not Specified
+ * Algorithm : HLD
  * Platform  : https://www.hackerrank.com/contests/w12/challenges/white-falcon-and-tree
  *
  */

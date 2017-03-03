@@ -4,21 +4,21 @@ import java.io.*;
 import java.math.*;
 
 /*
- * Coded by  	: jaswant Singh
+ * Coded by  	: Jaswant Singh
  * Lang   		: Java
- * Algorithm 	: Not Specified
- * Date           : 29/Nov/2015
+ * Algorithm 	: 
+ * Date         : 20/march/2015
  */ 
  class Solution implements Comparable<Solution>{
 	 public int vertex;
-	 public int weight; 
+	 public long weight; 
 	 //public provide flexibility to access from outside the the class
 	 //at the cost of security
 	 public Solution(){
 		this.vertex = 0;
-		this.weight = 0;
+		this.weight = 0L;
 	 }
-	 public Solution(int node , int weight){
+	 public Solution(int node , long weight){
 		 this.vertex = node;
 		 this.weight = weight;
 	 }
@@ -27,10 +27,6 @@ import java.math.*;
 		 if(this.weight<e.weight)return -1;
 		 else if(this.weight==e.weight) return 0;
 		 else return 1;
-	 }
-	 @Override
-	 public String toString(){
-	 	return " vertex = "+ this.vertex + " weight= "+this.weight ;
 	 }
      //Fast Reader implementation , handles large I/O files
     private boolean finished = false;
@@ -41,7 +37,7 @@ import java.math.*;
 	private int numChars;
 	private SpaceCharFilter filter;		  
 
-	public Solution(InputStream stream){
+public Solution(InputStream stream){
 		this.stream = stream;
 	}
     public static InputStream inputStream = System.in;
@@ -58,60 +54,71 @@ import java.math.*;
 	public static double tempdoubles[] = new double[100005];
 	public static char tempchars[] = new char[100005];
 	public static long mod = 1000000000+7;
- 	public static LinkedList<Integer> adj[];
-			
-	
+ 			public static ArrayList<Solution> adj[];
+			public static int source = 1;
 		    //Creating Reader-Writer Buffer of initial size 2000B
 			//public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in),2000);
 		//	public static BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out),2000);			
-	public static long INF = Integer.MAX_VALUE/1000;
+			public static long INF = Integer.MAX_VALUE/1000;
+			public static int ss[] = new int[100005];
+			public static long d[] = new long[100005+1]; 
+			public static boolean f[] = new boolean[100005+1];
+			static {
+				Arrays.fill(d,INF);
+			}
+		
+		
+	    public static void main(String []arg)throws Exception{
 			
-				
-
-	public static void main(String []arg)throws Exception{
+			//String[] s= br.readLine().split(" ");
+			//int n = i();//no of edges
+			//int p = i(); //no of nodes
+			int n = i(); //long p = l(); long x = l();
+			//creating the undirected graph
+			int k = i();
+			//String s = s();
 			
-			//int tests = i();
-		//	for(int t = 1 ; t <= tests; t++){
-				
-				int n = i();
-				int freq[] = is(n);
-				long tree[] = new long[n+100];
-				//Building the tree
-				for(int i =1 ; i<= n ; i++){
-					update(tree ,i , freq[i]);
-				}
-				int q = i();
-				for(int i =1 ; i <= q ; i++){
-					int idx = i();
-					long ans = query(tree ,idx);
-				 	out.write(""+ans+"\n");	out.flush();	
-				}
-				
-		//	}		
+			//long ans = 0,max =0;
+			int r1[] = new int[(int)n+1];
+			int r2[] = new int[(int)n+1];
+			
+			for(int i=1;i<=n;i++)//adj[i] = new ArrayList<Solution>();
+			{	
+				r1[i-1] = i();
+			}
+			
+			for(int i=1;i<=n;i++)//adj[i] = new ArrayList<Solution>();
+			{	
+				r2[i-1] = i();
+			}
+			Arrays.sort(r1,0,(int)n);
+			Arrays.sort(r2,0,(int)n);
+		//	int idx = (int)n;
+		//	int i=1;
+	int m = n;		
+	int ans = 0;
+	int p1 = 0, p2 = 0;
+	while(p1 < n && p2 < m){
+		if(r1[p1] > r2[p2]){
+		if(Math.abs(r1[p1] - r2[p2]) == k){ p1++;p2++;ans++;}
+			else p2++;
+		}else if(r1[p1] < r2[p2]){
+			if(Math.abs(r2[p2] - r1[p1]) <= k){ p1++;p2++;ans++;}
+			else p1++;
+	}else{ p1++;p2++;ans++;}
+	}
+			out.write(""+(ans)+"\n");
 			out.flush();
 			return ;
 		}
-	
-		
 //                   My General Utilities for Contest                //
- public static void update(long []tree , int idx , int val)throws Exception{
-     
-     while (idx < tree.length){
-        tree[idx] += val;
-        idx += (idx & -idx);
-    }
-}
- public static long query(long []tree , int idx)throws Exception{
-     
-    long sum = 0;
-    while (idx > 0){
-        sum += tree[idx];
-        idx -= (idx & -idx);
-    }
-    return sum;
-}
 
- 
+ public static boolean check(int a , int b ,long n)throws Exception{
+	 if(a<0||b<0)return false;
+	 if(a>n||b>n)return false;
+	 return true;
+	 
+ }
  public static boolean isPrime(long n)throws Exception{
 	if(n==1)return false;
 	if(n<=3)return true;
@@ -338,7 +345,6 @@ public static BigInteger bi()throws Exception{
 			return readLine0 ();
 		}
 	}
-
 
 	public BigInteger nextBigInteger(){
 		try{
