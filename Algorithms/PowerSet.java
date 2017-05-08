@@ -56,41 +56,30 @@ import java.math.*;
 		return;
    }	 
 		 
-public static int f(long []arr , int n , int k,long seg)throws Exception{
- 		if(k==0)return 0;
-  
+ int temp[] = new int[20];
+ void f(long []arr , int n){
+ 
  		int powersetsize = 1<<n;
 		//long temp = 0;
-		int temp[] = new int[25];
+		Arrays.fill(temp,0);
 		for(int c = 0; c < powersetsize; c++)
 		{
 		    
-			for(int j = 0; j < n; j++)
-			{   temp[j]=0; //reset
+			for(int j = 0; j < n; j++){
+        temp[j]=0; //reset
 				if((c & (1<<j))>0){
 				    temp[j]=-1;//System.out.print(arr[j]+" ");
-				}
-					
+				}	
 			}
-			long sum=0;
-			for(int j=0;j<n;j++){
-			 if(temp[j]==-1)sum+=arr[j];//if(temp[j]==-1) then jth value is taken in this perticuler set; 
-			}
-			//rest operation starts here
-			int idx=0;
-		    if(sum==seg){
-			  
-			  for(int j=0;j<n;j++){
-				  if(temp[j]!=-1){
-				    arr[idx]=arr[j];
-					idx++;
-				  }
-			  }
-			  return f(arr,idx,k-1,seg);
-			}
-			//System.out.print("\n");
+			// logic
+      for(int i = 0; i < n; i++){
+        if(temp[i]==-1){
+          // Do Stuff
+        }
+      }
+
 		}
-		return -1;
+		return ;
 }
 
 //****************************** Utilities ***********************//
