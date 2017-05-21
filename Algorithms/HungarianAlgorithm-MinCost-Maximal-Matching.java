@@ -4,7 +4,8 @@ import java.util.*;
 import java.lang.*;
 import java.io.*;
 import java.util.Arrays;
-// Min Cost Maximal Matching : HungarianAlgorithm
+// (Min Cost Maximal Matching : HungarianAlgorithm , to solve max cost maximal
+// matching you can change the cost matrix mat[i][j] = K - mat[i][j] or mat[i][j] = -mat[i][j]
 class A
 {
 	public static void main (String[] args) throws java.lang.Exception
