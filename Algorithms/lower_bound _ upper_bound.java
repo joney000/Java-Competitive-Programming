@@ -82,8 +82,8 @@ import java.math.*;
 	 *  number being looked up, and -1 if there is no such element.
 	 *
 	 */	
-	long lower_bound(long[] arr, long key) {
-        int len = arr.length - 1;			//upper index = size - 1
+	long lower_bound(long[] arr, int n, long key) {
+        int len = n;			//upper index = size - 1
         int lo = 1;					// Base 1 Indexing
         int hi = len;
         int mid = lo + (hi-lo)/2;
@@ -101,8 +101,8 @@ import java.math.*;
         }
     }
 
-    long upper_bound(long[] arr, long key) {
-        int len = arr.length -1; //upper index = size - 1
+    long upper_bound(long[] arr, int n, long key) {
+        int len = n; //upper index = size - 1
         int lo = 1;		   // Base 1 Indexing
         int hi = len;
         int mid = lo + (hi-lo)/2;
