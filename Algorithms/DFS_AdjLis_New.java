@@ -51,7 +51,7 @@ class A
   int level[]  = new int[MAX_N + 1];                  // l[v] = level of node v = et[i]
   
   int f[]  = new int[MAX_N + 1];                  // f[i] = father of i   
-  ArrayList<Integer> adj[] = new ArrayList[MAX_N + 1]; //Adjency List
+  LinkedList<Integer> adj[] = new LinkedList[MAX_N + 1]; //Adjency List
 
 
   void run()throws Exception{
@@ -78,7 +78,7 @@ class A
 
   void clear(){
     for(int i = 1; i <= MAX_N; i++){
-      adj[i] = new ArrayList<Integer>();
+      adj[i] = new LinkedList<Integer>();
     }
   }
   
