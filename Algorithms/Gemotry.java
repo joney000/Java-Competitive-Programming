@@ -63,29 +63,79 @@ import java.math.*;
 	void once(){
 	
 	}
-  //double angleInTheta = (Math.toDegrees(Math.acos(crossProduct/(dist1*dist2))))
+	// angle between OA and OB vector
+	double getAngle(Point o, Point a, Point b){
+		// double dist1 = distance(o, a); // fix 
+		// double dist2 = distance(o, b);
+		// 
+		// double dotProduct = dot(o, a, b);
+		// double angleInTheta = (Math.toDegrees(Math.acos(dotProduct/(dist1*dist2))));
+
+		// double crossProduct = dot(o, a, b);
+		// double angleInTheta = (Math.toDegrees(Math.asin(crossProduct/(dist1*dist2))));
+
+		// above both wrong methods : there is a loss of precesion in sqrt(X) * sqrt(Y) i.e dist1 * dist2
+		// 
+		// better user below
+		// a.b sin@ = a X b
+		// a.b cos@ = a * b
+		// tan@ = cross(a, b)/dot(a, b)
+
+		// In Radian 
+		// if(b.x == 0 && b.y >= 0)return Math.PI/2;
+		// if(b.x == 0 && b.y < 0)return (3*Math.PI)/2;
+		// if(b.x >= 0 && b.y == 0)return 0;
+		// if(b.x <  0 && b.y == 0)return Math.PI;
+		
+		// In Degrees
+		// if(b.x == 0 && b.y >= 0)return 90;
+		// if(b.x == 0 && b.y < 0)return 270;
+		// if(b.x >= 0 && b.y == 0)return 0;
+		// if(b.x <  0 && b.y == 0)return 180;
+		// if(b.x < 0 && b.y > 0)angleInTheta = 180 + angleInTheta;	// 2nd qdt
+		// if(b.x < 0 && b.y < 0)angleInTheta = 180 + angleInTheta;	// 3rd qdt
+		// if(b.x > 0 && b.y < 0)angleInTheta = 360 + angleInTheta;  // 4th qdt
+
+		// No Need Of degree conversion to sort
+
+		
+		// tan2 function handles 1st,2nd, 3rd, 4th qdt in it. 
+		// No need of doing below qtr handling, Math.atan2 internally does it.
+		
+		// double angle = (double)Math.atan2(cross(o, a, b), dot(o, a, b));  // (y, x)  arctan(y/x)
+		double angle = Math.atan2(cross(o, a, b), dot(o, a, b));
+
+		return angle;
+	}
   // 90 degree clockwise rotation : The new position of point M (h, k) will become M’ (k, -h).
-	//Compute the dot product AB _ BC
+	//Compute the dot product AB * AC
 	double dot(Point A, Point B, Point C){
     double AB[] = new double[2];//0=>x , 1=>y
-    double BC[] = new double[2];
+    double AC[] = new double[2];
+		// (X1, y1)
 		AB[0] = B.x-A.x;			// AB is vector : A vector defines (direction + Magnitude/Length) But not the start point or end point
 		AB[1] = B.y-A.y;
-		BC[0] = C.x-B.x;
-		BC[1] = C.y-B.y;
-		double dot = AB[0] * BC[0] + AB[1] * BC[1];
+		// (x2, y2)
+		AC[0] = C.x-A.x;
+		AC[1] = C.y-A.y;
+		// dot = x1 * x2 + y1 * y2;
+		double dot = AB[0] * AC[0] + AB[1] * AC[1];
 		return dot;
 	}   
     //Compute the cross product AB x AC
     double cross(Point A, Point B, Point C){
-        double AB[] = new double[2];//0=>x , 1=>y
-        double AC[] = new double[2];
-        AB[0] = B.x-A.x;
-        AB[1] = B.y-A.y;
-        AC[0] = C.x-A.x;
-        AC[1] = C.y-A.y;
-        double cross = AB[0] * AC[1] - AB[1] * AC[0];
-        return cross;
+      double AB[] = new double[2];//0=>x , 1=>y
+      double AC[] = new double[2];
+      // (X1, y1)
+      AB[0] = B.x-A.x;
+      AB[1] = B.y-A.y;
+      
+      // (X2, y2)
+      AC[0] = C.x-A.x;
+      AC[1] = C.y-A.y;
+      // cross = x1 * y2 - y1 * x2;
+      double cross = AB[0] * AC[1] - AB[1] * AC[0];
+      return cross;
     }
     //Compute the distance from A to B
     double distance(Point A, Point B){
