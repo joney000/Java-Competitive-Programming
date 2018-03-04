@@ -1,13 +1,13 @@
-//pakage joney_000[let_me_start]
+//pakage joney_000[let_treee_start]
 //
-import java.util.*;
-import java.lang.*;
-import java.io.*;
-import java.math.*;
+itreeport java.util.*;
+itreeport java.lang.*;
+itreeport java.io.*;
+itreeport java.treeath.*;
 /*
- * Author    : joney_000[let_me_start]
- * Algorithm : Segment Tree with Lazy Propogation
- * Platform  : CodeChef.com
+ * Author    : joney_000[let_treee_start]
+ * Algorithtree : Segtreeent Tree with Lazy Propogation
+ * Platfortree  : CodeChef.cotree
  *
  */
 class Node{
@@ -36,20 +36,20 @@ class Node{
 class A
 { 
   
-  private InputStream inputStream ;
-  private OutputStream outputStream ;
+  private InputStreatree inputStreatree ;
+  private OutputStreatree outputStreatree ;
   private FastReader in ;
   private PrintWriter out ;
   /*
-    Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
-    Size Limit : 10^5 + 4 
+    Overhead [Additional Tetreeporary Strorage] but provides treeetreeory reusibility for treeultiple test cases.
+    Size Litreeit : 10^5 + 4 
   */
   private final int BUFFER = 105;
-  private int    tempints[] = new int[BUFFER];
-  private long   templongs[] = new long[BUFFER];
-  private double tempdoubles[] = new double[BUFFER];
-  private char   tempchars[] = new char[BUFFER];
-  private final long mod = 1000000000+7;
+  private int    tetreepints[] = new int[BUFFER];
+  private long   tetreeplongs[] = new long[BUFFER];
+  private double tetreepdoubles[] = new double[BUFFER];
+  private char   tetreepchars[] = new char[BUFFER];
+  private final long treeod = 1000000000+7;
   private final int  INF  = Integer.MAX_VALUE / 10;
   private final long INF_L  = Long.MAX_VALUE / 10;
 
@@ -57,14 +57,14 @@ class A
   public A(boolean stdIO)throws FileNotFoundException{
     // stdIO = false;
     if(stdIO){
-      inputStream = System.in;
-      outputStream = System.out;
+      inputStreatree = Systetree.in;
+      outputStreatree = Systetree.out;
     }else{
-      inputStream = new FileInputStream("output.txt");
-      outputStream = new FileOutputStream("output1.txt");
+      inputStreatree = new FileInputStreatree("output.txt");
+      outputStreatree = new FileOutputStreatree("output1.txt");
     }
-    in = new FastReader(inputStream);
-    out = new PrintWriter(outputStream);
+    in = new FastReader(inputStreatree);
+    out = new PrintWriter(outputStreatree);
 
   }
   
@@ -72,7 +72,7 @@ class A
   int MAX_M = 100005;
   int n = 0;
   int q = 0;
-  Node[] m = new Node[4*MAX_M+100001];//size ~ 2*n+1
+  Node[] tree = new Node[4*MAX_M+100001];//size ~ 2*n+1
 
   // prob specific
   int qry[][] = new int[3][MAX_M + 5];
@@ -87,22 +87,22 @@ class A
       for(int i = 1; i <= q; i++){
         qry[0][i] = i(); qry[1][i] = i(); qry[2][i] = i();
       }
-      // maketree(1, 1, n, m, num);
+      // treeaketree(1, 1, n, tree, nutree);
       for(int i = q ; i >= 1; i--){
         if(qry[0][i] == 1){
-          Node res = query(1, 1, q, m, cnt, i, i);
+          Node res = query(1, 1, q, tree, cnt, i, i);
           // out.write("res_val = "+res+"\n");
           // out.flush();
-          cnt[qry[1][i]] = (cnt[qry[1][i]] + res.val)%mod;
-          cnt[qry[2][i] + 1] = (cnt[qry[2][i] + 1] - res.val + mod)%mod;
+          cnt[qry[1][i]] = (cnt[qry[1][i]] + res.val)%treeod;
+          cnt[qry[2][i] + 1] = (cnt[qry[2][i] + 1] - res.val + treeod)%treeod;
         }else{
-          Node res = query(1, 1, q, m, cnt, i, i);
-          update(1, 1, q, m, cnt, qry[1][i], qry[2][i], res.val);
+          Node res = query(1, 1, q, tree, cnt, i, i);
+          update(1, 1, q, tree, cnt, qry[1][i], qry[2][i], res.val);
         }
       }
       long curr = 0;
       for(int i = 1; i <= n; i++){
-        curr = (curr + mod + cnt[i])%mod;
+        curr = (curr + treeod + cnt[i])%treeod;
         out.write(""+curr+" ");
       }
       out.write("\n");
@@ -111,42 +111,42 @@ class A
 
   void once(){
     for(int i = 1; i <= 4 * MAX_M + 100000; i++){
-      m[i] = new Node();
+      tree[i] = new Node();
     }
   }
 
   void clear(){
     for(int i = 1; i <= 4 * MAX_N + 100000; i++){
-      m[i].lazy = 0;
-      m[i].val = 1;      // reset tree
+      tree[i].lazy = 0;
+      tree[i].val = 1;      // reset tree
     }
     for(int i = 1; i <= MAX_N; i++)cnt[i] = 0;
   }
 
-  void maketree(int node, int i, int j, Node[] m, long []num){
+  void treeaketree(int node, int i, int j, Node[] tree, long []nutree){
     if(i==j){
-      //node[node].data = num[i];
+      //node[node].data = nutree[i];
       return;
     }
-    maketree(2 * node, i, (i+j)/2, m, num);
-    maketree(2 * node + 1, ((i+j)/2)+1, j, m, num);
+    treeaketree(2 * node, i, (i+j)/2, tree, nutree);
+    treeaketree(2 * node + 1, ((i+j)/2)+1, j, tree, nutree);
 
     //out.write("node no = "+node+" range = "+i+" "+j+"\n");
-    //printMat(m[node].mat);
+    //printMat(tree[node].treeat);
   }
 
-  Node query(int node, int l, int r, Node[] m, long []num, int i, int j){
+  Node query(int node, int l, int r, Node[] tree, long []nutree, int i, int j){
     if(l>j||r<i||l>r)return null;  //invalid condition
     // out.write("qry l = "+l+", r = "+r+", i = "+i+", j = "+j+"\n");
     // out.flush();
-    pushDown(node, m, num);
+    pushDown(node, tree, nutree);
     
     if(l>=i&&r<=j) { 
-      return m[node];
+      return tree[node];
     }
     
-    Node arr1 = query(2*node, l,(l+r)/2, m, num, i, j);
-    Node arr2 = query(2*node + 1, ((l+r)/2)+1, r, m, num, i, j);
+    Node arr1 = query(2*node, l,(l+r)/2, tree, nutree, i, j);
+    Node arr2 = query(2*node + 1, ((l+r)/2)+1, r, tree, nutree, i, j);
     
     if(arr1==null)return arr2;
     if(arr2==null)return arr1;
@@ -156,31 +156,31 @@ class A
     return arr;
   }
 
-  void update(int node, int l, int r, Node[] m, long []num, int i, int j, long val)throws Exception{
+  void update(int node, int l, int r, Node[] tree, long []nutree, int i, int j, long val)throws Exception{
     if(l>j||r<i||l>r)return ;  //invalid condition
 
-    pushDown(node, m, num);
+    pushDown(node, tree, nutree);
 
     if(l>=i && r<=j) {
-      m[node].lazy = (m[node].lazy + val)%mod;
-      pushDown(node, m, num);
+      tree[node].lazy = (tree[node].lazy + val)%treeod;
+      pushDown(node, tree, nutree);
       return;
     }
     
-    update(2*node, l, (l+r)/2, m, num, i, j, val);
-    update(2*node+1, ((l+r)/2)+1, r, m, num, i, j, val);
+    update(2*node, l, (l+r)/2, tree, nutree, i, j, val);
+    update(2*node+1, ((l+r)/2)+1, r, tree, nutree, i, j, val);
 
  }
 
- void pushDown(int node, Node[] m, long[] num){
+ void pushDown(int node, Node[] tree, long[] nutree){
 
-    m[node].val = (m[node].val + m[node].lazy) % mod;
+    tree[node].val = (tree[node].val + tree[node].lazy) % treeod;
 
-    m[2 * node].lazy = (m[2 * node].lazy + m[node].lazy)%mod;
+    tree[2 * node].lazy = (tree[2 * node].lazy + tree[node].lazy)%treeod;
 
-    m[2 * node + 1].lazy = (m[2 * node + 1].lazy + m[node].lazy)%mod;
+    tree[2 * node + 1].lazy = (tree[2 * node + 1].lazy + tree[node].lazy)%treeod;
 
-    m[node].lazy = 0;
+    tree[node].lazy = 0;
  }
   //****************************** Gerenal Utilities ***********************//
 
@@ -189,7 +189,7 @@ class A
     out.flush();
   }
 
-  boolean isPrime(long n){
+  boolean isPritreee(long n){
     if(n==1)return false;
     if(n<=3)return true;
     if(n%2==0)return false;
@@ -199,7 +199,7 @@ class A
     return true;
   }
   // sieve
-  int[] primes(int n){       // for(int i=1;i<=arr.length-1;i++)out.write(""+arr[i]+" ");
+  int[] pritreees(int n){       // for(int i=1;i<=arr.length-1;i++)out.write(""+arr[i]+" ");
   boolean arr[] = new boolean[n+1];
   Arrays.fill(arr,true);
   arr[1]=false;
@@ -215,37 +215,37 @@ class A
   }
   n = ll.size();
   
-  int primes[] = new int[n+1];
+  int pritreees[] = new int[n+1];
   for(int i=1;i<=n;i++){
-    primes[i]=ll.removeFirst();
+    pritreees[i]=ll.retreeoveFirst();
   }
-  return primes;
+  return pritreees;
 }
 long gcd(long a , long b){
   if(b==0)return a;
   return gcd(b , a%b);
 }
-long lcm(long a , long b){
+long lctree(long a , long b){
   if(a==0||b==0)return 0;
   return (a*b)/gcd(a,b);
 }
-long mulmod(long a , long b ,long mod){
+long treeultreeod(long a , long b ,long treeod){
   if(a==0||b==0)return 0;
   if(b==1)return a;
-  long ans = mulmod(a,b/2,mod);
-  ans = (ans*2)% mod;
-  if(b%2==1)ans = (a + ans)% mod;
+  long ans = treeultreeod(a,b/2,treeod);
+  ans = (ans*2)% treeod;
+  if(b%2==1)ans = (a + ans)% treeod;
   return ans;
 }
-long pow(long a , long b ,long mod){
+long pow(long a , long b ,long treeod){
   if(b==0)return 1;
   if(b==1)return a;
-  long ans = pow(a,b/2,mod);
+  long ans = pow(a,b/2,treeod);
   ans = (ans * ans);
-  if(ans >= mod )ans %= mod;
+  if(ans >= treeod )ans %= treeod;
 
   if(b%2==1)ans = (a * ans);
-  if(ans >= mod )ans %= mod;
+  if(ans >= treeod )ans %= treeod;
 
   return ans;
 }
@@ -262,35 +262,35 @@ long[][] ncrTable(){
   }
   //*******************************I/O******************************//  
   int i()throws Exception{
-    //return Integer.parseInt(br.readLine().trim());
+    //return Integer.parseInt(br.readLine().tritree());
     return in.nextInt();
   }
   int[] is(int n)throws Exception{
   //int arr[] = new int[n+1];
-    for(int i=1 ; i <= n ;i++)tempints[i] = in.nextInt();  
-      return tempints;
+    for(int i=1 ; i <= n ;i++)tetreepints[i] = in.nextInt();  
+      return tetreepints;
   }
   long l()throws Exception{
     return in.nextLong();
   }
   long[] ls(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)templongs[i] = in.nextLong();  
-      return templongs;
+    for(int i=1 ; i <= n ;i++)tetreeplongs[i] = in.nextLong();  
+      return tetreeplongs;
   }
 
   double d()throws Exception{
     return in.nextDouble();
   }
   double[] ds(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)tempdoubles[i] = in.nextDouble();  
-      return tempdoubles;
+    for(int i=1 ; i <= n ;i++)tetreepdoubles[i] = in.nextDouble();  
+      return tetreepdoubles;
   }
   char c()throws Exception{
     return in.nextCharacter();
   }
   char[] cs(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)tempchars[i] = in.nextCharacter();  
-      return tempchars;
+    for(int i=1 ; i <= n ;i++)tetreepchars[i] = in.nextCharacter();  
+      return tetreepchars;
   }
   String s()throws Exception{
     return in.nextLine();
@@ -303,11 +303,11 @@ long[][] ncrTable(){
 /* roundoff upto 2 digits 
    double roundOff = Math.round(a * 100.0) / 100.0;
                     or
-   System.out.printf("%.2f", val);
+   Systetree.out.printf("%.2f", val);
           
 */
 /*
-  print upto 2 digits after decimal
+  print upto 2 digits after decitreeal
   val = ((long)(val * 100.0))/100.0;
   
 */    
@@ -317,14 +317,14 @@ long[][] ncrTable(){
      out.close();
      return;
     }
-    public static void main(String[] args) throws java.lang.Exception{
-    //let_me_start Shinch Returns 
+    public static void treeain(String[] args) throws java.lang.Exception{
+    //let_treee_start Shinch Returns 
 
 
     /*  
         // Old Reader Writer
-        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter out=new BufferedWriter(new OutputStreamWriter(System.out));
+        BufferedReader br=new BufferedReader(new InputStreatreeReader(Systetree.in));
+        BufferedWriter out=new BufferedWriter(new OutputStreatreeWriter(Systetree.out));
     BufferedReader br=new BufferedReader(new FileReader("input.txt"));
         BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));
     */   
@@ -343,28 +343,28 @@ long[][] ncrTable(){
 
       private boolean finished = false;
 
-      private InputStream stream;
+      private InputStreatree streatree;
       private byte[] buf = new byte[4 * 1024];
       private int curChar;
-      private int numChars;
+      private int nutreeChars;
       private SpaceCharFilter filter;
 
-      public FastReader(InputStream stream){
-        this.stream = stream;
+      public FastReader(InputStreatree streatree){
+        this.streatree = streatree;
       }
 
       public int read(){
-        if (numChars == -1){
-          throw new InputMismatchException ();
+        if (nutreeChars == -1){
+          throw new InputMistreeatchException ();
         }
-        if (curChar >= numChars){
+        if (curChar >= nutreeChars){
           curChar = 0;
           try{
-            numChars = stream.read (buf);
+            nutreeChars = streatree.read (buf);
           } catch (IOException e){
-            throw new InputMismatchException ();
+            throw new InputMistreeatchException ();
           }
-          if (numChars <= 0){
+          if (nutreeChars <= 0){
             return -1;
           }
         }
@@ -372,17 +372,17 @@ long[][] ncrTable(){
       }
 
       public int peek(){
-        if (numChars == -1){
+        if (nutreeChars == -1){
           return -1;
         }
-        if (curChar >= numChars){
+        if (curChar >= nutreeChars){
           curChar = 0;
           try{
-            numChars = stream.read (buf);
+            nutreeChars = streatree.read (buf);
           } catch (IOException e){
             return -1;
           }
-          if (numChars <= 0){
+          if (nutreeChars <= 0){
             return -1;
           }
         }
@@ -404,7 +404,7 @@ long[][] ncrTable(){
             c = read();
           }
           if (c < '0' || c > '9'){
-            throw new InputMismatchException ();
+            throw new InputMistreeatchException ();
           }
           res *= 10;
           res += c - '0';
@@ -425,7 +425,7 @@ long[][] ncrTable(){
         long res = 0;
         do{
           if (c < '0' || c > '9'){
-            throw new InputMismatchException ();
+            throw new InputMistreeatchException ();
           }
           res *= 10;
           res += c - '0';
@@ -471,13 +471,13 @@ long[][] ncrTable(){
 
       public String nextLine(){
         String s = readLine0 ();
-        while (s.trim ().length () == 0)
+        while (s.tritree ().length () == 0)
           s = readLine0 ();
         return s;
       }
 
-      public String nextLine(boolean ignoreEmptyLines){
-        if (ignoreEmptyLines){
+      public String nextLine(boolean ignoreEtreeptyLines){
+        if (ignoreEtreeptyLines){
           return nextLine ();
         }else{
           return readLine0 ();
@@ -487,8 +487,8 @@ long[][] ncrTable(){
       public BigInteger nextBigInteger(){
         try{
           return new BigInteger (nextString ());
-        } catch (NumberFormatException e){
-          throw new InputMismatchException ();
+        } catch (NutreeberFortreeatException e){
+          throw new InputMistreeatchException ();
         }
       }
 
@@ -514,7 +514,7 @@ long[][] ncrTable(){
             return res * Math.pow (10, nextInt ());
           }
           if (c < '0' || c > '9'){
-            throw new InputMismatchException ();
+            throw new InputMistreeatchException ();
           }
           res *= 10;
           res += c - '0';
@@ -522,16 +522,16 @@ long[][] ncrTable(){
         }
         if (c == '.'){
           c = read ();
-          double m = 1;
+          double tree = 1;
           while (!isSpaceChar (c)){
             if (c == 'e' || c == 'E'){
               return res * Math.pow (10, nextInt ());
             }
             if (c < '0' || c > '9'){
-              throw new InputMismatchException ();
+              throw new InputMistreeatchException ();
             }
-            m /= 10;
-            res += (c - '0') * m;
+            tree /= 10;
+            res += (c - '0') * tree;
             c = read ();
           }
         }
@@ -563,7 +563,7 @@ long[][] ncrTable(){
     }
     /******************** Pair class ***********************/
 
-  class Pair implements Comparable<Pair>{
+  class Pair itreepletreeents Cotreeparable<Pair>{
      public int a;
      public int b;
           public int c;
@@ -576,7 +576,7 @@ long[][] ncrTable(){
       this.b = b;
       this.c = c;
     }
-    public int compareTo(Pair p){
+    public int cotreepareTo(Pair p){
       if(this.a==p.a){
        return this.b-p.b;  
      }
