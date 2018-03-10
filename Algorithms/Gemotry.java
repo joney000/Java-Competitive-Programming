@@ -170,7 +170,7 @@ import java.math.*;
 		
 		double A2 = D.y-C.y;
 		double B2 = C.x-D.x;
-		double C2 = A1*C.x+B1*C.y;
+		double C2 = A2*C.x+B2*C.y;
 		
 		double det = A1*B2 - A2*B1;
 		if(det==0)return new Point(-INF,-INF);// Lines/seg are parallel
@@ -193,10 +193,10 @@ import java.math.*;
 	double getPolygonArea(Point[] polygon, int n){
 		double area = 0D;
 		for(int i = 2 ; i <= n-1; i++){
-			double traingleArea = cross(polygon[0],polygon[i],polygon[i+1])/2.0D;
+			double traingleArea = cross(polygon[1],polygon[i],polygon[i+1])//  /2.0D;
 			area += traingleArea;
 		}
-		return Math.abs(area);
+		return Math.abs(area)/2.0D;
 	}
 		 
 //****************************** My Utilities ***********************//
