@@ -1,7 +1,7 @@
 # Java-Competitive-Programming
 
 
-In This Repository, I wrote most of all the most common Algorithms and Data Structures efficiently written in Java8.
+In This Repository, I wrote most of all the most common Algorithms and Data Structures efficiently written in Java.
 
 These Pre-cooked and well-tested codes help to implement larger hackathon problems in lesser time.
  
