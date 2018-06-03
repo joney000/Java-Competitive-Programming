@@ -14,7 +14,7 @@ These Pre-cooked and well-tested codes help to implement larger hackathon proble
 | DFS - Adjency List| O(V + E), O(V + E) | V = No of vertices in Graph,  E = No of edges in Graph
 | LCA - Lowest Common Ancestor| O(log(V), O(V + E)
 | All Pair Shortest Path  |  O(V^3), O(V + E) | Floyd Warshall algorithm
-| Longest Common Subsequence | < O(M * N), O(M * N)>| Finding LCS of N & M length string using Dynamic Programming
+| Longest Common Subsequence | O(M * N), O(M * N)| Finding LCS of N & M length string using Dynamic Programming
 | Binary Search| O(log(N), O(N) | Search in N size sorted array
 | Lower Bound Search | O(log(N), O(N) | Unlike C, Java Doesn't Provide Lower Bound, Upper Bound in Collections
 | Upper Bound Search | O(log(N), O(N) | 
