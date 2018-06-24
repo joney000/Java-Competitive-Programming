@@ -53,8 +53,6 @@ public class A {
 	int dx[] = {-1, 1, 0, 0};
 	int dy[] = { 0, 0, 1, -1};
 
-	boolean vis[][] = new boolean[1005][1005];
-	char mat[][] = new char[1005][1005];
 	int cnt[][] = new int[1005][1005];
 
   void run()throws Exception{
@@ -80,6 +78,9 @@ public class A {
     // }
   }// end run
 
+  boolean vis[][] = new boolean[1005][1005];
+  char mat[][] = new char[1005][1005];
+  
   void clear(){
 
   }
@@ -99,71 +100,31 @@ public class A {
 	  xq.add(xroot);
 	  yq.add(yroot);
 	  vis[xroot][yroot] = true;
-	  //level[root]=0;
+	  //level[root] = 0;
 	  level_q.add(0);
 
 	  while(!xq.isEmpty()){
 	  
-	      int ux = xq.removeFirst(); //first
-	      int uy = yq.removeFirst(); //first
-	     	// l = level_q.removeFirst();
-		    //level[u] = l;		
-	      for(int i = 0 ; i <= 3 ; i++){
-          int vx = ux + dx[i] ;
-          int vy = uy + dy[i];	
-          if(isValid(vx ,vy)){
-              vis[vx][vy] = true;
-              xq.add(vx); yq.add(vy);
-              xq_buff.add(vx); yq_buff.add(vy);
-              // level_q.add(l+1);
-          		// f[v] = u;
-          		// level[v] = l+1;
-          }
-	      }
-	  }
-	  return ;
-		
-	}
-  //****************************** Gerenal Utilities ***********************//
+      int ux = xq.removeFirst(); //first
+      int uy = yq.removeFirst(); //first
+     	// l = level_q.removeFirst();
+	    //level[u] = l;		
+      for(int i = 0 ; i <= 3 ; i++){
+        int vx = ux + dx[i] ;
+        int vy = uy + dy[i];	
+        if(isValid(vx ,vy) && mat[vx][vy] == '.'){
+            vis[vx][vy] = true;
+            xq.add(vx); yq.add(vy);
 
-  void print_r(Object... o){
-    out.write("\n"+Arrays.deepToString(o)+"\n");
-    out.flush();
-  }
-
-  boolean isPrime(long n){
-    if(n<=1)return false;
-    if(n<=3)return true;
-    if(n%2==0)return false;
-    for(int i=2 ;i <= Math.sqrt(n); i++){
-      if(n%i==0)return false;
-    }
-    return true;
-  }
-  // sieve
-  int[] primes(int n){       // for(int i=1;i<=arr.length-1;i++)out.write(""+arr[i]+" ");
-    boolean arr[] = new boolean[n+1];
-    Arrays.fill(arr,true);
-    arr[1]=false;
-    for(int i=2;i<=Math.sqrt(n);i++){
-      if(!arr[i])continue;
-      for(int j = 2*i ;j<=n;j+=i){
-        arr[j]=false;
+            // level_q.add(l+1);
+        		// f[v] = u;
+        		// level[v] = l+1;
+        }
       }
-    }
-    LinkedList<Integer> ll = new LinkedList<Integer>();
-    for(int i=1;i<=n;i++){  
-      if(arr[i])ll.add(i);
-    }
-    n = ll.size();
-    
-    int primes[] = new int[n+1];
-    for(int i=1;i<=n;i++){
-      primes[i]=ll.removeFirst();
-    }
-    return primes;
+	  }
+	
   }
-
+  
   long gcd(long a , long b){
     if(b==0)return a;
     return gcd(b , a%b);
