@@ -5,9 +5,11 @@ import java.math.*;
 
 /*
  * Author    : joney_000[developer.jaswant@gmail.com]
- * Algorithm : Treap [As Kth Element] Tree + heap
+ * Algorithm : Treap [As Kth Element] Tree + heap & Rope data structure
  * Platform  : Codeforces
  * Ref       : https://threads-iiith.quora.com/Treaps-One-Tree-to-Rule-em-all-Part-1
+ *             https://www.youtube.com/watch?v=erKlLEXLKyY 
+ *             https://threads-iiith.quora.com/Treaps-One-Tree-to-Rule-em-all-Part-2     
  */
 
 class Treap {
@@ -70,7 +72,7 @@ class A{
   
   void run()throws Exception{
     Treap treap = null;
-    Set<Integer> set = new TreeSet<>();
+    Set<Integer> set = new TreeSet<Integer>();
     for (int i = 0; i < 100000; i++) {
       int x = random.nextInt(100000);
       if (random.nextBoolean()) {
