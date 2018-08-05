@@ -3,14 +3,15 @@ import java.lang.*;
 import java.io.*;
 import java.math.*;
 
-/*
+/**
  * Author    : joney_000[developer.jaswant@gmail.com]
- * Algorithm : N/A
+ * Algorithm : Extended Euclid Algo: find 3 things X, Y, GCD(A, B) Such that X * A + Y * B = GCD(A, B)
+ *             Time : O(MAX(A, B)) Space : O(MAX(A, B))
  * Platform  : Codeforces
- * Ref       : 
+ * Ref       : https://www.hackerearth.com/practice/math/number-theory/basic-number-theory-1/tutorial/
  */
 
-class A{ 
+public class A{ 
   
   private InputStream inputStream ;
   private OutputStream outputStream ;
@@ -19,10 +20,6 @@ class A{
   
   private final int BUFFER = 100005;
   
-  private int    auxInts[] = new int[BUFFER];
-  private long   auxLongs[] = new long[1];
-  private double auxDoubles[] = new double[1];
-  private char   auxChars[] = new char[1];
   private final long mod = 1000000000+7;
   private final int  INF  = Integer.MAX_VALUE;
   private final long INF_L  = Long.MAX_VALUE / 10;
@@ -40,14 +37,11 @@ class A{
     in = new FastReader(inputStream);
     out = new PrintWriter(outputStream);
   }
-  
+
   void run()throws Exception{
     int n = i();
-    
-    int ans = 0;
-
+    long ans = 0;
     out.write(""+ans+"\n");
-
   }
   
   void clear(){
@@ -77,10 +71,10 @@ class A{
     if(b == 0)return 1;
     if(b == 1)return a;
     long ans = pow(a, b/2, mod);
-    ans = (ans * ans);
+    ans = mulMod(ans, ans, mod);
     if(ans >= mod)ans %= mod;
 
-    if(b % 2 == 1)ans = (a * ans);
+    if(b % 2 == 1)ans = mulMod(a, ans, mod);
     if(ans >= mod)ans %= mod;
 
     return ans;
@@ -107,36 +101,16 @@ class A{
     return in.nextInt();
   }
 
-  int[] is(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)auxInts[i] = in.nextInt();  
-      return auxInts;
-  }
-
   long l()throws Exception{
     return in.nextLong();
-  }
-
-  long[] ls(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)auxLongs[i] = in.nextLong();  
-      return auxLongs;
   }
 
   double d()throws Exception{
     return in.nextDouble();
   }
 
-  double[] ds(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)auxDoubles[i] = in.nextDouble();  
-      return auxDoubles;
-  }
-
   char c()throws Exception{
     return in.nextCharacter();
-  }
-
-  char[] cs(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)auxChars[i] = in.nextCharacter();  
-      return auxChars;
   }
 
   String s()throws Exception{
@@ -146,7 +120,7 @@ class A{
   BigInteger bi()throws Exception{
     return in.nextBigInteger();
   }
-
+  
   private void closeResources(){
     out.flush();
     out.close();
