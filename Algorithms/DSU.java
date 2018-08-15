@@ -16,7 +16,7 @@ import java.math.*;
 	private InputStream inputStream ;
 	private OutputStream outputStream ;
 	private FastReader in ;
-    private PrintWriter out ;
+  private PrintWriter out ;
 	/*
 		Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
 		 
@@ -47,12 +47,12 @@ import java.math.*;
 		
 	}
 	
-  	void run()throws Exception{
+  void run()throws Exception{
 	
 	//	 int tests = i();
 	//	 once();
-	//	 for(int t  = 1 ; t<= tests ; t++){
 		 	int n = i(); int m = i();
+	//	 for(int t  = 1 ; t<= tests ; t++){
 			init(n);
 			for(int q = 1 ; q <= m ; q++){
 				int type = i(); 
@@ -60,7 +60,6 @@ import java.math.*;
 					//join
 					int a = i(); int b = i();
 					join(a,b);
-
 
 				}else{
 					int u = i();
@@ -75,39 +74,38 @@ import java.math.*;
 	
 	}
    
-    int f[] = new int[200005];
-    int h[] = new int[200005];
+  int f[] = new int[200005];
+  int h[] = new int[200005];
     	
 	void init(int n){
-		 for(int i = 1 ; i <= n ; i++){
-		 	f[i] = i;
-		 	h[i] = 0;
-		 }	
+		for(int i = 1 ; i <= n ; i++){
+		  f[i] = i;
+		  h[i] = 0;
+		}	
 	}
+
 	int root(int i){
-    	
-    	if (f[i] != i)
-        	f[i] = root(f[i]);
-    	
-    	return f[i];
+  	if(f[i] != i)
+     	f[i] = root(f[i]);
+   	return f[i];
 	}
+
  	void join(int x, int y){
-    	int xroot = root(x);
-    	int yroot = root(y);
- 		if (h[xroot] < h[yroot])
-        	f[xroot] = yroot;
-    	else if (h[xroot] > h[yroot])
-        	f[yroot] = xroot;
- 		else {
-        	f[yroot] = xroot;
-        	h[xroot]++;
-    	}
-	} 
-		 
-//****************************** My Utilities ***********************//
+    int xroot = root(x);
+    int yroot = root(y);
+ 		if(h[xroot] < h[yroot])
+     	f[xroot] = yroot;
+    else if (h[xroot] > h[yroot])
+     	f[yroot] = xroot;
+ 		else{
+     	f[yroot] = xroot;
+     	h[xroot]++;
+    }
+	}
+
  	void print_r(Object...o){
-       	out.write("\n"+Arrays.deepToString(o)+"\n");
-        	out.flush();
+    out.write("\n"+Arrays.deepToString(o)+"\n");
+    out.flush();
 	}
 	
 	int hash(String s){
