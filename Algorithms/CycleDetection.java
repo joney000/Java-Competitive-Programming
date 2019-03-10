@@ -5,9 +5,9 @@ import java.math.*;
 
 /*
  * Author    : joney_000[developer.jaswant@gmail.com]
- * Algorithm : N/A
+ * Algorithm : DFS or similar
  * Platform  : Codeforces
- * Ref       : 
+ * Ref       : Cycle detection in forest
  */
 
 class A{ 
@@ -56,11 +56,11 @@ class A{
       int u = i(); int v = i();
       adj[u].add(v); // directed graph
     }
-
+    LinkedList<Integer>[] adj0 = getCopy(adj, n);  // maintaining mutability
     boolean isCycle = false;
     for(int i = 1; i <= n; i++){
-      if(!visited[i]){
-        ans = ans | isCycle(i); //PS: Not connected Graph: i.e. forest containing disconnected components 
+      if(!vis[i]){
+        isCycle = isCycle | isCycle(i, adj0); //PS: Not connected Graph: i.e. forest containing disconnected components 
         if(isCycle){
           break;
         }
@@ -80,7 +80,21 @@ class A{
     }
   }
 
-  boolean dfs(int root)throws Exception{
+  // Maintain mutability
+  LinkedList<Integer>[] getCopy(LinkedList<Integer>[] adj, int n)throws Exception{
+    LinkedList<Integer> adj_copy[] = new LinkedList[n + 1];
+    for(int i = 1; i <= n; i++){
+      adj_copy[i] = new LinkedList<Integer>();
+      for(int x: adj[i]){
+        adj_copy[i].add(x);
+      }
+    }
+    return adj_copy; 
+  }
+
+  // int []depth = new int[MAXN + 1];
+
+  boolean isCycle(int root, LinkedList<Integer>[] adj)throws Exception{
 
     LinkedList <Integer> queue = new LinkedList<Integer>(); //the stack 
     int depth = 0; // level
@@ -101,7 +115,7 @@ class A{
          return true;
         }
       }else{
-        int v = q.removeLast();
+        int v = queue.removeLast();
         depth--;
       }
     }
