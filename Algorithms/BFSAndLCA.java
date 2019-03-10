@@ -42,7 +42,7 @@ public class A{
   }
   
 
-  int n = 0, m = 0;
+  int n, m;
 
   void run()throws Exception{
     clear();
@@ -52,8 +52,8 @@ public class A{
       adj[u].add(v);
       adj[v].add(u);
     }
-    LinkedList<Integer> adj1[] = getCopy(adj, n);     // wow 
-    bfs(adj1, 1, n);    //Assuming that node 1 is the root node
+    LinkedList<Integer> adj0[] = getCopy(adj, n);     // wow 
+    bfs(adj0, 1, n);    //Assuming that node 1 is the root node
     long ans = 0;
     out.write(""+ans+"\n");
  
@@ -63,51 +63,46 @@ public class A{
     
   }
   
-  int MAX_N = 200005;
-  int level[]  = new int[MAX_N + 1];                  
-  int f[]  = new int[MAX_N + 1];                  // f[i] = father of i   
-  LinkedList<Integer> adj[] = new LinkedList[MAX_N + 1];
+  int MAXN = 200005;
+  int depth[]  = new int[MAXN + 1];                  
+  int f[]  = new int[MAXN + 1];                  // f[i] = father of i   
+  LinkedList<Integer> adj[] = new LinkedList[MAXN + 1];
+  boolean vis[] = new boolean[MAXN + 1]; 
 
   void clear(){
-    for(int i = 1; i <= MAX_N; i++){
+    for(int i = 1; i <= MAXN; i++){
       adj[i] = new LinkedList<Integer>();
     }
   }
   
-  // Maintain mutability
-  LinkedList<Integer>[] getCopy(LinkedList<Integer> adj[], int n){
-    LinkedList<Integer> adj_copy[] = new LinkedList[n + 1];
+  // Maintain immutability
+  LinkedList<Integer>[] getCopy(LinkedList<Integer>[] adj, int n){
+    LinkedList<Integer> adjCopy[] = new LinkedList[n + 1];
     for(int i = 1; i <= n; i++){
-      adj_copy[i] = new LinkedList<Integer>();
+      adjCopy[i] = new LinkedList<Integer>();
       for(int x: adj[i]){
-        adj_copy[i].add(x);
+        adjCopy[i].add(x);
       }
     }
-    return adj_copy; 
+    return adjCopy; 
   }
 
   void bfs(LinkedList<Integer> adj[], int root, int n){
   
-    boolean vis[] = new boolean[n+1]; 
-    LinkedList <Integer> q = new LinkedList<Integer>();
-    int index = 1;
-    int l = 0;               //level
-    
-    q.add(root);
+    LinkedList <Integer> queue = new LinkedList<Integer>();
+    depth[root] = 0; 
+    queue.add(root);
     vis[root] = true;
     
-    while(!q.isEmpty()){
-    
-      int u = q.removeFirst();        // The Stack
-      level[u] = l; 
+    while(!queue.isEmpty()){
 
-      if(adj[u].size()>0){  
+      int u = queue.removeFirst();        // The Stack      
+      if(adj[u].size() > 0){  
         int v = adj[u].removeFirst();
         if(!vis[v]){
-          q.add(v);
-          l++;
+          queue.add(v);
           vis[v]    = true;
-          level[v]  = l;
+          depth[v]  = 1 + depth[u];
           f[v] = u;
         }
       }
@@ -116,9 +111,9 @@ public class A{
   
   int lca(int u, int v){
     while(u != v){
-      if(level[u] < level[v]){
+      if(depth[u] < depth[v]){
         v = f[v];
-      }else if(level[u] > level[v]){
+      }else if(depth[u] > depth[v]){
         u = f[u];
       }else{
         u = f[u];
