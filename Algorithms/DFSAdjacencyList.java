@@ -1,20 +1,15 @@
-//pakage joney_000[let_me_start]
-//
 import java.util.*;
 import java.lang.*;
 import java.io.*;
 import java.math.*;
 /*
- * Author    : joney_000[let_me_start]
- * Algorithm : N/A
- * Platform  : N/A
- *
+ * Author    : joney_000[developer.jaswant@gmail.com]
+ * Algorithm : DFS : depth first search in Liner Time and Space
+ * Platform  : Codeforces
  */
 
+class A{
 
-/*    The Main Class                */
-class A
-{ 
   private InputStream inputStream ;
   private OutputStream outputStream ;
   private FastReader in ;
@@ -59,8 +54,8 @@ class A
       adj[u].add(v);
       adj[v].add(u);
     }
-    LinkedList<Integer> adj1[] = getCopy(adj, n);     // wow 
-    dfs(adj1, 1, n);    //Assuming that node 1 is the root node
+    LinkedList<Integer> adj0[] = getCopy(adj, n);     // wow 
+    dfs(adj0, 1, n);    //Assuming that node 1 is the root node
     long ans = 0;
     out.write(""+ans+"\n");
   
@@ -70,59 +65,55 @@ class A
     
   }
 
-  int MAX_N = 200005;
-  int level[]  = new int[MAX_N + 1];                  
-  int f[]  = new int[MAX_N + 1];                  // f[i] = father of i   
-  LinkedList<Integer> adj[] = new LinkedList[MAX_N + 1];
-
+  int MAXN = 200005;
+  int depth[]  = new int[MAXN + 1];                  
+  int f[]  = new int[MAXN + 1];                  // f[i] = parent of i   
+  LinkedList<Integer> adj[] = new LinkedList[MAXN + 1];
+  boolean vis[] = new boolean[MAXN+1]; 
+  
   void clear(){
-    for(int i = 1; i <= MAX_N; i++){
+    for(int i = 1; i <= MAXN; i++){
       adj[i] = new LinkedList<Integer>();
     }
   }
   
-  // Maintain mutability
-  LinkedList<Integer>[] getCopy(LinkedList<Integer> adj[], int n)throws Exception{
-    LinkedList<Integer> adj_copy[] = new LinkedList[n + 1];
+  // Maintain immutability
+  LinkedList<Integer>[] getCopy(LinkedList<Integer>[] adj, int n)throws Exception{
+    LinkedList<Integer> adjCopy[] = new LinkedList[n + 1];
     for(int i = 1; i <= n; i++){
-      adj_copy[i] = new LinkedList<Integer>();
+      adjCopy[i] = new LinkedList<Integer>();
       for(int x: adj[i]){
-        adj_copy[i].add(x);
+        adjCopy[i].add(x);
       }
     }
-    return adj_copy; 
+    return adjCopy; 
   }
 
   void dfs(LinkedList<Integer> adj[], int root, int n)throws Exception{
   
-    boolean vis[] = new boolean[n+1]; 
-    LinkedList <Integer> q = new LinkedList<Integer>();
-    int index = 1;
-    int l = 0;               //level
-    
-    q.add(root);
+    LinkedList <Integer> queue = new LinkedList<Integer>();
+    int currentDepth = 0;               //level
+    queue.add(root);
     vis[root] = true;
     
-    while(!q.isEmpty()){
+    while(!queue.isEmpty()){
     
-      int u = q.getLast();        // The Stack
-      level[u] = l; 
+      int u = queue.getLast();        // The Stack
+      depth[u] = currentDepth; 
 
       if(adj[u].size()>0){  
         int v = adj[u].removeFirst();
         if(!vis[v]){
-          q.add(v);
-          l++;
+          queue.add(v);
+          currentDepth++;
           vis[v]    = true;
-          level[v]  = l;
+          depth[v]  = currentDepth;
           // f[v] = u;
         }
-
       }else {
-        int v = q.removeLast();
-        l--;
+        int v = queue.removeLast();
+        currentDepth--;
       }
-    
     }
   }
   //****************************** Gerenal Utilities ***********************//

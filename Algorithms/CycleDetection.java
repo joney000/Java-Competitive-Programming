@@ -80,16 +80,16 @@ class A{
     }
   }
 
-  // Maintain mutability
+  // Maintain immutability
   LinkedList<Integer>[] getCopy(LinkedList<Integer>[] adj, int n)throws Exception{
-    LinkedList<Integer> adj_copy[] = new LinkedList[n + 1];
+    LinkedList<Integer> adjCopy[] = new LinkedList[n + 1];
     for(int i = 1; i <= n; i++){
-      adj_copy[i] = new LinkedList<Integer>();
+      adjCopy[i] = new LinkedList<Integer>();
       for(int x: adj[i]){
-        adj_copy[i].add(x);
+        adjCopy[i].add(x);
       }
     }
-    return adj_copy; 
+    return adjCopy; 
   }
 
   // int []depth = new int[MAXN + 1];
@@ -97,26 +97,26 @@ class A{
   boolean isCycle(int root, LinkedList<Integer>[] adj)throws Exception{
 
     LinkedList <Integer> queue = new LinkedList<Integer>(); //the stack 
-    int depth = 0; // level
+    int currentDepth = 0; // level
     queue.add(root);
     vis[root] = true;
     
     while(!queue.isEmpty()){
     
       int u = queue.getLast(); //top
-      //depth[u]=l;
+      //depth[u]= currentDepth;
       if(adj[u].size() > 0){
         int v = adj[u].removeFirst();
         if(!vis[v]){
           queue.add(v);
-          depth++;
+          currentDepth++;
           vis[v] = true; 
         }else {
          return true;
         }
       }else{
         int v = queue.removeLast();
-        depth--;
+        currentDepth--;
       }
     }
     return false;
