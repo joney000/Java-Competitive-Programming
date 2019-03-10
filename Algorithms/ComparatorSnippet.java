@@ -15,9 +15,9 @@ class Developer{
 
 public class ComparatorSnippet{
 
-	public static void main(String... s){
+	public static void main(String... args)throws Exception{
 		
-		Developer[] devs = 	Collections.sort(listDevs, new Comparator<Developer>() {
+		Developer[] devs = Collections.sort(listDevs, new Comparator<Developer>() {
 			@Override
 			public int compare(Developer o1, Developer o2) {
 				return o1.getAge() - o2.getAge();

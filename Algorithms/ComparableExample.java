@@ -1,13 +1,15 @@
 
 class Person implements Comparable<Person>{
-	int start,end,c;
-	public Person(int start,int end,int c){
-		this.start=start;
-		this.end=end;
-		this.c=c;
-	}
+	private int start, end, salary;
 	
-	public int compareTo(Person p){
-		return this.start - p.start;
+	public Person(int start, int end, int salary){
+		this.start  = start;
+		this.end 		= end;
+		this.salary = salary;
+	}
+
+	@Override
+	public int compareTo(Person that){
+		return this.start - that.start;
 	}
 }
