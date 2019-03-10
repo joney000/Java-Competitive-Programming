@@ -19,8 +19,7 @@ import java.math.*;
    */ 
 
 /*    The Main Class                */
- class A
-{ 
+class A { 
   private InputStream inputStream ;
   private OutputStream outputStream ;
   private FastReader in ;
@@ -80,18 +79,18 @@ import java.math.*;
   	int hi = n;
   	int mid = 0;
   	while(true){
-  	    mid = lo + (hi - lo)/2;
-  	    if(a[mid] >= key){
-  	        hi = mid - 1;
-  	        if(hi < lo){
-							return mid;
-  	        }
-  	    }else{
-  	        lo = mid + 1;
-  	        if(hi < lo){
-	            return mid < n ? mid+1 : -1;
-	          }
-  	    }
+	    mid = lo + (hi - lo)/2;
+	    if(a[mid] >= key){
+        hi = mid - 1;
+        if(hi < lo){
+					return mid;
+        }
+	    }else{
+        lo = mid + 1;
+        if(hi < lo){
+          return mid < n ? mid+1 : -1;
+        }
+	    }
   	}
   }
 
