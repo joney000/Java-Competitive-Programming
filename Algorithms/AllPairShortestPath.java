@@ -41,6 +41,11 @@ public class A{
     out = new PrintWriter(outputStream);
   }
   
+  final int MAX_N = 100;
+  long cost[][] = new long[MAX_N + 1][MAX_N + 1];
+  long w[][] = new long[MAX_N + 1][MAX_N + 1];
+
+  
   void run()throws Exception{
     int n = i();
     int ans = 0;
@@ -48,10 +53,6 @@ public class A{
     out.write(""+ans+"\n");
 
   }
-  
-  final int MAX_N = 100;
-  long cost[][] = new long[MAX_N + 1][MAX_N + 1];
-  long w[][] = new long[MAX_N + 1][MAX_N + 1];
 
 
   void clear(){
@@ -71,14 +72,13 @@ public class A{
     }
     // order matters: k->i->j 
     for(int k = 1; k <= n; k++){
-        for (int i = 1; i <= n; i++){
-            for (int j = 1; j <= n; j++){
-             
-                if(cost[i][k] + cost[k][j] < cost[i][j]){
-                    cost[i][j] = cost[i][k] + cost[k][j];
-                }
-            }
+      for (int i = 1; i <= n; i++){
+        for (int j = 1; j <= n; j++){
+          if(cost[i][k] + cost[k][j] < cost[i][j]){
+              cost[i][j] = cost[i][k] + cost[k][j];
+          }
         }
+      }
     }
   }
   
