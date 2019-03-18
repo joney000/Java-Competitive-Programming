@@ -21,30 +21,52 @@ class ConsistentHashDataNode <T> {
 	}
 }
 
-class Server{
+class Server<T> extends ConsistentHashDataNode<T>{
 	String id, ip, contry;
-	public Server(String id, String ip, String contry){
+	public Server(String id, String ip, String contry, T serverMetaData){
+		super(serverMetaData);
 		this.id = id;
 		this.ip = ip;
-		this.contry = contry;	
+		this.contry = contry;
 	}
 }
 
 class ConsistentHashing <T> {
 
-	private TreeMap<Long, T> nodeMap;
+	private TreeMap<Long, T> circle;
   private Map<T, List<String>> nodeListMap;
   private int noOfAliasForEachServer;
-  
+
+  public ConsistentHashing(int noOfAliasForEachServer){
+  	this.noOfAliasForEachServer = noOfAliasForEachServer;
+  	circle = new TreeMap<Long, T>();
+  	nodeListMap = new HashMap<T, List<String>>();
+  }
+
+  void put(T key, ConsistentHashDataNode value){
+
+  }
+
+  void putAll(List<ConsistentHashDataNode<T>> dataNodes){
+  	for(ConsistentHashDataNode<T> dataNode: dataNodes){
+  		// put(server.data, server);
+  	}
+  }
 	public static void main(String ... args){
 		try{
-			List <Server> servers = new LinkedList<>();
-			for(int i = 0; i < 4; i++)servers.add(new Server("server-id-"+i, "109.105.110.5"+i, "India"));
+			ConsistentHashing<ConsistentHashDataNode<String>> cHash = new ConsistentHashing<>(5);
 
-			List <ConsistentHashDataNode<Integer>> data = new LinkedList<>();
-			for(int i = 0; i < 50; i++)data.add(new ConsistentHashDataNode<Integer>(i));
+			List <ConsistentHashDataNode<String>> servers = new LinkedList<>();
+			for(int i = 0; i < 4; i++){
+				servers.add(new Server<String>("server-id-"+i, "109.105.110.5"+i, "India", "server-metadata : id: "+i+" , region : IN/Asia"));
+			}
+
+			List <ConsistentHashDataNode<String>> data = new LinkedList<>();
+			for(int i = 0; i < 50; i++){
+				data.add(new ConsistentHashDataNode<String>("data-node-"+i));
+			}
 			
-			ConsistentHashing cHash = new ConsistentHashing();
+			
 
 
 		}catch(RuntimeException ex){
