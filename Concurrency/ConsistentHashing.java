@@ -11,13 +11,23 @@ import java.nio.ByteOrder;
  * Author    : joney_000[ developer.jaswant@gmail.com ]
  * Algorithm : Consistent Hashing Circle
  * Platform  : Generic Distributed Cache Data Nodes, Databases [eg. Memcached ]
- * Ref       : Hash Functions, Fast Data Backups, Distributed Systems
+ * Ref       : Hash Functions, Fast Data Backups, Distributed Systems, 
  */
 
 class ConsistentHashDataNode <T> {
 	T data;
 	public ConsistentHashDataNode(T data){
 		this.data = data;
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		return this.data.equals((T)obj);
+	}
+
+	@Override
+	public int hashCode(){
+		return this.data.hashCode();
 	}
 }
 
@@ -31,34 +41,55 @@ class Server<T> extends ConsistentHashDataNode<T>{
 	}
 }
 
-class ConsistentHashing <T> {
+class ConsistentHashing <K, V> {
 
-	private TreeMap<Long, T> circle;
-  private Map<T, List<String>> nodeListMap;
+	private TreeMap<Long, V> circle;
+  private HashMap<V, List<String>> nodeListMap;
   private int noOfAliasForEachServer;
 
   public ConsistentHashing(int noOfAliasForEachServer){
   	this.noOfAliasForEachServer = noOfAliasForEachServer;
-  	circle = new TreeMap<Long, T>();
-  	nodeListMap = new HashMap<T, List<String>>();
+  	circle = new TreeMap<Long, V>();
+  	nodeListMap = new HashMap<V, List<String>>();
   }
 
-  void put(T key, ConsistentHashDataNode value){
-
+  void put(String key, V value){
+  	Long hash = getHash(key);
+  	circle.put(hash, value);
   }
-
-  void putAll(List<ConsistentHashDataNode<T>> dataNodes){
-  	for(ConsistentHashDataNode<T> dataNode: dataNodes){
-  		// put(server.data, server);
+  
+  V remove(String key){
+  	if(circle.containsKey(key)){
+  		return circle.remove(key);
   	}
+  	return null;
   }
+
+ 	void addServer(K key, V value){
+ 		put(key.toString(), value);
+ 		for(int replicaId = 0; replicaId < noOfAliasForEachServer; replicaId++){
+ 			String keyStr = key.toString() + " replica ~ "+replicaId;
+  		put(keyStr, value);
+ 		}
+ 	}
+  
+  void removeServer(K key){
+ 		remove(key.toString());
+ 		for(int replicaId = 0; replicaId < noOfAliasForEachServer; replicaId++){
+ 			String keyStr = key.toString() + " replica ~ "+replicaId;
+  		remove(keyStr);
+ 		}
+ 	}
+  
 	public static void main(String ... args){
 		try{
-			ConsistentHashing<ConsistentHashDataNode<String>> cHash = new ConsistentHashing<>(5);
+			ConsistentHashing<String, ConsistentHashDataNode<String>> cHash = new ConsistentHashing<>(5);
 
 			List <ConsistentHashDataNode<String>> servers = new LinkedList<>();
 			for(int i = 0; i < 4; i++){
-				servers.add(new Server<String>("server-id-"+i, "109.105.110.5"+i, "India", "server-metadata : id: "+i+" , region : IN/Asia"));
+				ConsistentHashDataNode<String> newServer = new Server<String>("server-id-"+i, "109.105.110.5"+i, "India", "server-metadata : id: "+i+" , region : IN/Asia");
+				servers.add(newServer);
+				cHash.addServer(newServer.data, newServer);	// Adding new server to circle
 			}
 
 			List <ConsistentHashDataNode<String>> data = new LinkedList<>();
@@ -88,7 +119,7 @@ class ConsistentHashing <T> {
    * Credit: MurmurHash from SMHasher written by Austin Appleby
    * Ref   : https://en.wikipedia.org/wiki/MurmurHash
    */
-  public Long hash(String key){
+  public Long getHash(String key){
     ByteBuffer buf = ByteBuffer.wrap(key.getBytes());
     int seed = 0x1234ABCD;
     ByteOrder byteOrder = buf.order();
