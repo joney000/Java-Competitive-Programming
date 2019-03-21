@@ -70,6 +70,7 @@ class ConsistentHashing <K, V> {
  		for(int replicaId = 0; replicaId < noOfAliasForEachServer; replicaId++){
  			String keyStr = key.toString() + " replica ~ "+replicaId;
   		put(keyStr, value);
+  		nodeListMap.get(value).add(keyStr);
  		}
  	}
   
@@ -80,7 +81,13 @@ class ConsistentHashing <K, V> {
   		remove(keyStr);
  		}
  	}
-  
+
+  public V getServerNode(String val) {
+    Long hashing = getHash(val);
+    SortedMap<Long, V> tail = circle.tailMap(hashing);
+    return circle.get(tail.size() == 0 ? circle.firstKey() : tail.firstKey());
+  }
+
 	public static void main(String ... args){
 		try{
 			ConsistentHashing<String, ConsistentHashDataNode<String>> cHash = new ConsistentHashing<>(5);
