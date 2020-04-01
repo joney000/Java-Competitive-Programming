@@ -31,7 +31,7 @@ These Pre-cooked and well-tested codes help to implement larger hackathon proble
 | BST - Binary Search Tree| O(N), O(N) | 
 | Maximum Subarray Sum| O(N), O(N) |  Kadane's algorithm
 | Immutable Data Structures, Persistent Data Structurs -  Persistent Trie| O(N * log N), O(N)| query & update time: O(log N) .It's frequently used where you have to maintain multiple version of your data structure in lograthimic time.
-| Dijkstra | O(E log V), O(V + E)
+| Dijkstra | O((E+v) log V)), O(V + E)
 | Z - Function | O(P + T), O(P + T) | Leaner time string matching / occurrence finding of pattern string P into Large Text string T.
 | Minimum Cost Maximal Matching - Hungarian algorithm | O(N^3), O(N^2)
 | Heavy Light Decomposition | O(N * log^2 N), O(N)| per query time = (log N)^2
