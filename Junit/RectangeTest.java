@@ -73,31 +73,9 @@ public class Solution {
     }
 
     public static Rectangle findRectangularOverlap(Rectangle rect1, Rectangle rect2) {
-
         // calculate the overlap between the two rectangles
-        
-
         return new Rectangle();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // tests
 
     @Test
     public void overlapAlongBothAxesTest() {
