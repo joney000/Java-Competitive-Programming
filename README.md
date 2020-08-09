@@ -1,7 +1,6 @@
 # Java-Competitive-Programming
 
-In This Repository, I have written some of the important Algorithms and Data Structures efficiently in Java with proper references to time and space complexity.  
-These Pre-cooked and well-tested codes helps to implement larger hackathon problems in lesser time.
+In This Repository, I have written some of the important Algorithms and Data Structures efficiently in Java with proper references to time and space complexity. These Pre-cooked and well-tested codes helps to implement larger hackathon problems in lesser time.
  
 ### Algorithms:
 | Algorithm        | Big-O Time, Big-O Space           | Comments/Symbols  |
