@@ -5,12 +5,12 @@ import java.math.*;
 
 /*
  * Author    : joney_000[developer.jaswant@gmail.com]
- * Algorithm : N/A
+ * Algorithm : All Pair Shortest Path
  * Platform  : Codeforces
- * Ref       : 
+ * Ref       : Time Complexity: O(N^3), Space Complexity: O(N^2)
  */
 
-public class A{ 
+class A{ 
   
   private InputStream inputStream ;
   private OutputStream outputStream ;
@@ -19,10 +19,6 @@ public class A{
   
   private final int BUFFER = 100005;
   
-  private int    auxInts[] = new int[BUFFER];
-  private long   auxLongs[] = new long[1];
-  private double auxDoubles[] = new double[1];
-  private char   auxChars[] = new char[1];
   private final long mod = 1000000000+7;
   private final int  INF  = Integer.MAX_VALUE;
   private final long INF_L  = Long.MAX_VALUE / 10;
@@ -43,23 +39,20 @@ public class A{
   
   final int MAX_N = 100;
   long cost[][] = new long[MAX_N + 1][MAX_N + 1];
-  long w[][] = new long[MAX_N + 1][MAX_N + 1];
+  long weight[][] = new long[MAX_N + 1][MAX_N + 1];
 
-  
   void run()throws Exception{
     int n = i();
     int ans = 0;
-
+    initialize();
     out.write(""+ans+"\n");
-
   }
 
-
-  void clear(){
+  void initialize(){
     for(int i = 1; i <= MAX_N; i++){
       for(int j = 1; j <= MAX_N; j++){
-        w[i][j] = INF_L;
-        if(i==j)w[i][j] = 0L;
+        weight[i][j] = INF_L;
+        if(i==j)weight[i][j] = 0L;
       }
     }
   }
@@ -67,7 +60,7 @@ public class A{
   void allPairShortestPath(int n){
     for (int i = 1; i <= n; i++){
       for (int j = 1; j <= n; j++){
-        cost[i][j] = w[i][j];
+        cost[i][j] = weight[i][j];
       }
     }
     // order matters: k->i->j 
@@ -105,10 +98,10 @@ public class A{
     if(b == 0)return 1;
     if(b == 1)return a;
     long ans = pow(a, b/2, mod);
-    ans = (ans * ans);
+    ans = mulMod(ans, ans, mod);
     if(ans >= mod)ans %= mod;
 
-    if(b % 2 == 1)ans = (a * ans);
+    if(b % 2 == 1)ans = mulMod(a, ans, mod);
     if(ans >= mod)ans %= mod;
 
     return ans;
@@ -135,36 +128,16 @@ public class A{
     return in.nextInt();
   }
 
-  int[] is(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)auxInts[i] = in.nextInt();  
-      return auxInts;
-  }
-
   long l()throws Exception{
     return in.nextLong();
-  }
-
-  long[] ls(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)auxLongs[i] = in.nextLong();  
-      return auxLongs;
   }
 
   double d()throws Exception{
     return in.nextDouble();
   }
 
-  double[] ds(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)auxDoubles[i] = in.nextDouble();  
-      return auxDoubles;
-  }
-
   char c()throws Exception{
     return in.nextCharacter();
-  }
-
-  char[] cs(int n)throws Exception{
-    for(int i=1 ; i <= n ;i++)auxChars[i] = in.nextCharacter();  
-      return auxChars;
   }
 
   String s()throws Exception{
@@ -174,7 +147,7 @@ public class A{
   BigInteger bi()throws Exception{
     return in.nextBigInteger();
   }
-
+  
   private void closeResources(){
     out.flush();
     out.close();
