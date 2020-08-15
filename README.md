@@ -1,4 +1,5 @@
 [![Jaswant's github stats](https://github-readme-stats.vercel.app/api?username=joney000)]()
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=joney000&layout=compact)]()
 
 # Java-Competitive-Programming
 
