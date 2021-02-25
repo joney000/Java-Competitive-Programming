@@ -2,7 +2,7 @@
 
 In This Repository, I have written some of the important Algorithms and Data Structures efficiently in Java with proper references to time and space complexity. These Pre-cooked and well-tested codes helps to implement larger hackathon problems in lesser time.
 
-### Algorithms:
+## Algorithms:
 | Algorithm        | Big-O Time, Big-O Space           | Comments/Symbols  |
 | :----------- |:-------------:| :----- |
 | [DFS - 2-D Grid](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/DFS_Grid.java) | O(M * N), O(M * N) | M * N = dimensions of matrix
@@ -41,7 +41,7 @@ In This Repository, I have written some of the important Algorithms and Data Str
 | [Trie / Prefix Tree](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/Trie.java)| O(N * L), O(N * L)| if there are N strings of L size, per query time(Prefix information) = O(L) 
 | [LIS - Longest Increasing Subsequence](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/LIS_nLOGn.java)| O(N * log(N)), O(N)
 
-### Contributions
+## Contributions
 
 Want to contribute in corrections or enhancement? Great!
 Please raise a PR, or drop a mail at developer.jaswant@gmail.com .
