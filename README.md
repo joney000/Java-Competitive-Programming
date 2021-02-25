@@ -4,7 +4,7 @@ In This Repository, I have written some of the important Algorithms and Data Str
 
 ### Algorithms:
 | Algorithm        | Big-O Time, Big-O Space           | Comments/Symbols  |
-| ------------- |:-------------:| -----:|
+| :----------- |:-------------:| :----- |
 | [DFS - 2-D Grid](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/DFS_Grid.java) | O(M * N), O(M * N) | M * N = dimensions of matrix
 | [DFS - Adjency List](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/DFSAdjacencyList.java) | O(V + E), O(V + E) | V = No of vertices in Graph, E = No of edges in Graph
 | [BFS - 2-D Grid](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/BFS_GRID.java) | O(M * N), O(M * N)|  M * N = dimensions of matrix
