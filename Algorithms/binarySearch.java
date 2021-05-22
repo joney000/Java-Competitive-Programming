@@ -48,7 +48,7 @@ import java.math.*;
     int m = 0;
     int l = 1; int r = n;
     while(l <= r){
-      m = l + (r-l)/2; // prevent float errors & hence infinite loop
+      m = l + (r-l)/2; // prevent float errors & infinite loop
       if(A[m] == key){ // first comparison
         return m;
       }else if( A[m] < key ){ // second comparison
