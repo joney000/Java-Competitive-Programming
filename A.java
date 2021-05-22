@@ -5,10 +5,9 @@ import java.math.*;
 
 /**
  * Author    : joney_000[developer.jaswant@gmail.com]
- * Algorithm : Extended Euclid Algo: find 3 things X, Y, GCD(A, B) Such that X * A + Y * B = GCD(A, B)
- *             Time : O(MAX(A, B)) Space : O(MAX(A, B))
+ * Algorithm : Default Template
  * Platform  : Codeforces
- * Ref       : https://www.hackerearth.com/practice/math/number-theory/basic-number-theory-1/tutorial/
+ * Ref       : N/A
  */
 
 public class A{ 
