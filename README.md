@@ -40,6 +40,7 @@ In This Repository, I have written some of the important Algorithms and Data Str
 | [Kth Order Statics](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/kthOrderStatics.java)|O(N), O(N) | K’th Smallest/Largest Element in Unsorted Array
 | [Trie / Prefix Tree](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/Trie.java)| O(N * L), O(N * L)| if there are N strings of L size, per query time(Prefix information) = O(L) 
 | [LIS - Longest Increasing Subsequence](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/LIS_nLOGn.java)| O(N * log(N)), O(N)
+| [Priority Queue](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/PriorityQueue.java)| O(log(N)), O(N) | N = no of objects in the queue. peek: O(1), poll/add: O(log n)
 
 ## Contributions
 
