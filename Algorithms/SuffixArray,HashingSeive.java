@@ -10,13 +10,12 @@ import java.math.*;
  *
  */
 
-/*    The Main Class                */
  class A{
 	
 	private InputStream inputStream ;
 	private OutputStream outputStream ;
 	private FastReader in ;
-    	private PrintWriter out ;
+    private PrintWriter out ;
 	/*
 		Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
 		 
