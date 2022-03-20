@@ -10,8 +10,6 @@ import java.math.*;
  * Platform  : N/A
  *
  */
-
-/*    The Main Class                */
 public class A {
 
   private InputStream inputStream ;

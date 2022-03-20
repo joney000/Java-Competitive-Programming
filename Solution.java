@@ -37,32 +37,25 @@ class Solution{
     in = new FastReader(inputStream);
     out = new PrintWriter(outputStream);
   }
+  
   final int MAXN = (int)1e3 + 1;
-  int [][]mat = new int[MAXN][MAXN];
-    
+  int [][]matrix = new int[MAXN][MAXN];
+  
   void run()throws Exception{
     int tests = i();
-    for(int t = 1; t <= tests; t++){
+    for(int testCase = 1; testCase <= tests; testCase++){
+      out.write("Case #"+testCase+": ");
       int n = i();
-      String s = s();
-      
-      out.write("Case #"+t+": ");
-      for(int i = 1; i <= s.length(); i++){
-        if(s.charAt(i - 1) == 'S')out.write("E");
-        else out.write("S");
-      }
-      out.write("\n");
-    }
-  }
-  boolean isContain4(String a){
-    String key = ""+a;
-    for(int pos = 1; pos <= key.length(); pos++){
-      if(key.charAt(pos - 1)=='4')return true;
-    }
-    return false;
-  }
-  void clear(){
+      // solve cool things here
 
+      long ans = 0L;
+      
+      out.write(""+ans+"\n");
+    }
+  }
+
+  void clear(){
+    // Todo: implementation of clearing the shared memory for each test case
   }
 
   long gcd(long a, long b){
