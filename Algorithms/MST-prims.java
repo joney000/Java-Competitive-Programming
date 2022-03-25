@@ -1,3 +1,4 @@
+package Algorithms;
 
 import java.util.*;
 import java.lang.*;
@@ -11,11 +12,11 @@ import java.math.*;
  */
 
 /*    The Main Class                */
- class D{
+class MSTPrims{
 	
 	private InputStream inputStream ;
 	private OutputStream outputStream ;
-	private FastReader in ;
+	private InputReaderAndProcessor in ;
     	private PrintWriter out ;
 	/*
 		Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
@@ -32,8 +33,8 @@ import java.math.*;
 	private final int  INF  = Integer.MAX_VALUE / 10;
 	private final long INF_L  = Long.MAX_VALUE / 10;
 	
-	public D(){}
-	public D(boolean stdIO)throws FileNotFoundException{
+	public MSTPrims(){}
+	public MSTPrims(boolean stdIO)throws FileNotFoundException{
 		//stdIO = false;
 		if(stdIO){
 			inputStream = System.in;
@@ -42,7 +43,7 @@ import java.math.*;
 			inputStream = new FileInputStream("laundro_matt.txt");
 			outputStream = new FileOutputStream("output.txt");
 		}
-		in = new FastReader(inputStream);
+		in = new InputReaderAndProcessor(inputStream);
 		out = new PrintWriter(outputStream);
 		
 	}
@@ -63,9 +64,9 @@ import java.math.*;
 	//	 for(int t  = 1 ; t<= tests ; t++){
 	//	 	clear(n);
 			n = i(); m = i();
-			Pair p[] = new Pair[m+1];
+		ThreeNumberComparator p[] = new ThreeNumberComparator[m+1];
 			for(int i = 1 ; i <=m ; i++){
-				p[i] = new Pair(i(),i(),i());
+				p[i] = new ThreeNumberComparator(i(),i(),i());
 			}
 			Arrays.sort(p,1,m+1);
 			for(int i = 1 ; i <= n ; i++)adj[i] = new LinkedList<Integer>();
@@ -75,7 +76,7 @@ import java.math.*;
 			Graph graph = new Graph(n, 2*m);
 			int to = n-1;
 			for(int i = 1 ; i <=m ; i++){
-			//	if(hs.contains(p[i].a)&&hs.contains(p[i].b)){to++;continue;}
+			//	if(hs.contains(p[i].number1)&&hs.contains(p[i].number2)){to++;continue;}
 				long u = p[i].a;
 				long v = p[i].b;
 				hs.add(u);
@@ -225,7 +226,7 @@ import java.math.*;
 	
 	int hash(String s){
 		int base = 31;
-		int a = 31;//base = a multiplier
+		int a = 31;//base = number1 multiplier
 		int mod = 100005;//range [0..100004]
 		long val = 0;
 		for(int i =  1 ; i<= s.length() ;i++){
@@ -347,7 +348,7 @@ import java.math.*;
 //***********************I/O ENDS ***********************//
 //*********************** 0.3%f [precision]***********************//
 /* roundoff upto 2 digits 
-   double roundOff = Math.round(a * 100.0) / 100.0;
+   double roundOff = Math.round(number1 * 100.0) / 100.0;
                     or
    System.out.printf("%.2f", val);
 					
@@ -363,8 +364,8 @@ import java.math.*;
 	}
 	public static void main(String[] args) throws java.lang.Exception{
 		//let_me_start Shinch Returns 
-		
-    		 D driver = new D(true);
+
+		MSTPrims driver = new MSTPrims(true);
     		 long start =  System.currentTimeMillis();
     		 driver.run();
     		 long end =  System.currentTimeMillis();
@@ -375,255 +376,32 @@ import java.math.*;
 	}	 
 
 }
-
-class FastReader{
-
-	private boolean finished = false;
-
-	private InputStream stream;
-	private byte[] buf = new byte[4*1024];
-	private int curChar;
-	private int numChars;
-	private SpaceCharFilter filter;
-
-	public FastReader(InputStream stream){
-		this.stream = stream;
-	}
-
-	public int read(){
-		if (numChars == -1){
-			throw new InputMismatchException ();
-		}
-		if (curChar >= numChars){
-			curChar = 0;
-			try{
-				numChars = stream.read (buf);
-			} catch (IOException e){
-				throw new InputMismatchException ();
-			}
-			if (numChars <= 0){
-				return -1;
-			}
-		}
-		return buf[curChar++];
-	}
-
-	public int peek(){
-		if (numChars == -1){
-			return -1;
-		}
-		if (curChar >= numChars){
-			curChar = 0;
-			try{
-				numChars = stream.read (buf);
-			} catch (IOException e){
-				return -1;
-			}
-			if (numChars <= 0){
-				return -1;
-			}
-		}
-		return buf[curChar];
-	}
-
-	public int nextInt(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		int res = 0;
-		do{
-			if(c==','){
-				c = read();
-			}
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res * sgn;
-	}
-
-	public long nextLong(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		long res = 0;
-		do{
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res * sgn;
-	}
-
-	public String nextString(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		StringBuilder res = new StringBuilder ();
-		do{
-			res.appendCodePoint (c);
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res.toString ();
-	}
-
-	public boolean isSpaceChar(int c){
-		if (filter != null){
-			return filter.isSpaceChar (c);
-		}
-		return isWhitespace (c);
-	}
-
-	public static boolean isWhitespace(int c){
-		return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
-	}
-
-	private String readLine0(){
-		StringBuilder buf = new StringBuilder ();
-		int c = read ();
-		while (c != '\n' && c != -1){
-			if (c != '\r'){
-				buf.appendCodePoint (c);
-			}
-			c = read ();
-		}
-		return buf.toString ();
-	}
-
-	public String nextLine(){
-		String s = readLine0 ();
-		while (s.trim ().length () == 0)
-			s = readLine0 ();
-		return s;
-	}
-
-	public String nextLine(boolean ignoreEmptyLines){
-		if (ignoreEmptyLines){
-			return nextLine ();
-		}else{
-			return readLine0 ();
-		}
-	}
-
-	public BigInteger nextBigInteger(){
-		try{
-			return new BigInteger (nextString ());
-		} catch (NumberFormatException e){
-			throw new InputMismatchException ();
-		}
-	}
-
-	public char nextCharacter(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		return (char) c;
-	}
-
-	public double nextDouble(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		double res = 0;
-		while (!isSpaceChar (c) && c != '.'){
-			if (c == 'e' || c == 'E'){
-				return res * Math.pow (10, nextInt ());
-			}
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		}
-		if (c == '.'){
-			c = read ();
-			double m = 1;
-			while (!isSpaceChar (c)){
-				if (c == 'e' || c == 'E'){
-					return res * Math.pow (10, nextInt ());
-				}
-				if (c < '0' || c > '9'){
-					throw new InputMismatchException ();
-				}
-				m /= 10;
-				res += (c - '0') * m;
-				c = read ();
-			}
-		}
-		return res * sgn;
-	}
-
-	public boolean isExhausted(){
-		int value;
-		while (isSpaceChar (value = peek ()) && value != -1)
-			read ();
-		return value == -1;
-	}
-
-	public String next(){
-		return nextString ();
-	}
-
-	public SpaceCharFilter getFilter(){
-		return filter;
-	}
-
-	public void setFilter(SpaceCharFilter filter){
-		this.filter = filter;
-	}
-
-	public interface SpaceCharFilter{
-		public boolean isSpaceChar(int ch);
-	}
-}
  /******************** Pair class ***********************/
  
- class Pair implements Comparable<Pair>{
+ class ThreeNumberComparator implements Comparable<ThreeNumberComparator>{
 
  public long b;
  public long a;
  public long c;
- public Pair(){
+ public ThreeNumberComparator(){
 
   this.a = 0L;
   this.b = 0L;
   this.c = 0L;
  }
- public Pair( long a,long b , long c ){
+ public ThreeNumberComparator( long a,long b , long c ){
 
   this.a = a;
   this.b = b;
   this.c = c;
  }
- public int compareTo(Pair p){
+ public int compareTo(ThreeNumberComparator p){
 	if(this.c < p.c)return -1;
 	else if(this.c > p.c )return 1;
 	else return 0;
  }
  public String toString(){
-  return "a="+this.a+" b="+this.b;
+  return "number1="+this.a+" number2="+this.b;
  }
  
 } 
@@ -648,7 +426,7 @@ class Graph
             edge[i] = new Edge();
     }
  
-    // A utility function to find set of an element i
+    // BiTSet utility function to find set of an element i
     // (uses path compression technique)
     int find(subset subsets[], int i)
     {
@@ -659,7 +437,7 @@ class Graph
         return subsets[i].parent;
     }
  
-    // A function that does union of two sets of x and y
+    // BiTSet function that does union of two sets of x and y
     // (uses union by rank)
     void Union(subset subsets[], int x, int y)
     {

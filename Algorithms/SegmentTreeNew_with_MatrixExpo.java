@@ -1,3 +1,6 @@
+package Algorithms;
+
+import Algorithms.InputReaderAndProcessor;
 
 import java.util.*;
 import java.lang.*;
@@ -9,12 +12,12 @@ import java.math.*;
  * Platform  : https://www.facebook.com/hackercup
  *
  */
-class Node{
+class SegmentTreeNewNode{
    //public int [] C = new int[3]; 
    public long mat[][] = new long[2][2];
 
   
-   public Node(){
+   public SegmentTreeNewNode(){
    	this.mat[0][0] = this.mat[1][1] = 1L;
    }
   
@@ -25,7 +28,7 @@ class Node{
 	
 	private InputStream inputStream ;
 	private OutputStream outputStream ;
-	private FastReader in ;
+	private InputReaderAndProcessor in ;
     	private PrintWriter out ;
 	/*
 		Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
@@ -52,7 +55,7 @@ class Node{
 			inputStream = new FileInputStream("laundro_matt.txt");
 			outputStream = new FileOutputStream("output.txt");
 		}
-		in = new FastReader(inputStream);
+		in = new InputReaderAndProcessor(inputStream);
 		out = new PrintWriter(outputStream);
 		
 	}
@@ -69,9 +72,9 @@ class Node{
 		 	for(int i=1;i<=n;i++){
 	  			num[i]= i();
 			}
-			
-			Node[] m = new Node[3*n+5000];//size ~ 2*n+1
-			for(int i=1;i<= 3*n + 5000 -1 ;i++)m[i] = new Node();
+
+		SegmentTreeNewNode[] m = new SegmentTreeNewNode[3*n+5000];//size ~ 2*n+1
+			for(int i=1;i<= 3*n + 5000 -1 ;i++)m[i] = new SegmentTreeNewNode();
 			
 			maketree(1,1,n,m,num);
 			
@@ -83,7 +86,7 @@ class Node{
 					update(1,1,n,m,num,idx,idx);
 				}else{
 					int i = i(); int j = i();
-					Node res = query(1,1,n,m,num,i,j);
+					SegmentTreeNewNode res = query(1,1,n,m,num,i,j);
 					long ans = res.mat[0][1];
 					out.write(""+ans+"\n");				
 				}
@@ -116,7 +119,7 @@ class Node{
 		}
    		
  	}
-	void maketree(int node,int i,int j,Node[] m,int []num){
+	void maketree(int node, int i, int j, SegmentTreeNewNode[] m, int []num){
 		if(i==j){
 		
 		          copy(m[node].mat , expo(num[i]));
@@ -134,26 +137,26 @@ class Node{
 		//out.write("node no = "+node+" range = "+i+" "+j+"\n");
 		//printMat(m[node].mat);
 	}
-	
-	Node query(int node,int l,int r,Node[] m,int []num,int i,int j){
+
+	SegmentTreeNewNode query(int node,int l,int r,SegmentTreeNewNode[] m,int []num,int i,int j){
 		if(l>j||r<i||l>r)return null;  //invalid condition
 		
 		if(l>=i&&r<=j) { 
 			return m[node];
 		}
-		
-		Node arr1 = query(2*node,l,(l+r)/2,m,num,i,j);
-	      Node arr2 = query(2*node+1,((l+r)/2)+1,r,m,num,i,j);
+
+		SegmentTreeNewNode arr1 = query(2*node,l,(l+r)/2,m,num,i,j);
+		SegmentTreeNewNode arr2 = query(2*node+1,((l+r)/2)+1,r,m,num,i,j);
 		
 		if(arr1==null)return arr2;
 		if(arr2==null)return arr1;
-		Node arr = new Node();
+		SegmentTreeNewNode arr = new SegmentTreeNewNode();
 		//logic
 		mulMat(arr.mat,arr1.mat , arr2.mat);
 		return arr;
 	}
 
-	void update(int node,int l,int r,Node[] m,int []num,int i,int j){
+	void update(int node,int l,int r,SegmentTreeNewNode[] m,int []num,int i,int j){
 		if(l>j||r<i||l>r)return ;  //invalid condition
 		
 		if(l>=i&&r<=j) {
@@ -270,7 +273,7 @@ class Node{
 	
 	int hash(String s){
 		int base = 31;
-		int a = 31;//base = a multiplier
+		int a = 31;//base = number1 multiplier
 		int mod = 100005;//range [0..100004]
 		long val = 0;
 		for(int i =  1 ; i<= s.length() ;i++){
@@ -392,7 +395,7 @@ class Node{
 //***********************I/O ENDS ***********************//
 //*********************** 0.3%f [precision]***********************//
 /* roundoff upto 2 digits 
-   double roundOff = Math.round(a * 100.0) / 100.0;
+   double roundOff = Math.round(number1 * 100.0) / 100.0;
                     or
    System.out.printf("%.2f", val);
 					
@@ -429,266 +432,3 @@ class Node{
 
 }
 
-class FastReader{
-
-	private boolean finished = false;
-
-	private InputStream stream;
-	private byte[] buf = new byte[4*1024];
-	private int curChar;
-	private int numChars;
-	private SpaceCharFilter filter;
-
-	public FastReader(InputStream stream){
-		this.stream = stream;
-	}
-
-	public int read(){
-		if (numChars == -1){
-			throw new InputMismatchException ();
-		}
-		if (curChar >= numChars){
-			curChar = 0;
-			try{
-				numChars = stream.read (buf);
-			} catch (IOException e){
-				throw new InputMismatchException ();
-			}
-			if (numChars <= 0){
-				return -1;
-			}
-		}
-		return buf[curChar++];
-	}
-
-	public int peek(){
-		if (numChars == -1){
-			return -1;
-		}
-		if (curChar >= numChars){
-			curChar = 0;
-			try{
-				numChars = stream.read (buf);
-			} catch (IOException e){
-				return -1;
-			}
-			if (numChars <= 0){
-				return -1;
-			}
-		}
-		return buf[curChar];
-	}
-
-	public int nextInt(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		int res = 0;
-		do{
-			if(c==','){
-				c = read();
-			}
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res * sgn;
-	}
-
-	public long nextLong(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		long res = 0;
-		do{
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res * sgn;
-	}
-
-	public String nextString(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		StringBuilder res = new StringBuilder ();
-		do{
-			res.appendCodePoint (c);
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res.toString ();
-	}
-
-	public boolean isSpaceChar(int c){
-		if (filter != null){
-			return filter.isSpaceChar (c);
-		}
-		return isWhitespace (c);
-	}
-
-	public static boolean isWhitespace(int c){
-		return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
-	}
-
-	private String readLine0(){
-		StringBuilder buf = new StringBuilder ();
-		int c = read ();
-		while (c != '\n' && c != -1){
-			if (c != '\r'){
-				buf.appendCodePoint (c);
-			}
-			c = read ();
-		}
-		return buf.toString ();
-	}
-
-	public String nextLine(){
-		String s = readLine0 ();
-		while (s.trim ().length () == 0)
-			s = readLine0 ();
-		return s;
-	}
-
-	public String nextLine(boolean ignoreEmptyLines){
-		if (ignoreEmptyLines){
-			return nextLine ();
-		}else{
-			return readLine0 ();
-		}
-	}
-
-	public BigInteger nextBigInteger(){
-		try{
-			return new BigInteger (nextString ());
-		} catch (NumberFormatException e){
-			throw new InputMismatchException ();
-		}
-	}
-
-	public char nextCharacter(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		return (char) c;
-	}
-
-	public double nextDouble(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		double res = 0;
-		while (!isSpaceChar (c) && c != '.'){
-			if (c == 'e' || c == 'E'){
-				return res * Math.pow (10, nextInt ());
-			}
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		}
-		if (c == '.'){
-			c = read ();
-			double m = 1;
-			while (!isSpaceChar (c)){
-				if (c == 'e' || c == 'E'){
-					return res * Math.pow (10, nextInt ());
-				}
-				if (c < '0' || c > '9'){
-					throw new InputMismatchException ();
-				}
-				m /= 10;
-				res += (c - '0') * m;
-				c = read ();
-			}
-		}
-		return res * sgn;
-	}
-
-	public boolean isExhausted(){
-		int value;
-		while (isSpaceChar (value = peek ()) && value != -1)
-			read ();
-		return value == -1;
-	}
-
-	public String next(){
-		return nextString ();
-	}
-
-	public SpaceCharFilter getFilter(){
-		return filter;
-	}
-
-	public void setFilter(SpaceCharFilter filter){
-		this.filter = filter;
-	}
-
-	public interface SpaceCharFilter{
-		public boolean isSpaceChar(int ch);
-	}
-}
- /******************** Pair class ***********************/
- 
- class Pair implements Comparable<Pair>{
- public int id;
- public String name;
- public long b;
- public long a;
- public long c;
- public Pair(){
-  this.id = 1000;
-  this.name = "s";
-  this.a = 0L;
-  this.b = 0L;
-  this.c = 0L;
- }
- public Pair(int id , long a,long b , long c , String name){
-  this.name = name;
-  this.id = id;
-  this.a = a;
-  this.b = b;
-  this.c = c;
- }
- public int compareTo(Pair p){
-	if(this.a < p.a)return -1;
-	else if(this.a > p.a )return 1;
-	else {
-		if(this.b < p.b)return -1;
-		else if(this.b > p.b )return 1;
-		else {
-			if(this.c < p.c)return -1;
-			else if(this.c > p.c )return 1;
-			else return -this.name.compareTo(p.name);
-		}
-	
-	}
- }
- public String toString(){
-  return "a="+this.a+" b="+this.b;
- }
- 
-} 

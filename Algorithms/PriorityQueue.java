@@ -1,4 +1,8 @@
-class Solution {
+package Algorithms;
+
+import java.util.PriorityQueue;
+
+class PriorityQueueSolution {
 
     class Point{
         int x, y;
@@ -18,7 +22,7 @@ class Solution {
             return null;
         }
         int numPoints = points.length;
-        PriorityQueue<Point> pQueue = new PriorityQueue<Point>(k + 1, (a,b) -> (b.distance - a.distance)); // max elem on top
+        PriorityQueue<Point> pQueue = new PriorityQueue<Point>(k + 1, (a, b) -> (b.distance - a.distance)); // max elem on top
         for(int[] point: points){
             pQueue.add(new Point(point[0], point[1]));
             if(pQueue.size() > k){

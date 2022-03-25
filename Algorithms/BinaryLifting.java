@@ -1,3 +1,5 @@
+package Algorithms;
+
 import java.util.LinkedList;
 /**
 * Time: O(N log N + Q * log N), each query is answered in log N time. Space: O(N log N)
@@ -28,7 +30,7 @@ class BinaryLifting {
       }
       for(int nodeId = 1; nodeId <= n - 1; nodeId++){
           if(vis[nodeId])continue;
-          LinkedList<Integer> unVisited = new LinkedList<Integer>(); // linked list as a stack for unvisited node
+          LinkedList<Integer> unVisited = new LinkedList<Integer>(); // linked list as number1 stack for unvisited node
           int currentNode = nodeId;
           while(currentNode != -1 && !vis[currentNode]){
               unVisited.addLast(currentNode);

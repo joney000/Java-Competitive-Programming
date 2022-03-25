@@ -1,4 +1,4 @@
-//pakage joney_000[let_me_start]
+package Algorithms;//pakage joney_000[let_me_start]
 //
 import java.util.*;
 import java.lang.*;
@@ -12,15 +12,15 @@ import java.math.*;
  */
  
  /*                The Main Class                */
-class Node {
+class HldNodesMainNode {
 	int cnt = 0;
 
 }
-class A
+class HldNodesMain
 {	
     	private InputStream inputStream ;
 	private OutputStream outputStream ;
-	private FastReader in ;
+	private InputReaderAndProcessor in ;
     	private PrintWriter out ;
 	/*
 		Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
@@ -35,8 +35,8 @@ class A
 	private final int  INF  = Integer.MAX_VALUE / 10;
 	private final long INF_L  = Long.MAX_VALUE / 10;
 	
-	public A(){}
-	public A(boolean stdIO)throws FileNotFoundException{
+	public HldNodesMain(){}
+	public HldNodesMain(boolean stdIO)throws FileNotFoundException{
 		if(stdIO){
 			inputStream = System.in;
 			outputStream = System.out;
@@ -44,7 +44,7 @@ class A
 			inputStream = new FileInputStream("input.txt");
 			outputStream = new FileOutputStream("output.txt");
 		}
-		in = new FastReader(inputStream);
+		in = new InputReaderAndProcessor(inputStream);
 		out = new PrintWriter(outputStream);
 		
 	}
@@ -65,7 +65,7 @@ class A
   	int depth[] = new int[N];     // depth of node i in dfs
   	int f[][] = new int[LOGN][N]; //father sparse array
   	int subsize[] = new int[N];  //subtree size of node i
-  	Node st[] = new Node[4 * N + 50000];  // The Segment Tree
+	HldNodesMainNode st[] = new HldNodesMainNode[4 * N + 50000];  // The Segment Tree
   	int log[] = new int[N+5];
   	
   	void run()throws Exception{
@@ -74,7 +74,7 @@ class A
 		 once();
 	//	 for(int t  = 1 ; t<= tests ; t++){
 		 	int n = i(); 
-		 //	A = l(); B = l();
+		 //	BiTSet = l(); B = l();
 		  	for(int i=1;i<=n;i++){
 		   		w[i] = 0;
 		   	}
@@ -142,7 +142,7 @@ class A
 		}
 		
 		for(int i = 0 ; i<= 4 * N + 50000 - 1; i++ ){
-			st[i] = new Node();	
+			st[i] = new HldNodesMainNode();
 		}
 	}	
 	void clear(int n){
@@ -225,10 +225,10 @@ class A
 	//	out.write("here4 lca("+u+","+v+")="+lca+"\n");
 	//	out.flush();
 		int a = query_up(u, lca); // One part of path
-	//	out.write("here5 a(u,lca) = "+a+"\n");
+	//	out.write("here5 number1(u,lca) = "+number1+"\n");
 	//	out.flush();
 		int b = query_up(v, lca); // another part of path
-	//	out.write("here6 b(v,lca) = "+b+"\n");
+	//	out.write("here6 number2(v,lca) = "+number2+"\n");
 	//	out.flush();
 		int ans = Math.max(a,b); // take the minimum of both paths
 		return ans;
@@ -297,7 +297,7 @@ class A
   	}
   	/*
  	 * update_tree:
-	 * Point update. Update a single element of the segment tree.
+	 * Point update. Update number1 single element of the segment tree.
  	*/
   	void update_tree(int curr, int s, int e, int S, int E) {
 		if(s>E||e<S||s>e) return;
@@ -424,7 +424,7 @@ class A
 //***********************I/O ENDS ***********************//
 //*********************** 0.3%f [precision]***********************//
 /* roundoff upto 2 digits 
-   double roundOff = Math.round(a * 100.0) / 100.0;
+   double roundOff = Math.round(number1 * 100.0) / 100.0;
                     or
    System.out.printf("%.2f", val);
 					
@@ -448,8 +448,8 @@ class A
         BufferedWriter out=new BufferedWriter(new OutputStreamWriter(System.out));
 	  BufferedReader br=new BufferedReader(new FileReader("input.txt"));
         BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));
-    */ 	 
-    		 A driver = new A(true);
+    */
+		HldNodesMain driver = new HldNodesMain();
     		 long start =  System.currentTimeMillis();
     		 driver.run();
     		 long end =  System.currentTimeMillis();
@@ -461,228 +461,6 @@ class A
 
 }
 
-class FastReader{
-
-	private boolean finished = false;
-
-	private InputStream stream;
-	private byte[] buf = new byte[8*1024];
-	private int curChar;
-	private int numChars;
-	private SpaceCharFilter filter;
-
-	public FastReader(InputStream stream){
-		this.stream = stream;
-	}
-
-	public int read(){
-		if (numChars == -1){
-			throw new InputMismatchException ();
-		}
-		if (curChar >= numChars){
-			curChar = 0;
-			try{
-				numChars = stream.read (buf);
-			} catch (IOException e){
-				throw new InputMismatchException ();
-			}
-			if (numChars <= 0){
-				return -1;
-			}
-		}
-		return buf[curChar++];
-	}
-
-	public int peek(){
-		if (numChars == -1){
-			return -1;
-		}
-		if (curChar >= numChars){
-			curChar = 0;
-			try{
-				numChars = stream.read (buf);
-			} catch (IOException e){
-				return -1;
-			}
-			if (numChars <= 0){
-				return -1;
-			}
-		}
-		return buf[curChar];
-	}
-
-	public int nextInt(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		int res = 0;
-		do{
-			if(c==','){
-				c = read();
-			}
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res * sgn;
-	}
-
-	public long nextLong(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		long res = 0;
-		do{
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res * sgn;
-	}
-
-	public String nextString(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		StringBuilder res = new StringBuilder ();
-		do{
-			res.appendCodePoint (c);
-			c = read ();
-		} while (!isSpaceChar (c));
-		return res.toString ();
-	}
-
-	public boolean isSpaceChar(int c){
-		if (filter != null){
-			return filter.isSpaceChar (c);
-		}
-		return isWhitespace (c);
-	}
-
-	public static boolean isWhitespace(int c){
-		return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
-	}
-
-	private String readLine0(){
-		StringBuilder buf = new StringBuilder ();
-		int c = read ();
-		while (c != '\n' && c != -1){
-			if (c != '\r'){
-				buf.appendCodePoint (c);
-			}
-			c = read ();
-		}
-		return buf.toString ();
-	}
-
-	public String nextLine(){
-		String s = readLine0 ();
-		while (s.trim ().length () == 0)
-			s = readLine0 ();
-		return s;
-	}
-
-	public String nextLine(boolean ignoreEmptyLines){
-		if (ignoreEmptyLines){
-			return nextLine ();
-		}else{
-			return readLine0 ();
-		}
-	}
-
-	public BigInteger nextBigInteger(){
-		try{
-			return new BigInteger (nextString ());
-		} catch (NumberFormatException e){
-			throw new InputMismatchException ();
-		}
-	}
-
-	public char nextCharacter(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		return (char) c;
-	}
-
-	public double nextDouble(){
-		int c = read ();
-		while (isSpaceChar (c))
-			c = read ();
-		int sgn = 1;
-		if (c == '-'){
-			sgn = -1;
-			c = read ();
-		}
-		double res = 0;
-		while (!isSpaceChar (c) && c != '.'){
-			if (c == 'e' || c == 'E'){
-				return res * Math.pow (10, nextInt ());
-			}
-			if (c < '0' || c > '9'){
-				throw new InputMismatchException ();
-			}
-			res *= 10;
-			res += c - '0';
-			c = read ();
-		}
-		if (c == '.'){
-			c = read ();
-			double m = 1;
-			while (!isSpaceChar (c)){
-				if (c == 'e' || c == 'E'){
-					return res * Math.pow (10, nextInt ());
-				}
-				if (c < '0' || c > '9'){
-					throw new InputMismatchException ();
-				}
-				m /= 10;
-				res += (c - '0') * m;
-				c = read ();
-			}
-		}
-		return res * sgn;
-	}
-
-	public boolean isExhausted(){
-		int value;
-		while (isSpaceChar (value = peek ()) && value != -1)
-			read ();
-		return value == -1;
-	}
-
-	public String next(){
-		return nextString ();
-	}
-
-	public SpaceCharFilter getFilter(){
-		return filter;
-	}
-
-	public void setFilter(SpaceCharFilter filter){
-		this.filter = filter;
-	}
-
-	public interface SpaceCharFilter{
-		public boolean isSpaceChar(int ch);
-	}
-}
  /******************** Pair class ***********************/
  
  class Pair implements Comparable<Pair>{
@@ -703,7 +481,7 @@ class FastReader{
   return this.a-p.a; 
  }
  public String toString(){
-  return "a="+this.a+" b="+this.b;
+  return "number1="+this.a+" number2="+this.b;
  }
  
 } 

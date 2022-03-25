@@ -1,14 +1,16 @@
-// Time Complexity : O(N) and Space O(N) Heap space,
+package Algorithms;// Time Complexity : O(N) and Space O(N) Heap space,
 // Advantage over stack approach: handle cycle detection
 
-class Solution {
+import java.util.LinkedList;
+
+class TopologicalOrderBfs {
     public boolean isCycle(int numCourses, int[][] prerequisites) {
         if(numCourses <= 1)return true;
         try{
             
             int d[] = new int[numCourses];
 	   				// Graph as Adj List
-						LinkedList<Integer> [] adj = new LinkedList[numCourses];
+						LinkedList<Integer>[] adj = new LinkedList[numCourses];
 	  				for(int vertex = 0; vertex < numCourses; vertex ++){
 							adj[vertex] = new LinkedList<Integer>();
 						}

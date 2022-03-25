@@ -1,0 +1,13 @@
+ long tos(long n , long arr[] , int st){ 
+        
+       long result = n;
+	 
+       for(int i=0;i < st && n>=arr[i];i++) 
+        { 
+		  if(n<arr[i])break;
+          if (n % arr[i] == 0) result -= result / arr[i]; 
+          while (n % arr[i] == 0) n /= arr[i]; 
+        } 
+        if (n > 1) result -= result / n; 
+        return result; 
+ }

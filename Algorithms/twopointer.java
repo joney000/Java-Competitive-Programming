@@ -1,3 +1,7 @@
+package Algorithms;
+
+import Algorithms.InputReaderAndProcessor;
+
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -9,21 +13,21 @@ import java.math.*;
  * Algorithm 	: 
  * Date         : 20/march/2015
  */ 
- class Solution implements Comparable<Solution>{
+ class TwoPointerSolution implements Comparable<TwoPointerSolution>{
 	 public int vertex;
 	 public long weight; 
 	 //public provide flexibility to access from outside the the class
 	 //at the cost of security
-	 public Solution(){
+	 public TwoPointerSolution(){
 		this.vertex = 0;
 		this.weight = 0L;
 	 }
-	 public Solution(int node , long weight){
+	 public TwoPointerSolution(int node , long weight){
 		 this.vertex = node;
 		 this.weight = weight;
 	 }
 	 @Override
-	 public int compareTo(Solution e){
+	 public int compareTo(TwoPointerSolution e){
 		 if(this.weight<e.weight)return -1;
 		 else if(this.weight==e.weight) return 0;
 		 else return 1;
@@ -37,16 +41,21 @@ import java.math.*;
 	private int numChars;
 	private SpaceCharFilter filter;		  
 
-public Solution(InputStream stream){
+public TwoPointerSolution(InputStream stream){
 		this.stream = stream;
 	}
     public static InputStream inputStream = System.in;
 	public static OutputStream outputStream = System.out;
-	public static Solution in = new Solution(inputStream);
-    public static PrintWriter out = new PrintWriter(outputStream);
+	public static InputReaderAndProcessor in;
+
+	static {
+		in = new InputReaderAndProcessor(inputStream);
+	}
+
+	public static PrintWriter out = new PrintWriter(outputStream);
 	/*
 	 *  Overhead [Additional Temporary Storage] 
-	 *  But it save a lot of time and Re Allocation of Space . it Reuse The same Buffers for all the Test Cases.
+	 *  But it save number1 lot of time and Re Allocation of Space . it Reuse The same Buffers for all the Test Cases.
 	 *  take care of Limit : 10^5 + 5 (Runtime Error:OverFlow)
 	 */
 	public static int tempints[] = new int[100005];
@@ -82,12 +91,12 @@ public Solution(InputStream stream){
 			int r1[] = new int[(int)n+1];
 			int r2[] = new int[(int)n+1];
 			
-			for(int i=1;i<=n;i++)//adj[i] = new ArrayList<Solution>();
+			for(int i=1;i<=n;i++)//adj[i] = new ArrayList<Dijkstra>();
 			{	
 				r1[i-1] = i();
 			}
 			
-			for(int i=1;i<=n;i++)//adj[i] = new ArrayList<Solution>();
+			for(int i=1;i<=n;i++)//adj[i] = new ArrayList<Dijkstra>();
 			{	
 				r2[i-1] = i();
 			}
@@ -165,13 +174,13 @@ public Solution(InputStream stream){
  }
 //							My I/O function                    	//
 public static int i()throws Exception{
- return in.nextInt();                   					   //read a single Integer
+ return in.nextInt();                   					   //read number1 single Integer
 }
 public static int[] is(int n)throws Exception{               
   for(int i=1 ; i <= n ;i++)tempints[i] = in.nextInt();        //read N integers
  return tempints;
 }
-public static long l()throws Exception{                        //read a single Long
+public static long l()throws Exception{                        //read number1 single Long
  return in.nextLong();
 }
 public static long[] ls(int n)throws Exception{				   //read N Long type digits
@@ -203,7 +212,7 @@ public static BigInteger bi()throws Exception{
 //*********************** for 0.2%f [precision data]***********************//
  /* 
   * roundoff upto 2 digits 
-  * double roundOff = Math.round(a * 100.0) / 100.0;
+  * double roundOff = Math.round(number1 * 100.0) / 100.0;
   *                  or
   * System.out.printf("%.2f", val);
   *				

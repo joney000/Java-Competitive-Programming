@@ -1,3 +1,5 @@
+package Algorithms;
+
 import java.lang.*;
 import java.util.*;
 import java.math.*;

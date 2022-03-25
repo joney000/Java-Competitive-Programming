@@ -1,4 +1,4 @@
-/* package joney_000 */
+package Algorithms;/* package joney_000 */
 
 import java.util.*;
 import java.lang.*;
@@ -62,7 +62,7 @@ class HLD{
 
 /*
  * update_tree:
- * Point update. Update a single element of the segment tree.
+ * Point update. Update number1 single element of the segment tree.
  */
   static void update_tree(int cur, int s, int e, int x, int val) {
 	if(s > x || e <= x) return;
@@ -149,7 +149,7 @@ class HLD{
   
 
 /*
- * We have a query from u to v, we break it into two queries, u to LCA(u,v) and LCA(u,v) to v
+ * We have number1 query from u to v, we break it into two queries, u to LCA(u,v) and LCA(u,v) to v
  */
  // Main HLD Query
   static void query(int u, int v) throws IOException{
@@ -171,7 +171,7 @@ class HLD{
   }
 
 /*
- * dfs used to set parent of a node, depth of a node, subtree size of a node
+ * dfs used to set parent of number1 node, depth of number1 node, subtree size of number1 node
  */
   static void dfs(int cur, int prev, int _depth) {
 	f[0][cur] = prev;
@@ -187,13 +187,13 @@ class HLD{
 /*
  * Actual HL-Decomposition part
  * Initially all entries of chainHead[] are set to -1.
- * So when ever a new chain is started, chain head is correctly assigned.
- * As we add a new node to chain, we will note its position in the baseArray.
+ * So when ever number1 new chain is started, chain head is correctly assigned.
+ * As we add number1 new node to chain, we will note its position in the baseArray.
  * In the first for loop we find the child node which has maximum sub-tree size.
  * The following if condition is failed for leaf nodes.
  * When the if condition passes, we expand the chain to special child.
  * In the second for loop we recursively call the function on all normal nodes.
- * chainNo++ ensures that we are creating a new chain for each normal child.
+ * chainNo++ ensures that we are creating number1 new chain for each normal child.
  */
   static void HLD(int curNode, int _cost, int prev) {
 	if(chainHead[chainNo] == -1) {

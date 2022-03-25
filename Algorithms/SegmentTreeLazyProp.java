@@ -1,4 +1,4 @@
-//pakage joney_000[let_me_start]
+package Algorithms;//pakage joney_000[let_me_start]
 //
 import java.util.*;
 import java.lang.*;
@@ -10,17 +10,17 @@ import java.math.*;
  * Platform  : CodeChef.com
  *
  */
-class Node{
+class SegmentTreeNode {
 
   public long val = 1L;  
   public long lazy = 0L;
   
-  public Node(){
+  public SegmentTreeNode(){
     this.val  = 1; 
     this.lazy = 0;
   }
 
-  public Node(long val, long lazy){
+  public SegmentTreeNode(long val, long lazy){
     this.val = val;
     this.lazy = lazy;
   }
@@ -33,12 +33,12 @@ class Node{
 }
 
 /*    The Main Class                */
-class A
+class SegmentTreeLazyProp
 { 
   
   private InputStream inputStream ;
   private OutputStream outputStream ;
-  private FastReader in ;
+  private InputReaderAndProcessor in ;
   private PrintWriter out ;
   /*
     Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
@@ -53,8 +53,8 @@ class A
   private final int  INF  = Integer.MAX_VALUE / 10;
   private final long INF_L  = Long.MAX_VALUE / 10;
 
-  public A(){}
-  public A(boolean stdIO)throws FileNotFoundException{
+  public SegmentTreeLazyProp(){}
+  public SegmentTreeLazyProp(boolean stdIO)throws FileNotFoundException{
     // stdIO = false;
     if(stdIO){
       inputStream = System.in;
@@ -63,7 +63,7 @@ class A
       inputStream = new FileInputStream("output.txt");
       outputStream = new FileOutputStream("output1.txt");
     }
-    in = new FastReader(inputStream);
+    in = new InputReaderAndProcessor(inputStream);
     out = new PrintWriter(outputStream);
 
   }
@@ -72,7 +72,7 @@ class A
   int MAX_M = 100005;
   int n = 0;
   int q = 0;
-  Node[] m = new Node[4*MAX_M+100001];//size ~ 2*n+1
+  SegmentTreeNode[] m = new SegmentTreeNode[4*MAX_M+100001];//size ~ 2*n+1
 
   // prob specific
   int qry[][] = new int[3][MAX_M + 5];
@@ -90,13 +90,13 @@ class A
       // maketree(1, 1, n, m, num);
       for(int i = q ; i >= 1; i--){
         if(qry[0][i] == 1){
-          Node res = query(1, 1, q, m, cnt, i, i);
+          SegmentTreeNode res = query(1, 1, q, m, cnt, i, i);
           // out.write("res_val = "+res+"\n");
           // out.flush();
           cnt[qry[1][i]] = (cnt[qry[1][i]] + res.val)%mod;
           cnt[qry[2][i] + 1] = (cnt[qry[2][i] + 1] - res.val + mod)%mod;
         }else{
-          Node res = query(1, 1, q, m, cnt, i, i);
+          SegmentTreeNode res = query(1, 1, q, m, cnt, i, i);
           update(1, 1, q, m, cnt, qry[1][i], qry[2][i], res.val);
         }
       }
@@ -111,7 +111,7 @@ class A
 
   void once(){
     for(int i = 1; i <= 4 * MAX_M + 100000; i++){
-      m[i] = new Node();
+      m[i] = new SegmentTreeNode();
     }
   }
 
@@ -123,7 +123,7 @@ class A
     for(int i = 1; i <= MAX_N; i++)cnt[i] = 0;
   }
 
-  void maketree(int node, int i, int j, Node[] m, long []num){
+  void maketree(int node, int i, int j, SegmentTreeNode[] m, long []num){
     if(i==j){
       //node[node].data = num[i];
       return;
@@ -135,7 +135,7 @@ class A
     //printMat(m[node].mat);
   }
 
-  Node query(int node, int l, int r, Node[] m, long []num, int i, int j){
+  SegmentTreeNode query(int node, int l, int r, SegmentTreeNode[] m, long []num, int i, int j){
     if(l>j||r<i||l>r)return null;  //invalid condition
     // out.write("qry l = "+l+", r = "+r+", i = "+i+", j = "+j+"\n");
     // out.flush();
@@ -144,19 +144,19 @@ class A
     if(l>=i&&r<=j) { 
       return m[node];
     }
-    
-    Node arr1 = query(2*node, l,(l+r)/2, m, num, i, j);
-    Node arr2 = query(2*node + 1, ((l+r)/2)+1, r, m, num, i, j);
+
+    SegmentTreeNode arr1 = query(2*node, l,(l+r)/2, m, num, i, j);
+    SegmentTreeNode arr2 = query(2*node + 1, ((l+r)/2)+1, r, m, num, i, j);
     
     if(arr1==null)return arr2;
     if(arr2==null)return arr1;
-     Node arr = new Node();
+    SegmentTreeNode arr = new SegmentTreeNode();
     //logic
     
     return arr;
   }
 
-  void update(int node, int l, int r, Node[] m, long []num, int i, int j, long val)throws Exception{
+  void update(int node, int l, int r, SegmentTreeNode[] m, long []num, int i, int j, long val)throws Exception{
     if(l>j||r<i||l>r)return ;  //invalid condition
 
     pushDown(node, m, num);
@@ -172,7 +172,7 @@ class A
 
  }
 
- void pushDown(int node, Node[] m, long[] num){
+ void pushDown(int node, SegmentTreeNode[] m, long[] num){
 
     m[node].val = (m[node].val + m[node].lazy) % mod;
 
@@ -301,7 +301,7 @@ long[][] ncrTable(){
 //***********************I/O ENDS ***********************//
 //*********************** 0.3%f [precision]***********************//
 /* roundoff upto 2 digits 
-   double roundOff = Math.round(a * 100.0) / 100.0;
+   double roundOff = Math.round(number1 * 100.0) / 100.0;
                     or
    System.out.printf("%.2f", val);
           
@@ -328,7 +328,7 @@ long[][] ncrTable(){
     BufferedReader br=new BufferedReader(new FileReader("input.txt"));
         BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));
     */   
-        A driver = new A(true);
+        SegmentTreeLazyProp driver = new SegmentTreeLazyProp(true);
         
         driver.run();
 
@@ -336,254 +336,4 @@ long[][] ncrTable(){
         return ;
 
       }  
-
     }
-
-    class FastReader{
-
-      private boolean finished = false;
-
-      private InputStream stream;
-      private byte[] buf = new byte[4 * 1024];
-      private int curChar;
-      private int numChars;
-      private SpaceCharFilter filter;
-
-      public FastReader(InputStream stream){
-        this.stream = stream;
-      }
-
-      public int read(){
-        if (numChars == -1){
-          throw new InputMismatchException ();
-        }
-        if (curChar >= numChars){
-          curChar = 0;
-          try{
-            numChars = stream.read (buf);
-          } catch (IOException e){
-            throw new InputMismatchException ();
-          }
-          if (numChars <= 0){
-            return -1;
-          }
-        }
-        return buf[curChar++];
-      }
-
-      public int peek(){
-        if (numChars == -1){
-          return -1;
-        }
-        if (curChar >= numChars){
-          curChar = 0;
-          try{
-            numChars = stream.read (buf);
-          } catch (IOException e){
-            return -1;
-          }
-          if (numChars <= 0){
-            return -1;
-          }
-        }
-        return buf[curChar];
-      }
-
-      public int nextInt(){
-        int c = read ();
-        while (isSpaceChar (c))
-          c = read ();
-        int sgn = 1;
-        if (c == '-'){
-          sgn = -1;
-          c = read ();
-        }
-        int res = 0;
-        do{
-          if(c==','){
-            c = read();
-          }
-          if (c < '0' || c > '9'){
-            throw new InputMismatchException ();
-          }
-          res *= 10;
-          res += c - '0';
-          c = read ();
-        } while (!isSpaceChar (c));
-        return res * sgn;
-      }
-
-      public long nextLong(){
-        int c = read ();
-        while (isSpaceChar (c))
-          c = read ();
-        int sgn = 1;
-        if (c == '-'){
-          sgn = -1;
-          c = read ();
-        }
-        long res = 0;
-        do{
-          if (c < '0' || c > '9'){
-            throw new InputMismatchException ();
-          }
-          res *= 10;
-          res += c - '0';
-          c = read ();
-        } while (!isSpaceChar (c));
-        return res * sgn;
-      }
-
-      public String nextString(){
-        int c = read ();
-        while (isSpaceChar (c))
-          c = read ();
-        StringBuilder res = new StringBuilder ();
-        do{
-          res.appendCodePoint (c);
-          c = read ();
-        } while (!isSpaceChar (c));
-        return res.toString ();
-      }
-
-      public boolean isSpaceChar(int c){
-        if (filter != null){
-          return filter.isSpaceChar (c);
-        }
-        return isWhitespace (c);
-      }
-
-      public static boolean isWhitespace(int c){
-        return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
-      }
-
-      private String readLine0(){
-        StringBuilder buf = new StringBuilder ();
-        int c = read ();
-        while (c != '\n' && c != -1){
-          if (c != '\r'){
-            buf.appendCodePoint (c);
-          }
-          c = read ();
-        }
-        return buf.toString ();
-      }
-
-      public String nextLine(){
-        String s = readLine0 ();
-        while (s.trim ().length () == 0)
-          s = readLine0 ();
-        return s;
-      }
-
-      public String nextLine(boolean ignoreEmptyLines){
-        if (ignoreEmptyLines){
-          return nextLine ();
-        }else{
-          return readLine0 ();
-        }
-      }
-
-      public BigInteger nextBigInteger(){
-        try{
-          return new BigInteger (nextString ());
-        } catch (NumberFormatException e){
-          throw new InputMismatchException ();
-        }
-      }
-
-      public char nextCharacter(){
-        int c = read ();
-        while (isSpaceChar (c))
-          c = read ();
-        return (char) c;
-      }
-
-      public double nextDouble(){
-        int c = read ();
-        while (isSpaceChar (c))
-          c = read ();
-        int sgn = 1;
-        if (c == '-'){
-          sgn = -1;
-          c = read ();
-        }
-        double res = 0;
-        while (!isSpaceChar (c) && c != '.'){
-          if (c == 'e' || c == 'E'){
-            return res * Math.pow (10, nextInt ());
-          }
-          if (c < '0' || c > '9'){
-            throw new InputMismatchException ();
-          }
-          res *= 10;
-          res += c - '0';
-          c = read ();
-        }
-        if (c == '.'){
-          c = read ();
-          double m = 1;
-          while (!isSpaceChar (c)){
-            if (c == 'e' || c == 'E'){
-              return res * Math.pow (10, nextInt ());
-            }
-            if (c < '0' || c > '9'){
-              throw new InputMismatchException ();
-            }
-            m /= 10;
-            res += (c - '0') * m;
-            c = read ();
-          }
-        }
-        return res * sgn;
-      }
-
-      public boolean isExhausted(){
-        int value;
-        while (isSpaceChar (value = peek ()) && value != -1)
-          read ();
-        return value == -1;
-      }
-
-      public String next(){
-        return nextString ();
-      }
-
-      public SpaceCharFilter getFilter(){
-        return filter;
-      }
-
-      public void setFilter(SpaceCharFilter filter){
-        this.filter = filter;
-      }
-
-      public interface SpaceCharFilter{
-        public boolean isSpaceChar(int ch);
-      }
-    }
-    /******************** Pair class ***********************/
-
-  class Pair implements Comparable<Pair>{
-     public int a;
-     public int b;
-          public int c;
-     public Pair(){
-      this.a = 0;
-      this.b = 0;
-    }
-    public Pair(int a,int b, int c){
-      this.a = a;
-      this.b = b;
-      this.c = c;
-    }
-    public int compareTo(Pair p){
-      if(this.a==p.a){
-       return this.b-p.b;  
-     }
-     return p.a-this.a; 
-   }
-   public String toString(){
-    return "a="+this.a+" b="+this.b;
-  }
-
-} 

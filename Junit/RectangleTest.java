@@ -1,3 +1,5 @@
+package Junit;
+
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
@@ -5,7 +7,7 @@ import org.junit.runner.notification.Failure;
 
 import static org.junit.Assert.*;
 
-public class Solution {
+public class RectangleTest {
 
     public static class Rectangle {
 
@@ -134,7 +136,7 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(Solution.class);
+        Result result = JUnitCore.runClasses(RectangleTest.class);
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
         }

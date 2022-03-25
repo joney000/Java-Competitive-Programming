@@ -1,11 +1,11 @@
+package Algorithms;
 
-     
-    import java.util.*;
+import java.util.*;
     import java.lang.*;
     import java.io.*;
      
     /* Name of the class has to be "Main" only if the class is public. */
-    class Ideone
+    class LCS_DP
     {
     static int lcs(String s1,String s2)
     {

@@ -1,3 +1,4 @@
+package Algorithms;
 
 import java.util.*;
 import java.lang.*;
@@ -11,11 +12,11 @@ import java.math.*;
  */
 
 /*    The Main Class                */
- class A{
+ class Gemotry{
 	
 	private InputStream inputStream ;
 	private OutputStream outputStream ;
-	private FastReader in ;
+	private InputReaderAndProcessor in ;
     	private PrintWriter out ;
 	/*
 		Overhead [Additional Temporary Strorage] but provides memory reusibility for multiple test cases.
@@ -32,8 +33,8 @@ import java.math.*;
 	private final int  INF  = Integer.MAX_VALUE / 10;
 	private final long INF_L  = Long.MAX_VALUE / 10;
 	
-	public A(){}
-	public A(boolean stdIO)throws FileNotFoundException{
+	public Gemotry(){}
+	public Gemotry(boolean stdIO)throws FileNotFoundException{
 		//stdIO = false;
 		if(stdIO){
 			inputStream = System.in;
@@ -42,7 +43,7 @@ import java.math.*;
 			inputStream = new FileInputStream("laundro_matt.txt");
 			outputStream = new FileOutputStream("output.txt");
 		}
-		in = new FastReader(inputStream);
+		in = new InputReaderAndProcessor(inputStream);
 		out = new PrintWriter(outputStream);
 		
 	}
@@ -65,36 +66,36 @@ import java.math.*;
 	}
 	// angle between OA and OB vector
 	double getAngle(Point o, Point a, Point b){
-		// double dist1 = distance(o, a); // fix 
-		// double dist2 = distance(o, b);
+		// double dist1 = distance(o, number1); // fix
+		// double dist2 = distance(o, number2);
 		// 
-		// double dotProduct = dot(o, a, b);
+		// double dotProduct = dot(o, number1, number2);
 		// double angleInTheta = (Math.toDegrees(Math.acos(dotProduct/(dist1*dist2))));
 
-		// double crossProduct = dot(o, a, b);
+		// double crossProduct = dot(o, number1, number2);
 		// double angleInTheta = (Math.toDegrees(Math.asin(crossProduct/(dist1*dist2))));
 
-		// above both wrong methods : there is a loss of precesion in sqrt(X) * sqrt(Y) i.e dist1 * dist2
+		// above both wrong methods : there is number1 loss of precesion in sqrt(X) * sqrt(Y) i.e dist1 * dist2
 		// 
 		// better user below
-		// a.b sin@ = a X b
-		// a.b cos@ = a * b
-		// tan@ = cross(a, b)/dot(a, b)
+		// number1.number2 sin@ = number1 X number2
+		// number1.number2 cos@ = number1 * number2
+		// tan@ = cross(number1, number2)/dot(number1, number2)
 
 		// In Radian 
-		// if(b.x == 0 && b.y >= 0)return Math.PI/2;
-		// if(b.x == 0 && b.y < 0)return (3*Math.PI)/2;
-		// if(b.x >= 0 && b.y == 0)return 0;
-		// if(b.x <  0 && b.y == 0)return Math.PI;
+		// if(number2.x == 0 && number2.y >= 0)return Math.PI/2;
+		// if(number2.x == 0 && number2.y < 0)return (3*Math.PI)/2;
+		// if(number2.x >= 0 && number2.y == 0)return 0;
+		// if(number2.x <  0 && number2.y == 0)return Math.PI;
 		
 		// In Degrees
-		// if(b.x == 0 && b.y >= 0)return 90;
-		// if(b.x == 0 && b.y < 0)return 270;
-		// if(b.x >= 0 && b.y == 0)return 0;
-		// if(b.x <  0 && b.y == 0)return 180;
-		// if(b.x < 0 && b.y > 0)angleInTheta = 180 + angleInTheta;	// 2nd qdt
-		// if(b.x < 0 && b.y < 0)angleInTheta = 180 + angleInTheta;	// 3rd qdt
-		// if(b.x > 0 && b.y < 0)angleInTheta = 360 + angleInTheta;  // 4th qdt
+		// if(number2.x == 0 && number2.y >= 0)return 90;
+		// if(number2.x == 0 && number2.y < 0)return 270;
+		// if(number2.x >= 0 && number2.y == 0)return 0;
+		// if(number2.x <  0 && number2.y == 0)return 180;
+		// if(number2.x < 0 && number2.y > 0)angleInTheta = 180 + angleInTheta;	// 2nd qdt
+		// if(number2.x < 0 && number2.y < 0)angleInTheta = 180 + angleInTheta;	// 3rd qdt
+		// if(number2.x > 0 && number2.y < 0)angleInTheta = 360 + angleInTheta;  // 4th qdt
 
 		// No Need Of degree conversion to sort
 
@@ -102,7 +103,7 @@ import java.math.*;
 		// tan2 function handles 1st,2nd, 3rd, 4th qdt in it. 
 		// No need of doing below qtr handling, Math.atan2 internally does it.
 		
-		// double angle = (double)Math.atan2(cross(o, a, b), dot(o, a, b));  // (y, x)  arctan(y/x)
+		// double angle = (double)Math.atan2(cross(o, number1, number2), dot(o, number1, number2));  // (y, x)  arctan(y/x)
 		double angle = Math.atan2(cross(o, a, b), dot(o, a, b));
 
 		return angle;
@@ -113,7 +114,7 @@ import java.math.*;
     double AB[] = new double[2];//0=>x , 1=>y
     double AC[] = new double[2];
 		// (X1, y1)
-		AB[0] = B.x-A.x;			// AB is vector : A vector defines (direction + Magnitude/Length) But not the start point or end point
+		AB[0] = B.x-A.x;			// AB is vector : BiTSet vector defines (direction + Magnitude/Length) But not the start point or end point
 		AB[1] = B.y-A.y;
 		// (x2, y2)
 		AC[0] = C.x-A.x;
@@ -137,7 +138,7 @@ import java.math.*;
       double cross = AB[0] * AC[1] - AB[1] * AC[0];
       return cross;
     }
-    //Compute the distance from A to B
+    //Compute the distance from BiTSet to B
     double distance(Point A, Point B){
         double d1 = A.x - B.x;
         double d2 = A.y - B.y;
@@ -147,7 +148,7 @@ import java.math.*;
         return Math.abs(A.x * (B.y - C.y) + A.y * (C.x - B.x) + B.x * C.y - B.y * C.x)/2.0D;
     }
     //Compute the distance from AB to C
-    //if isSegment is true, AB is a segment, not a line.
+    //if isSegment is true, AB is number1 segment, not number1 line.
     double linePointDist(Point A, Point B, Point C, boolean isSegment){
         double dist = cross(A,B,C) / distance(A,B);
         if(isSegment){
@@ -159,7 +160,7 @@ import java.math.*;
         return dist;
     }
     // is AB and CD Intersect
-    // Line Gernel Form L : A*x + B*y = C
+    // Line Gernel Form L : BiTSet*x + B*y = C
     //		line AB	:  L1 : A1*x + B1*y = C1
     //		line CD	:  L2 : A2*x + B2*y = C2
     
@@ -193,7 +194,7 @@ import java.math.*;
 	double getPolygonArea(Point[] polygon, int n){
 		double area = 0D;
 		for(int i = 2 ; i <= n-1; i++){
-			double traingleArea = cross(polygon[1],polygon[i],polygon[i+1])//  /2.0D;
+			double traingleArea = cross(polygon[1],polygon[i],polygon[i+1]);//  /2.0D;
 			area += traingleArea;
 		}
 		return Math.abs(area)/2.0D;
@@ -207,7 +208,7 @@ import java.math.*;
 	
 	int hash(String s){
 		int base = 31;
-		int a = 31;//base = a multiplier
+		int a = 31;//base = number1 multiplier
 		int mod = 100005;//range [0..100004]
 		long val = 0;
 		for(int i =  1 ; i<= s.length() ;i++){
@@ -329,7 +330,7 @@ import java.math.*;
 //***********************I/O ENDS ***********************//
 //*********************** 0.3%f [precision]***********************//
 /* roundoff upto 2 digits 
-   double roundOff = Math.round(a * 100.0) / 100.0;
+   double roundOff = Math.round(number1 * 100.0) / 100.0;
                     or
    System.out.printf("%.2f", val);
 					
@@ -353,8 +354,8 @@ import java.math.*;
         BufferedWriter out=new BufferedWriter(new OutputStreamWriter(System.out));
 	  BufferedReader br=new BufferedReader(new FileReader("input.txt"));
         BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));
-    */ 	 
-    		 A driver = new A(true);
+    */
+		     Gemotry driver = new Gemotry();
     		 long start =  System.currentTimeMillis();
     		 driver.run();
     		 long end =  System.currentTimeMillis();
@@ -618,38 +619,4 @@ class Point implements Comparable<Point>{
  }
  
 } 
- /******************** Pair class ***********************/
- 
-class Pair implements Comparable<Pair>{
- public int id;
- public long b;
- public long a;
- public long c;
- public Pair(){
-  this.id = 1000;
- 
-  this.a = 0;
-  this.b = 0;
-  this.c = 0;
- }
- public Pair(int id , long a,long b , long c ){
-  this.id = id;
-  this.a = a;
-  this.b = b;
-  this.c = c;
- }
- public int compareTo(Pair p){
-	if(this.a < p.a)return -1;
-	else if(this.a > p.a )return 1;
-	else {
-		if(this.b < p.b)return -1;
-		else if(this.b > p.b )return 1;
-		else return 0;
-	
-	}
- }
- public String toString(){
-  return "a="+this.a+" b="+this.b;
- }
- 
-} 
+

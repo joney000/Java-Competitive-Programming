@@ -1,513 +1,408 @@
- 
+package Algorithms;
 
- import java.util.Scanner;
+import java.util.Scanner;
 
- 
 
- /* Class BSTNode */
 
- class BSTNode
+/* Class BSTNode */
 
- {
+class BSTNode {
 
-     BSTNode left, right;
+    BSTNode left, right;
+    int data;
+    /* Constructor */
 
-     int data;
+    public BSTNode() {
 
- 
+        left = null;
 
-     /* Constructor */
+        right = null;
 
-     public BSTNode()
+        data = 0;
 
-     {
+    }
 
-         left = null;
+    /* Constructor */
 
-         right = null;
+    public BSTNode(int n) {
 
-         data = 0;
+        left = null;
 
-     }
+        right = null;
 
-     /* Constructor */
+        data = n;
 
-     public BSTNode(int n)
+    }
 
-     {
+    /* Function to set left node */
 
-         left = null;
+    public void setLeft(BSTNode n) {
 
-         right = null;
+        left = n;
 
-         data = n;
+    }
 
-     }
+    /* Function to set right node */
 
-     /* Function to set left node */
+    public void setRight(BSTNode n) {
 
-     public void setLeft(BSTNode n)
+        right = n;
 
-     {
+    }
 
-         left = n;
+    /* Function to get left node */
 
-     }
+    public BSTNode getLeft() {
 
-     /* Function to set right node */ 
+        return left;
 
-     public void setRight(BSTNode n)
+    }
 
-     {
+    /* Function to get right node */
 
-         right = n;
+    public BSTNode getRight() {
 
-     }
+        return right;
 
-     /* Function to get left node */
+    }
 
-     public BSTNode getLeft()
+    /* Function to set data to node */
 
-     {
+    public void setData(int d) {
 
-         return left;
+        data = d;
 
-     }
+    }
 
-     /* Function to get right node */
+    /* Function to get data from node */
 
-     public BSTNode getRight()
+    public int getData() {
 
-     {
+        return data;
 
-         return right;
+    }
+    /* Function to insert data recursively */
 
-     }
+    public BSTNode insert(BSTNode node, int data) {
 
-     /* Function to set data to node */
+        if (node == null)
 
-     public void setData(int d)
+            node = new BSTNode(data);
 
-     {
+        else {
 
-         data = d;
+            if (data <= node.getData())
 
-     }
+                node.left = insert(node.left, data);
 
-     /* Function to get data from node */
+            else
 
-     public int getData()
+                node.right = insert(node.right, data);
 
-     {
+        }
 
-         return data;
+        return node;
 
-     }     
+    }
 
- }
+}
 
- 
 
- /* Class BST */
 
- class BST
+/* Class BST */
 
- {
+class BST {
 
-     private BSTNode root;
+    private BSTNode root;
+    /* Constructor */
 
- 
+    public BST() {
 
-     /* Constructor */
+        root = null;
 
-     public BST()
+    }
 
-     {
+    /* Function to check if tree is empty */
 
-         root = null;
+    public boolean isEmpty() {
 
-     }
+        return root == null;
 
-     /* Function to check if tree is empty */
+    }
 
-     public boolean isEmpty()
+    /* Functions to insert data */
 
-     {
+    public void insert(int data) {
+        root = root.insert(root, data);
+    }
 
-         return root == null;
+    /* Functions to delete data */
 
-     }
+    public void delete(int k) {
 
-     /* Functions to insert data */
+        if (isEmpty())
 
-     public void insert(int data)
+            System.out.println("Tree Empty");
 
-     {
+        else if (search(k) == false)
 
-         root = insert(root, data);
+            System.out.println("Sorry " + k + " is not present");
 
-     }
+        else {
 
-     /* Function to insert data recursively */
+            root = delete(root, k);
 
-     private BSTNode insert(BSTNode node, int data)
+            System.out.println(k + " deleted from the tree");
 
-     {
+        }
 
-         if (node == null)
+    }
 
-             node = new BSTNode(data);
+    private BSTNode delete(BSTNode root, int k) {
 
-         else
+        BSTNode p, p2, n;
 
-         {
+        if (root.getData() == k) {
 
-             if (data <= node.getData())
+            BSTNode lt, rt;
 
-                 node.left = insert(node.left, data);
+            lt = root.getLeft();
 
-             else
+            rt = root.getRight();
 
-                 node.right = insert(node.right, data);
+            if (lt == null && rt == null)
 
-         }
+                return null;
 
-         return node;
+            else if (lt == null) {
 
-     }
+                p = rt;
 
-     /* Functions to delete data */
+                return p;
 
-     public void delete(int k)
+            } else if (rt == null) {
 
-     {
+                p = lt;
 
-         if (isEmpty())
+                return p;
 
-             System.out.println("Tree Empty");
+            } else {
 
-         else if (search(k) == false)
+                p2 = rt;
 
-             System.out.println("Sorry "+ k +" is not present");
+                p = rt;
 
-         else
+                while (p.getLeft() != null)
 
-         {
+                    p = p.getLeft();
 
-             root = delete(root, k);
+                p.setLeft(lt);
 
-             System.out.println(k+ " deleted from the tree");
+                return p2;
 
-         }
+            }
 
-     }
+        }
 
-     private BSTNode delete(BSTNode root, int k)
+        if (k < root.getData()) {
 
-     {
+            n = delete(root.getLeft(), k);
 
-         BSTNode p, p2, n;
+            root.setLeft(n);
 
-         if (root.getData() == k)
+        } else {
 
-         {
+            n = delete(root.getRight(), k);
 
-             BSTNode lt, rt;
+            root.setRight(n);
 
-             lt = root.getLeft();
+        }
 
-             rt = root.getRight();
+        return root;
 
-             if (lt == null && rt == null)
+    }
 
-                 return null;
+    /* Functions to count number of nodes */
 
-             else if (lt == null)
+    public int countNodes() {
 
-             {
+        return countNodes(root);
 
-                 p = rt;
+    }
 
-                 return p;
+    /* Function to count number of nodes recursively */
 
-             }
+    private int countNodes(BSTNode r) {
 
-             else if (rt == null)
+        if (r == null)
 
-             {
+            return 0;
 
-                 p = lt;
+        else {
 
-                 return p;
+            int l = 1;
 
-             }
+            l += countNodes(r.getLeft());
 
-             else
+            l += countNodes(r.getRight());
 
-             {
+            return l;
 
-                 p2 = rt;
+        }
 
-                 p = rt;
+    }
 
-                 while (p.getLeft() != null)
+    /* Functions to search for an element */
 
-                     p = p.getLeft();
+    public boolean search(int val) {
 
-                 p.setLeft(lt);
+        return search(root, val);
 
-                 return p2;
+    }
 
-             }
+    /* Function to search for an element recursively */
 
-         }
+    private boolean search(BSTNode r, int val) {
 
-         if (k < root.getData())
+        boolean found = false;
 
-         {
+        while ((r != null) && !found) {
 
-             n = delete(root.getLeft(), k);
+            int rval = r.getData();
 
-             root.setLeft(n);
+            if (val < rval)
 
-         }
+                r = r.getLeft();
 
-         else
+            else if (val > rval)
 
-         {
+                r = r.getRight();
 
-             n = delete(root.getRight(), k);
+            else {
 
-             root.setRight(n);             
+                found = true;
 
-         }
+                break;
 
-         return root;
+            }
 
-     }
+            found = search(r, val);
 
-     /* Functions to count number of nodes */
+        }
 
-     public int countNodes()
+        return found;
 
-     {
+    }
 
-         return countNodes(root);
+    /* Function for inorder traversal */
 
-     }
+    public void inorder() {
 
-     /* Function to count number of nodes recursively */
+        inorder(root);
 
-     private int countNodes(BSTNode r)
+    }
 
-     {
+    private void inorder(BSTNode r) {
 
-         if (r == null)
+        if (r != null) {
 
-             return 0;
+            inorder(r.getLeft());
 
-         else
+            System.out.print(r.getData() + " ");
 
-         {
+            inorder(r.getRight());
 
-             int l = 1;
+        }
 
-             l += countNodes(r.getLeft());
+    }
 
-             l += countNodes(r.getRight());
+    /* Function for preorder traversal */
 
-             return l;
+    public void preorder() {
 
-         }
+        preorder(root);
 
-     }
+    }
 
-     /* Functions to search for an element */
+    private void preorder(BSTNode r) {
 
-     public boolean search(int val)
+        if (r != null) {
 
-     {
+            System.out.print(r.getData() + " ");
 
-         return search(root, val);
+            preorder(r.getLeft());
 
-     }
+            preorder(r.getRight());
 
-     /* Function to search for an element recursively */
+        }
 
-     private boolean search(BSTNode r, int val)
+    }
 
-     {
+    /* Function for postorder traversal */
 
-         boolean found = false;
+    public void postorder() {
 
-         while ((r != null) && !found)
+        postorder(root);
 
-         {
+    }
 
-             int rval = r.getData();
+    private void postorder(BSTNode r) {
 
-             if (val < rval)
+        if (r != null) {
 
-                 r = r.getLeft();
+            postorder(r.getLeft());
 
-             else if (val > rval)
+            postorder(r.getRight());
 
-                 r = r.getRight();
+            System.out.print(r.getData() + " ");
 
-             else
+        }
 
-             {
+    }
 
-                 found = true;
+}
 
-                 break;
 
-             }
 
-             found = search(r, val);
+/* Class BinarySearchTree */
 
-         }
+class BinarySearchTree {
 
-         return found;
-
-     }
-
-     /* Function for inorder traversal */
-
-     public void inorder()
-
-     {
-
-         inorder(root);
-
-     }
-
-     private void inorder(BSTNode r)
-
-     {
-
-         if (r != null)
-
-         {
-
-             inorder(r.getLeft());
-
-             System.out.print(r.getData() +" ");
-
-             inorder(r.getRight());
-
-         }
-
-     }
-
-     /* Function for preorder traversal */
-
-     public void preorder()
-
-     {
-
-         preorder(root);
-
-     }
-
-     private void preorder(BSTNode r)
-
-     {
-
-         if (r != null)
-
-         {
-
-             System.out.print(r.getData() +" ");
-
-             preorder(r.getLeft());             
-
-             preorder(r.getRight());
-
-         }
-
-     }
-
-     /* Function for postorder traversal */
-
-     public void postorder()
-
-     {
-
-         postorder(root);
-
-     }
-
-     private void postorder(BSTNode r)
-
-     {
-
-         if (r != null)
-
-         {
-
-             postorder(r.getLeft());             
-
-             postorder(r.getRight());
-
-             System.out.print(r.getData() +" ");
-
-         }
-
-     }     
-
- }
-
- 
-
- /* Class BinarySearchTree */
-
-  class BinarySearchTree
-
- {
-
-     public static void main(String[] args)
-
-    {                 
+    public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
 
         /* Creating object of BST */
 
-        BST bst = new BST(); 
+        BST bst = new BST();
 
-        System.out.println("Binary Search Tree Test\n");          
+        System.out.println("Binary Search Tree Test\n");
 
-        int x=5;
+        int x = 5;
 
         /*  Perform tree operations  */
-        for(int i=0;i<5;i++){
-           
-                bst.insert( scan.nextInt() );                     
+        for (int i = 0; i < 5; i++) {
+
+            bst.insert(scan.nextInt());
 
         }
-            System.out.print("\nPost order : ");
+        System.out.print("\nPost order : ");
 
-            bst.postorder();
+        bst.postorder();
 
-            System.out.print("\nPre order : ");
+        System.out.print("\nPre order : ");
 
-            bst.preorder();
+        bst.preorder();
 
-            System.out.print("\nIn order : ");
+        System.out.print("\nIn order : ");
 
-            bst.inorder();
-            System.out.print("\n search=3 : "+ bst.search(3));
+        bst.inorder();
+        System.out.print("\n search=3 : " + bst.search(3));
 
-           
-            
-            System.out.print("\n search=7 : "+bst.search(7));
 
- 
-         
- 
+        System.out.print("\n search=7 : " + bst.search(7));
 
 
     }
 
- }
+}

@@ -1,10 +1,12 @@
+package Algorithms;
+
 import java.io.*;
 import java.util.*;
 import java.text.*;
 import java.math.*;
 import java.util.regex.*;
 
-class A {
+class LCS {
 
  static int CeilIndex(int A[], int l, int r, int key) 
    {

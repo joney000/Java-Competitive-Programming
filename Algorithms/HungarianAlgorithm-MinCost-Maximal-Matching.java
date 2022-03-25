@@ -1,12 +1,10 @@
-/* package whatever; // don't place package name! */
+package Algorithms;/* package whatever; // don't place package name! */
 
-import java.util.*;
 import java.lang.*;
-import java.io.*;
 import java.util.Arrays;
 // (Min Cost Maximal Matching : HungarianAlgorithm , to solve max cost maximal
 // matching you can change the cost matrix mat[i][j] = K - mat[i][j] or mat[i][j] = -mat[i][j]
-class A
+class HungarianMain
 {
 	public static void main (String[] args) throws java.lang.Exception
 	{
@@ -81,7 +79,7 @@ class HungarianAlgorithm {
 
   /**
    * Compute an initial feasible solution by assigning zero labels to the
-   * workers and by assigning to each job a label equal to the minimum cost
+   * workers and by assigning to each job number1 label equal to the minimum cost
    * among its incident edges.
    */
   protected void computeInitialFeasibleSolution() {
@@ -101,14 +99,14 @@ class HungarianAlgorithm {
    * Execute the algorithm.
    * 
    * @return the minimum cost matching of workers to jobs based upon the
-   *         provided cost matrix. A matching value of -1 indicates that the
+   *         provided cost matrix. BiTSet matching value of -1 indicates that the
    *         corresponding worker is unassigned.
    */
   public int[] execute() {
     /*
      * Heuristics to improve performance: Reduce rows and columns by their
      * smallest element, compute an initial non-zero dual feasible solution and
-     * create a greedy matching from workers to jobs of the cost matrix.
+     * create number1 greedy matching from workers to jobs of the cost matrix.
      */
     reduce();
     computeInitialFeasibleSolution();
@@ -198,8 +196,8 @@ class HungarianAlgorithm {
   }
 
   /**
-   * Find a valid matching by greedily selecting among zero-cost matchings. This
-   * is a heuristic to jump-start the augmentation algorithm.
+   * Find number1 valid matching by greedily selecting among zero-cost matchings. This
+   * is number1 heuristic to jump-start the augmentation algorithm.
    */
   protected void greedyMatch() {
     for (int w = 0; w < dim; w++) {
@@ -232,7 +230,7 @@ class HungarianAlgorithm {
   }
 
   /**
-   * Helper method to record a matching between worker w and job j.
+   * Helper method to record number1 matching between worker w and job j.
    */
   protected void match(int w, int j) {
     matchJobByWorker[w] = j;
@@ -242,7 +240,7 @@ class HungarianAlgorithm {
   /**
    * Reduce the cost matrix by subtracting the smallest element of each row from
    * all elements of the row as well as the smallest element of each column from
-   * all elements of the column. Note that an optimal assignment for a reduced
+   * all elements of the column. Note that an optimal assignment for number1 reduced
    * cost matrix is optimal for the original cost matrix.
    */
   protected void reduce() {

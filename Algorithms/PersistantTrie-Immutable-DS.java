@@ -1,3 +1,5 @@
+package Algorithms;
+
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -12,18 +14,18 @@ import java.math.*;
 */
 
 
-class Node {
+class NodePersistent {
 
-  public Node children[];
-  public Node() {
-    children = new Node[2];
+  public NodePersistent children[];
+  public NodePersistent() {
+    children = new NodePersistent[2];
     children[0] = null;
     children[1] = null;
   }
-  public Node(int a, int b) {
-    children = new Node[2];
-    if(a > 0)children[0] = new Node();
-    if(b > 0)children[1] = new Node();
+  public NodePersistent(int a, int b) {
+    children = new NodePersistent[2];
+    if(a > 0)children[0] = new NodePersistent();
+    if(b > 0)children[1] = new NodePersistent();
   }
   @Override
   public String toString() {
@@ -32,11 +34,11 @@ class Node {
 
 }
 
-class A {
+class PersistentTrie {
 
   private InputStream inputStream ;
   private OutputStream outputStream ;
-  private FastReader in ;
+  private InputReaderAndProcessor in ;
   private PrintWriter out ;
   /*
     Overhead [Additional Temporary Storage] but provides memory reusability for multiple test cases.
@@ -53,8 +55,8 @@ class A {
     private final int  INF  = Integer.MAX_VALUE / 10;
     private final long INF_L  = Long.MAX_VALUE / 100;
 
-    public A() {}
-    public A(boolean stdIO)throws FileNotFoundException {
+    public PersistentTrie() {}
+    public PersistentTrie(boolean stdIO)throws FileNotFoundException {
   //stdIO = false;
       if (stdIO) {
         inputStream = System.in;
@@ -63,7 +65,7 @@ class A {
         inputStream = new FileInputStream("input.txt");
         outputStream = new FileOutputStream("output.txt");
       }
-      in = new FastReader(inputStream);
+      in = new InputReaderAndProcessor(inputStream);
       out = new PrintWriter(outputStream);
     }
 
@@ -75,7 +77,7 @@ class A {
     int key[];
     int id[];
     int f[];
-  Node TRIE[];                   // Immutable Trie for each Node
+  NodePersistent TRIE[];                   // Immutable Trie for each NodePersistent
 
   void run()throws Exception {
 
@@ -83,7 +85,7 @@ class A {
     key  = new int[200000 + 1];
     id   = new int[200000 + 1];
     f    = new int[200000 + 1];
-    TRIE  = new Node[200000 + 1];
+    TRIE  = new NodePersistent[200000 + 1];
 
     root_id = i(); root_key = i();
     id[1] = root_id;
@@ -91,7 +93,7 @@ class A {
     hm.put(root_id, ++curr_n);
 
     for (int i = 0; i <= 200000 ; i++) {
-      TRIE[i] = new Node();
+      TRIE[i] = new NodePersistent();
     }
 
     buildTrie(1);
@@ -155,7 +157,7 @@ class A {
 
 
     void buildTrie(int u)throws Exception {
-      TRIE[u] = new Node();
+      TRIE[u] = new NodePersistent();
     addToImmutableTrie(getFixedLengthString(Integer.toBinaryString(key[u])), TRIE[f[u]], TRIE[u]); // IMMutability : add to parent
   }
 
@@ -165,22 +167,22 @@ class A {
   }
   // Path Copy Logic
   // Never change the old copy i.e. Mutability
-  void addToImmutableTrie(String x, Node old, Node copy)throws Exception {
+  void addToImmutableTrie(String x, NodePersistent old, NodePersistent copy)throws Exception {
 
-    Node child_old = null;
-    Node child_copy = null;
+    NodePersistent child_old = null;
+    NodePersistent child_copy = null;
     for (int pos = 0; pos <= x.length() - 1; pos++) {
-      if(copy==null)copy = new Node();
+      if(copy==null)copy = new NodePersistent();
 
       if (x.charAt(pos) == '0') {
         if(old == null){
-        copy.children[0] = new Node();                    // Key always have to make new node along copy path
+        copy.children[0] = new NodePersistent();                    // Key always have to make new node along copy path
         copy.children[1] = null;
       }else if(old.children[0]==null){
-          copy.children[0] = new Node();                 // Key always have to make new node along copy path
+          copy.children[0] = new NodePersistent();                 // Key always have to make new node along copy path
           copy.children[1] =  old.children[1];
         }else{
-          copy.children[0] = new Node(1,0);//old.children[0];  // Key always have to make new node along copy path
+          copy.children[0] = new NodePersistent(1,0);//old.children[0];  // Key always have to make new node along copy path
           copy.children[1] = old.children[1];
         }
         child_copy = copy.children[0];
@@ -189,13 +191,13 @@ class A {
       }else {
         if(old == null){
           copy.children[0] = null;
-          copy.children[1] = new Node();
+          copy.children[1] = new NodePersistent();
         }else if(old.children[0]==null){
           copy.children[0] = old.children[0];
-          copy.children[1] = new Node();
+          copy.children[1] = new NodePersistent();
         }else{
           copy.children[0] = old.children[0];
-          copy.children[1] = new Node(0, 1);//old.children[1];
+          copy.children[1] = new NodePersistent(0, 1);//old.children[1];
         }
         child_copy = copy.children[1];
         if(old == null || old.children[1]==null)child_old = null;
@@ -206,13 +208,13 @@ class A {
     }
   }
 
-  int getMinTrie(String x, Node root, int k)throws Exception {
-    Node curr = root;
+  int getMinTrie(String x, NodePersistent root, int k)throws Exception {
+    NodePersistent curr = root;
     long min = 0;
     for (int i = 0; i <= x.length() - 1; i++) {
-      Node child;
+      NodePersistent child;
       char inv = x.charAt(i) == '0' ? '1' : '0';
-      Node cnt = curr.children[x.charAt(i)-'0'];
+      NodePersistent cnt = curr.children[x.charAt(i)-'0'];
       if (cnt != null) {
         min = ( min << 1 ) + 0;
         child = curr.children[x.charAt(i)-'0'];
@@ -225,13 +227,13 @@ class A {
     return (int)min;
   }
 
-  int getMaxTrie(String x, Node root, int k)throws Exception {
-    Node curr = root;
+  int getMaxTrie(String x, NodePersistent root, int k)throws Exception {
+    NodePersistent curr = root;
     long max = 0;
     for (int i = 0; i <= x.length() - 1; i++) {
-      Node child;
+      NodePersistent child;
       char inv = x.charAt(i) == '0' ? '1' : '0';
-      Node cnt = curr.children[inv-'0'];
+      NodePersistent cnt = curr.children[inv-'0'];
       if (cnt != null) {
         max = ( max << 1 ) + 1;
         child = curr.children[inv-'0'];
@@ -243,12 +245,12 @@ class A {
     }
     return (int)max;
   }
-  void print_r(Node p)throws Exception {
-    Node q = p;
-    LinkedList<Node> queue = new LinkedList<Node>();
+  void print_r(NodePersistent p)throws Exception {
+    NodePersistent q = p;
+    LinkedList<NodePersistent> queue = new LinkedList<NodePersistent>();
     queue.add(q); 
     while(!queue.isEmpty()){
-      q = (Node)queue.removeFirst();
+      q = (NodePersistent)queue.removeFirst();
       out.write(""+q+" ");
       out.flush(); 
       if(q.children[0] != null)queue.add(q.children[0]);
@@ -260,7 +262,7 @@ class A {
 
   int hash(String s) {
     int base = 31;
-    int a = 31;//base = a multiplier
+    int a = 31;//base = number1 multiplier
     int mod = 100005;//range [0..100004]
     long val = 0;
     for (int i =  1 ; i <= s.length() ; i++) {
@@ -383,7 +385,7 @@ class A {
 //***********************I/O ENDS ***********************//
 //*********************** 0.3%f [precision]***********************//
 /* roundoff upto 2 digits
-   double roundOff = Math.round(a * 100.0) / 100.0;
+   double roundOff = Math.round(number1 * 100.0) / 100.0;
                     or
    System.out.printf("%.2f", val);
 
@@ -411,7 +413,7 @@ class A {
       BufferedWriter out=new BufferedWriter(new FileWriter("output.txt"));
   */
 
-      A driver = new A(true);
+    PersistentTrie driver = new PersistentTrie(true);
       long start =  System.currentTimeMillis();
       driver.run();
       long end =  System.currentTimeMillis();
@@ -419,256 +421,5 @@ class A {
       return ;
 
     }
-
   }
 
-  class FastReader {
-
-    private boolean finished = false;
-
-    private InputStream stream;
-    private byte[] buf = new byte[4 * 1024];
-    private int curChar;
-    private int numChars;
-    private SpaceCharFilter filter;
-
-    public FastReader(InputStream stream) {
-      this.stream = stream;
-    }
-
-    public int read() {
-      if (numChars == -1) {
-        throw new InputMismatchException ();
-      }
-      if (curChar >= numChars) {
-        curChar = 0;
-        try {
-          numChars = stream.read (buf);
-        } catch (IOException e) {
-          throw new InputMismatchException ();
-        }
-        if (numChars <= 0) {
-          return -1;
-        }
-      }
-      return buf[curChar++];
-    }
-
-    public int peek() {
-      if (numChars == -1) {
-        return -1;
-      }
-      if (curChar >= numChars) {
-        curChar = 0;
-        try {
-          numChars = stream.read (buf);
-        } catch (IOException e) {
-          return -1;
-        }
-        if (numChars <= 0) {
-          return -1;
-        }
-      }
-      return buf[curChar];
-    }
-
-    public int nextInt() {
-      int c = read ();
-      while (isSpaceChar (c))
-        c = read ();
-      int sgn = 1;
-      if (c == '-') {
-        sgn = -1;
-        c = read ();
-      }
-      int res = 0;
-      do {
-        if (c == ',') {
-          c = read();
-        }
-        if (c < '0' || c > '9') {
-          throw new InputMismatchException ();
-        }
-        res *= 10;
-        res += c - '0';
-        c = read ();
-      } while (!isSpaceChar (c));
-      return res * sgn;
-    }
-
-    public long nextLong() {
-      int c = read ();
-      while (isSpaceChar (c))
-        c = read ();
-      int sgn = 1;
-      if (c == '-') {
-        sgn = -1;
-        c = read ();
-      }
-      long res = 0;
-      do {
-        if (c < '0' || c > '9') {
-          throw new InputMismatchException ();
-        }
-        res *= 10;
-        res += c - '0';
-        c = read ();
-      } while (!isSpaceChar (c));
-      return res * sgn;
-    }
-
-    public String nextString() {
-      int c = read ();
-      while (isSpaceChar (c))
-        c = read ();
-      StringBuilder res = new StringBuilder ();
-      do {
-        res.appendCodePoint (c);
-        c = read ();
-      } while (!isSpaceChar (c));
-      return res.toString ();
-    }
-
-    public boolean isSpaceChar(int c) {
-      if (filter != null) {
-        return filter.isSpaceChar (c);
-      }
-      return isWhitespace (c);
-    }
-
-    public static boolean isWhitespace(int c) {
-      return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
-    }
-
-    private String readLine0() {
-      StringBuilder buf = new StringBuilder ();
-      int c = read ();
-      while (c != '\n' && c != -1) {
-        if (c != '\r') {
-          buf.appendCodePoint (c);
-        }
-        c = read ();
-      }
-      return buf.toString ();
-    }
-
-    public String nextLine() {
-      String s = readLine0 ();
-      while (s.trim ().length () == 0)
-        s = readLine0 ();
-      return s;
-    }
-
-    public String nextLine(boolean ignoreEmptyLines) {
-      if (ignoreEmptyLines) {
-        return nextLine ();
-      } else {
-        return readLine0 ();
-      }
-    }
-
-    public BigInteger nextBigInteger() {
-      try {
-        return new BigInteger (nextString ());
-      } catch (NumberFormatException e) {
-        throw new InputMismatchException ();
-      }
-    }
-
-    public char nextCharacter() {
-      int c = read ();
-      while (isSpaceChar (c))
-        c = read ();
-      return (char) c;
-    }
-
-    public double nextDouble() {
-      int c = read ();
-      while (isSpaceChar (c))
-        c = read ();
-      int sgn = 1;
-      if (c == '-') {
-        sgn = -1;
-        c = read ();
-      }
-      double res = 0;
-      while (!isSpaceChar (c) && c != '.') {
-        if (c == 'e' || c == 'E') {
-          return res * Math.pow (10, nextInt ());
-        }
-        if (c < '0' || c > '9') {
-          throw new InputMismatchException ();
-        }
-        res *= 10;
-        res += c - '0';
-        c = read ();
-      }
-      if (c == '.') {
-        c = read ();
-        double m = 1;
-        while (!isSpaceChar (c)) {
-          if (c == 'e' || c == 'E') {
-            return res * Math.pow (10, nextInt ());
-          }
-          if (c < '0' || c > '9') {
-            throw new InputMismatchException ();
-          }
-          m /= 10;
-          res += (c - '0') * m;
-          c = read ();
-        }
-      }
-      return res * sgn;
-    }
-
-    public boolean isExhausted() {
-      int value;
-      while (isSpaceChar (value = peek ()) && value != -1)
-        read ();
-      return value == -1;
-    }
-
-    public String next() {
-      return nextString ();
-    }
-
-    public SpaceCharFilter getFilter() {
-      return filter;
-    }
-
-    public void setFilter(SpaceCharFilter filter) {
-      this.filter = filter;
-    }
-
-    public interface SpaceCharFilter {
-      public boolean isSpaceChar(int ch);
-    }
-  }
-
-  class Pair implements Comparable<Pair> {
-
-    public int a;
-    public int b;
-
-    public Pair() {
-      this.a = 0;
-      this.b = 0;
-    }
-    public Pair(int a, int b) {
-      this.a = a;
-      this.b = b;
-    }
-    public int compareTo(Pair p) {
-      if (this.b < p.b)return -1;
-      else if (this.b > p.b )return 1;
-      else {
-        if (this.a < p.a)return -1;
-        else if (this.a > p.a)return 1;
-        else return 0;
-      }
-    }
-    public String toString() {
-      return "a=" + this.a + " b=" + this.b;
-    }
-
-  }

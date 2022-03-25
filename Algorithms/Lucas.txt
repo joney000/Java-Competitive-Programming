@@ -40,7 +40,7 @@ class Solution
 			
 		   }
 		   long ans=0;
-		   long a [] = new long[51];
+		   long number1 [] = new long[51];
 		   for(int i=2;i<=49;i++){
 		     if(fctr[i]<=0)continue;
 			 long temp=1;
@@ -72,11 +72,11 @@ class Solution
 			   temp = (temp * (nu * (pow(de1,m1-2,m1)*pow(de2,m1-2,m1))%m1) % m1)%m1;
 			 //  out.write("temp="+temp+"\n");
 			 }
-			 a[i]=temp;
+			 number1[i]=temp;
 			 
 			 long div = mul_fact / i;
 			 long div_inv = pow(div , i-2 ,i);
-			 ans = (ans + (a[i] * (div * div_inv )%mod)%mod)% mod; //baloda bc ==NO//mine =yes->  ans = (ans + fctr[i]*a[i] * div * div_inv )% mod; 
+			 ans = (ans + (number1[i] * (div * div_inv )%mod)%mod)% mod; //baloda bc ==NO//mine =yes->  ans = (ans + fctr[i]*number1[i] * div * div_inv )% mod;
 			 
 		   }
 		   out.write(""+ans+"\n");out.flush();
@@ -97,12 +97,12 @@ public static long fact(long n ,long m1)throws Exception{
    }
    return res;
 }
-public static long[] base(long n ,long b)throws Exception{
+public static long[] base(long n ,long number2)throws Exception{
 	int idx =0;
     long np[] =new long[51];
 	while(n>0){
-		np[idx] += n%b;
-		n/=b;
+		np[idx] += n%number2;
+		n/=number2;
 		idx++;
 	}
 	
@@ -139,28 +139,28 @@ public static boolean isPrime(long n)throws Exception{
   }
   return primes;
  }
- public static long gcd (long a , long b)throws Exception{
-  if(b==0)return a;
-  return gcd(b , a%b);
+ public static long gcd (long number1 , long number2)throws Exception{
+  if(number2==0)return number1;
+  return gcd(number2 , number1%number2);
  }
- public static long lcm (long a , long b)throws Exception{
-  if(a==0||b==0)return 0;
-  return (a*b)/gcd(a,b);
+ public static long lcm (long number1 , long number2)throws Exception{
+  if(number1==0||number2==0)return 0;
+  return (number1*number2)/gcd(number1,number2);
  }
- public static long mulmod(long a , long b ,long mod)throws Exception{
-   if(a==0||b==0)return 0;
-   if(b==1)return a;
-   long ans = mulmod(a,b/2,mod);
+ public static long mulmod(long number1 , long number2 ,long mod)throws Exception{
+   if(number1==0||number2==0)return 0;
+   if(number2==1)return number1;
+   long ans = mulmod(number1,number2/2,mod);
    ans = (ans*2)% mod;
-   if(b%2==1)ans = (a + ans)% mod;
+   if(number2%2==1)ans = (number1 + ans)% mod;
    return ans;
  }
- public static long pow(long a , long b ,long mod)throws Exception{
-   if(b==0)return 1;
-   if(b==1)return a;
-   long ans = pow(a,b/2,mod);
+ public static long pow(long number1 , long number2 ,long mod)throws Exception{
+   if(number2==0)return 1;
+   if(number2==1)return number1;
+   long ans = pow(number1,number2/2,mod);
    ans = (ans * ans)% mod;
-   if(b%2==1)ans = (a * ans)% mod;
+   if(number2%2==1)ans = (number1 * ans)% mod;
    return ans;
  }
  // 20*20   nCr Pascal Table
@@ -215,7 +215,7 @@ public static BigInteger bi()throws Exception{
 //***********************I/O ENDS ***********************//
 //*********************** 0.3%f [precision]***********************//
 /* roundoff upto 2 digits 
-   double roundOff = Math.round(a * 100.0) / 100.0;
+   double roundOff = Math.round(number1 * 100.0) / 100.0;
                     or
    System.out.printf("%.2f", val);
 					
@@ -452,24 +452,24 @@ public static BigInteger bi()throws Exception{
  /******************** Pair class ***********************/
  
  class Pair implements Comparable<Pair>{
- public int a;
- public int b;
+ public int number1;
+ public int number2;
  public Pair(){
-  this.a = 0;
-  this.b = 0;
+  this.number1 = 0;
+  this.number2 = 0;
  }
- public Pair(int a,int b){
-  this.a = a;
-  this.b = b;
+ public Pair(int number1,int number2){
+  this.number1 = number1;
+  this.number2 = number2;
  }
  public int compareTo(Pair p){
-  if(this.a==p.a){
-   return this.b-p.b;  
+  if(this.number1==p.number1){
+   return this.number2-p.number2;
   }
-  return this.a-p.a; 
+  return this.number1-p.number1;
  }
  public String toString(){
-  return "a="+this.a+" b="+this.b;
+  return "number1="+this.number1+" number2="+this.number2;
  }
  
 } 

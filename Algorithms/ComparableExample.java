@@ -1,3 +1,4 @@
+package Algorithms;
 
 class Person implements Comparable<Person>{
 	private int start, end, salary;
