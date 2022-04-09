@@ -1,0 +1,4 @@
+# compiled classes
+*.class
+# vm crash logs
+hs_err_pid*
