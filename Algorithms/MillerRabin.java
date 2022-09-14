@@ -27,7 +27,7 @@ class MillerRabin {
     // we dont need to test all the base a < 2(ln number)2
     for(long base: bases){
       long exp = pow(base % number, power, number);
-      if(exp <= 1 || exp != number - 1){
+      if(exp <= 1 || exp == number - 1){
         continue;
       }
       for(int i = 0; i < trailingZeros - 1 && exp != number - 1; i++){
