@@ -5,18 +5,20 @@ import java.util.HashMap;
  * @use: holding frequency map, similar to multiset in c++
 */
 class MultiSet<K> {
+
 	private HashMap<K, Integer> multiSet = new HashMap<K, Integer>();
 	private int size;
-	int get(K key){
+
+	public int get(K key){
 		return multiSet.getOrDefault(key, 0);
 	}
 
-	void add(K key){
+	public void add(K key){
 		size++;
 		multiSet.put(key, get(key)+ 1);
 	}
 
-	void remove(K key){
+	public void remove(K key){
 		int freq = get(key);
 		size--;
 		if(freq == 1){
@@ -32,6 +34,10 @@ class MultiSet<K> {
 
 	public boolean isEmpty(){
 		return size == 0;
+	}
+
+	public boolean containsKey(K key){
+		return multiSet.containsKey(key);
 	}
 	
 	@Override
