@@ -76,29 +76,25 @@ public class A{
   }
   
   // Maintain immutability
-  LinkedList<Integer>[] getCopy(LinkedList<Integer>[] adj, int n){
+  LinkedList<Integer>[] getCopy(LinkedList<Integer>[] graph, int n){
     LinkedList<Integer> adjCopy[] = new LinkedList[n + 1];
     for(int i = 1; i <= n; i++){
       adjCopy[i] = new LinkedList<Integer>();
-      for(int x: adj[i]){
+      for(int x: graph[i]){
         adjCopy[i].add(x);
       }
     }
     return adjCopy; 
   }
 
-  void bfs(LinkedList<Integer> adj[], int root, int n){
-  
+  void bfs(LinkedList<Integer> graph[], int root, int n){
     LinkedList <Integer> queue = new LinkedList<Integer>();
     depth[root] = 0; 
     queue.add(root);
     vis[root] = true;
-    
     while(!queue.isEmpty()){
-
-      int u = queue.removeFirst();        // The Stack      
-      if(adj[u].size() > 0){  
-        int v = adj[u].removeFirst();
+      int u = queue.removeFirst();      
+      for(int v: graph[u]){
         if(!vis[v]){
           queue.add(v);
           vis[v]    = true;
