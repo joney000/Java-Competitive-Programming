@@ -5,13 +5,12 @@ import java.math.*;
 
 /**
  * Author    : joney_000[developer.jaswant@gmail.com]
- * Algorithm : Extended Euclid Algo: find 3 things X, Y, GCD(A, B) Such that X * A + Y * B = GCD(A, B)
- *             Time : O(MAX(A, B)) Space : O(MAX(A, B))
- * Platform  : Codeforces
- * Ref       : https://www.hackerearth.com/practice/math/number-theory/basic-number-theory-1/tutorial/
+ * Algorithm : Default Template
+ * Platform  : Codeforces/Codejam
+ * Ref       : N/A
  */
 
-class Solution{ 
+public class Solution{ 
   
   private InputStream inputStream ;
   private OutputStream outputStream ;
@@ -37,25 +36,15 @@ class Solution{
     in = new FastReader(inputStream);
     out = new PrintWriter(outputStream);
   }
-  
-  final int MAXN = (int)1e3 + 1;
-  int [][]matrix = new int[MAXN][MAXN];
-  
+
   void run()throws Exception{
     int tests = i();
-    for(int testCase = 1; testCase <= tests; testCase++){
-      out.write("Case #"+testCase+": ");
-      int n = i();
-      // solve cool things here
+    for(int testId = 1; testId <= tests; testId++){
+      out.write("Case #"+testId+": ");
 
-      long ans = 0L;
-      
+      int ans = 0;
       out.write(""+ans+"\n");
     }
-  }
-
-  void clear(){
-    // Todo: implementation of clearing the shared memory for each test case
   }
 
   long gcd(long a, long b){
@@ -147,7 +136,7 @@ class Solution{
 
   public static void main(String[] args) throws java.lang.Exception{
   
-    Solution driver = new Solution(true);
+    A driver = new A(true);
     driver.run();
     driver.closeResources();
   }
