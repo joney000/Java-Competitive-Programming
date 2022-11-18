@@ -41,7 +41,6 @@ public class Solution{
     int tests = i();
     for(int testId = 1; testId <= tests; testId++){
       out.write("Case #"+testId+": ");
-
       int ans = 0;
       out.write(""+ans+"\n");
     }
@@ -136,7 +135,7 @@ public class Solution{
 
   public static void main(String[] args) throws java.lang.Exception{
   
-    A driver = new A(true);
+    Solution driver = new Solution(true);
     driver.run();
     driver.closeResources();
   }
