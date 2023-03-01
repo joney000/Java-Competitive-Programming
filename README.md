@@ -43,6 +43,7 @@ In This Repository, I have written some of the important Algorithms and Data Str
 | [Priority Queue](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/PriorityQueue.java)| O(log(N)), O(N) | N = no of objects in the queue. peek: O(1), poll/add: O(log n)
 | [Multiset](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/Multiset.java)| O(log(N)), O(N) | N = no of objects in the multiset. get/add: O(log n) and Average Case O(1)
 | [MillerRabin](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/MillerRabin.java)| O(log(N)), O(1) | deterministic algorithm to identify if a number is prime or not
+| [Disjoint Set Union - DSU](https://github.com/joney000/Java-Competitive-Programming/blob/master/Algorithms/DSU.java)| O(log(N)), O(N) | merge disjoint sets with O(log n) merge operation with path optimization
 
 ## Contributions
 
