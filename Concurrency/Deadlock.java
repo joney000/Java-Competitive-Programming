@@ -1,7 +1,7 @@
 // ref: 
 // https://docs.oracle.com/javase/tutorial/essential/concurrency/sync.html
 // https://docs.oracle.com/javase/tutorial/essential/concurrency/deadlock.html
-
+// https://docs.oracle.com/javase/tutorial/essential/concurrency/atomic.html
 public class Deadlock {
     static class Friend {
         private final String name;
