@@ -7,10 +7,11 @@ import java.math.*;
  * Author    : joney_000[let_me_start]
  * Algorithm : Bit / fenwick tree
  * Platform  : Codeforces
- * Ref       : https://sanugupta.wordpress.com/2014/08/29/binary-indexed-tree-fenwick-tree/
+ * Ref       : 1.) https://sanugupta.wordpress.com/2014/08/29/binary-indexed-tree-fenwick-tree/
+ *           : 2.) https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/
  */
 
-public class A{ 
+public class BIT { 
   
   private InputStream inputStream ;
   private OutputStream outputStream ;
@@ -27,8 +28,8 @@ public class A{
   private final int  INF  = Integer.MAX_VALUE;
   private final long INF_L  = Long.MAX_VALUE / 10;
 
-  public A(){}
-  public A(boolean stdIO)throws FileNotFoundException{
+  public BIT(){}
+  public BIT(boolean stdIO)throws FileNotFoundException{
     // stdIO = false;
     if(stdIO){
       inputStream = System.in;
@@ -41,12 +42,13 @@ public class A{
     out = new PrintWriter(outputStream);
   }
   
-  
+  final int MAX_TREE_SIZE = 200000;
+
   void run()throws Exception{
     int n = i(); int q = i(); int m = i();
     int qry[][] = new int[3][q + 1];// 0=>l, 1=> r, 2=>val
     int a[] = new int[n + 1];
-
+    initializeTree(MAX_TREE_SIZE);
     for(int i = 1; i <= n; i++){
       a[i] = i();
       update(tree, i, a[i]);				// point update this time, 
@@ -65,23 +67,31 @@ public class A{
     }
 
     for(int i = 1; i <= n; i++){
-      long res = qry(tree, i); // case of point qry
+      long res = query(tree, i); // case of point qry
       out.write(""+res+" ");		
     }
 
   }// end run
 
-  final int MAX = 200000;
-  long tree[] = new long[MAX + 5];  
+  private long []tree;
+  private int treeSize;
   
-  void update(long tree[], int idx, long value){		// idx to MAX
-    while(idx < MAX){
+  // time and space O(treeSize)
+  private void initializeTree(int treeSize){
+    this.treeSize = treeSize;
+    tree = new long[treeSize];
+  }
+
+  // range update, time: O(log treeSize)
+  private void update(long tree[], int idx, long value){
+    while(idx < this.treeSize){
       tree[idx] += value;
       idx += (idx & (-idx));
     }
   }
   
-  long qry(long tree[], int idx){
+  // range sum, time: O(log treeSize)
+  private long query(long tree[], int idx){
     long ret = 0;
     while(idx > 0){
       ret += tree[idx];
@@ -199,7 +209,7 @@ public class A{
 
   public static void main(String[] args) throws java.lang.Exception{
   
-    A driver = new A(true);
+    BIT driver = new BIT(true);
     driver.run();
     driver.closeResources();
   }
