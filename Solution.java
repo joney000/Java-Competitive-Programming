@@ -16,12 +16,10 @@ public class Solution{
   private OutputStream outputStream ;
   private FastReader in ;
   private PrintWriter out ;
-  
-  private final int BUFFER = 100005;
-  
-  private final long mod = 1000000000+7;
+  private final String PROBLEM_ID = "1039-A";
+  private final long MOD = 1000000000+7;
   private final int  INF  = Integer.MAX_VALUE;
-  private final long INF_L  = Long.MAX_VALUE / 10;
+  private final long INF_L  = Long.MAX_VALUE / 2;
 
   public Solution(){}
   public Solution(boolean stdIO)throws FileNotFoundException{
@@ -30,19 +28,21 @@ public class Solution{
       inputStream = System.in;
       outputStream = System.out;
     }else{
-      inputStream = new FileInputStream("input.txt");
-      outputStream = new FileOutputStream("output.txt");
+      inputStream = new FileInputStream(PROBLEM_ID + "-input.txt");
+      outputStream = new FileOutputStream(PROBLEM_ID + "-output.txt");
     }
     in = new FastReader(inputStream);
     out = new PrintWriter(outputStream);
   }
 
-  void run()throws Exception{
+  void run()throws Exception {
     int tests = i();
+    test:
     for(int testId = 1; testId <= tests; testId++){
-      out.write("Case #"+testId+": ");
-      int ans = 0;
-      out.write(""+ans+"\n");
+      // out.write("Case #"+testId+": ");
+      long ans = 0;
+      out.write(ans + "\n");
+      
     }
   }
 
@@ -123,15 +123,7 @@ public class Solution{
     out.flush();
     out.close();
     return;
-  }
-
-//  IMP: roundoff upto 2 digits 
-//  double roundOff = Math.round(a * 100.0) / 100.0;
-//                    or
-//  System.out.printf("%.2f", val);
-
-//  print upto 2 digits after decimal
-//  val = ((long)(val * 100.0))/100.0;    
+  }   
 
   public static void main(String[] args) throws java.lang.Exception{
   
@@ -141,10 +133,7 @@ public class Solution{
   }
 }
 
-class FastReader{
-
-  private boolean finished = false;
-
+class FastReader {
   private InputStream stream;
   private byte[] buf = new byte[4 * 1024];
   private int curChar;
@@ -377,7 +366,8 @@ class Pair implements Comparable<Pair>{
     this.a = a;
     this.b = b;
   }
-
+  
+  @Override
   public int compareTo(Pair p){
     if(this.a == p.a){
      return this.b - p.b;  
