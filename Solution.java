@@ -17,13 +17,13 @@ public class Solution{
   private FastReader in ;
   private PrintWriter out ;
   private final String PROBLEM_ID = "1039-A";
-  private final long MOD = 1000000000+7;
+  private final long MOD = (long)1e9 + 7;
   private final int  INF  = Integer.MAX_VALUE;
   private final long INF_L  = Long.MAX_VALUE / 2;
 
   public Solution(){}
+
   public Solution(boolean stdIO)throws FileNotFoundException{
-    // stdIO = false;
     if(stdIO){
       inputStream = System.in;
       outputStream = System.out;
@@ -39,10 +39,10 @@ public class Solution{
     int tests = i();
     test:
     for(int testId = 1; testId <= tests; testId++){
-      // out.write("Case #"+testId+": ");
+      // Codejam / Hackercup formatting
+      // out.write("Case #" + testId + ": ");
       long ans = 0;
       out.write(ans + "\n");
-      
     }
   }
 
