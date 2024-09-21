@@ -9,6 +9,68 @@ import java.math.*;
  * Platform  : Codeforces/Codejam
  * Ref       : N/A
  */
+class Entry {
+  String value;
+  long expiredAt;
+
+  public Entry(String value, long expiredAt){
+    this.value = value;
+    this.expiredAt = expiredAt;
+  }
+  
+  @Override
+  public String toString(){
+    return "Entry{ value:" + value + ", expiredAt: " + expiredAt + "}"; 
+  }
+}
+
+class InMemoryDB {
+
+  HashMap<String, HashMap<String, Entry>> cache = new HashMap<>();
+  
+  InMemoryDB(){
+  }
+
+  void addEntry(long timestamp, String key, String field, String value, long ttl){
+    long expiredAt = timestamp + ttl;
+    var entries = new HashMap<String, Entry>();
+    if (cache.containsKey(key)) {
+      entries = (HashMap<String, Entry>)cache.get(key);
+    }
+    entries.put(field, new Entry(value, expiredAt));
+    cache.put(key, entries);
+  }
+
+  void evictIfExpired(long timestamp, String key, String field) {
+    var entries = (HashMap<String, Entry>)cache.get(key);
+    Entry entry = (Entry) entries.get(field);
+    if (entry.expiredAt <= timestamp){
+      entries.remove(field);
+      cache.put(key, entries);
+    }
+  }
+
+  boolean deleteEntry(long timestamp, String key, String field){
+    if (cache.containsKey(key)) {
+      var entries = (HashMap<String, Entry>)cache.get(key);
+      evictIfExpired(timestamp, key, field);
+      if(entries.containsKey(field)){
+        entries.remove(field);
+        cache.put(key, entries);
+        return true;
+      }else {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  List<Entry> scan(long timestamp, String key){
+    // similarly O(N) iterate and evictIfExpired and return values
+    return null;
+  }
+
+}
 
 public class Solution{ 
   
@@ -34,15 +96,42 @@ public class Solution{
     in = new FastReader(inputStream);
     out = new PrintWriter(outputStream);
   }
-
   void run()throws Exception {
     int tests = i();
     test:
     for(int testId = 1; testId <= tests; testId++){
       // Codejam / Hackercup formatting
       // out.write("Case #" + testId + ": ");
-      long ans = 0;
-      out.write(ans + "\n");
+      Random rng = new Random();
+      InMemoryDB database = new InMemoryDB();
+
+      for(int operations = 1; operations <= 1000; operations++){
+        long timestamp = operations * operations;
+        switch(rng.nextInt(4)){
+          // add
+          case 0: {
+            long ttl = rng.nextLong((int)1e9);
+            String key = "key_" + rng.nextInt(100);// random key
+            String field = "field_" + rng.nextInt(100);// random field
+            String value = "value_" + rng.nextInt(100);// random field 
+            
+            database.addEntry(timestamp, key, field, value, ttl);
+            break;
+          }
+          // delete
+          case 1: {
+            String key = "key_" + rng.nextInt(100);// random key
+            String field = "field_" + rng.nextInt(100);// random field
+            database.deleteEntry(timestamp, key, field);
+            break;
+          }
+          // TODO: Scan disctionary 
+          default: {
+            break;
+          }
+        }
+      }
+      // out.write(ans + "\n");
     }
   }
 
