@@ -1,20 +1,38 @@
 /*
- * Author    : joney_000[let_me_start][jaswantsinghyadav007@gmail.com]
+ * Author    : joney_000[developer.jaswant@gmail.com]
  * Algorithm : Disjoint Set Union O(log n) + path optimization
  * Platform  : Codeforces/Leetcode. eg. problem: https://leetcode.com/problems/satisfiability-of-equality-equations/
  */
-
 class DSU {
+    private int[] parentOf;
+    private int[] depth;
+    private int size;
+
+    public DSU(int size) {
+        this.size = size;
+        this.depth = new int[size + 1];
+        this.parentOf = new int[size + 1];
+        clear(size);
+    }
+    
+    // reset 
+    public void clear(int range) {
+        this.size = range;
+        for (int pos = 1; pos <= range; pos++) {
+            depth[pos] = 0;
+            parentOf[pos] = pos;
+        }
+    }
 
     // Time: O(log n), Auxiliary Space: O(1)
-    private int getRoot(int node, int[] parentOf){
+    int getRoot(int node) {
         int root = node;
         // finding root
-        while(root != parentOf[root]){
+        while (root != parentOf[root]) {
             root = parentOf[root];
         }
         // update chain for new parent
-        while(node != parentOf[node]){
+        while (node != parentOf[node]) {
             int next = parentOf[node];
             parentOf[node] = root;
             node = next;
@@ -22,60 +40,29 @@ class DSU {
         return root;
     }
 
-	// Time: O(log n), Auxiliary Space: O(1)
-    private void joinSet(int a, int b, int[] parentOf, int[] depth){
-        int rootA = getRoot(a, parentOf);
-        int rootB = getRoot(b, parentOf);
-        if(rootA == rootB){
+    // Time: O(log n), Auxiliary Space: O(1)
+    void joinSet(int a, int b) {
+        int rootA = getRoot(a);
+        int rootB = getRoot(b);
+        if (rootA == rootB) {
             return;
         }
-        if(depth[rootA] >= depth[rootB]){
+        if (depth[rootA] >= depth[rootB]) {
             depth[rootA] = Math.max(depth[rootA], 1 + depth[rootB]);
             parentOf[rootB] = rootA;
-        }else{
+        } else {
             depth[rootB] = Math.max(depth[rootB], 1 + depth[rootA]);
             parentOf[rootA] = rootB;
         }
     }
-	
-    private void joinSets(String[] equations, int[] parentOf, int[] depth){
-        for(String equation: equations){
-            int var1 = equation.charAt(0) - 'a';
-            int var2 = equation.charAt(3) - 'a';
-            char not = equation.charAt(1);
-            if(not == '='){
-               joinSet(var1, var2, parentOf, depth);
+
+    int getNoOfTrees() {
+        int uniqueRoots = 0;
+        for (int pos = 1; pos <= size; pos++) {
+            if (pos == getRoot(pos)) {
+                uniqueRoots++;// root
             }
         }
-    }   
-	// Time: O(log n), Auxiliary Space: O(1), PS: In this problem you will need constant space
-	// but in general you need to hold the info for each node's ancestors. that typically
-	// leads to O(N) auxiliary space
-    public boolean equationsPossible(String[] equations) {
-        if(equations == null || equations.length <= 0){
-            return true;
-        }
-        // disjoint sets
-        int []parentOf = new int[26];
-        int []depth = new int[26];
-        for(int pos = 0; pos < 26; pos++){
-            depth[pos] = 0;
-            parentOf[pos] = pos;
-        }
-        joinSets(equations, parentOf, depth);
-        for(String equation: equations){
-            int var1 = equation.charAt(0) - 'a';
-            int var2 = equation.charAt(3) - 'a';
-            char not = equation.charAt(1);
-            if(not == '!'){    
-                if(var1 == var2){
-                    return false;
-                }
-                if(getRoot(var1, parentOf) == getRoot(var2, parentOf)){
-                    return false;
-                }
-            }
-        }
-        return true;
+        return uniqueRoots;
     }
 }
