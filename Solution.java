@@ -1,5 +1,4 @@
 import java.util.*;
-import java.lang.*;
 import java.io.*;
 import java.math.*;
 
@@ -16,7 +15,7 @@ public class Solution{
   private OutputStream outputStream ;
   private FastReader in ;
   private PrintWriter out ;
-  private final String PROBLEM_ID = "1039-A";
+  private final String PROBLEM_ID = "A";
   private final long MOD = (long)1e9 + 7;
   private final int  INF  = Integer.MAX_VALUE;
   private final long INF_L  = Long.MAX_VALUE / 2;
@@ -37,12 +36,9 @@ public class Solution{
 
   void run()throws Exception {
     int tests = i();
-    test:
     for(int testId = 1; testId <= tests; testId++){
-      // Codejam / Hackercup formatting
-      // out.write("Case #" + testId + ": ");
-      long ans = 0;
-      out.write(ans + "\n");
+      long res = 0;
+      out.write(res + "\n");
     }
   }
 
